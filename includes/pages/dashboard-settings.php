@@ -62,7 +62,13 @@
                             <div class="shortdate text-muted">July, 2014</div>
                         </td>
                         <td class="agenda-time">
-                            5:30 AM
+
+                            <select>
+                                <?php for($i=0; $i<25; $i++): ?>
+                                    <option><?php print $i; ?></option>
+                                <?php endfor; ?>
+                            </select>
+
                         </td>
                         <td class="agenda-events">
                             <div class="agenda-event">
@@ -74,52 +80,7 @@
                         	<input type="checkbox" name="close" />
                         </td>
                     </tr>
-                    
-                    <!-- Multiple events in a single day (note the rowspan) -->
-                    <tr>
-                        <td class="agenda-date" class="active" rowspan="3">
-                            <div class="dayofmonth">24</div>
-                            <div class="dayofweek">Thursday</div>
-                            <div class="shortdate text-muted">July, 2014</div>
-                        </td>
-                        <td class="agenda-time">
-                            8:00 - 9:00 AM 
-                        </td>
-                        <td class="agenda-events">
-                            <div class="agenda-event">
-                                Doctor's Appointment
-                            </div>
-                        </td>
-   						<td>
-                        	<input type="checkbox" name="close" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="agenda-time">
-                            10:15 AM - 12:00 PM 
-                        </td>
-                        <td class="agenda-events">
-                            <div class="agenda-event">
-                                Meeting with executives
-                            </div>
-                        </td>
-                     	<td>
-                        	<input type="checkbox" name="close" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="agenda-time">
-                            7:00 - 9:00 PM
-                        </td>
-                        <td class="agenda-events">
-                            <div class="agenda-event">
-                                Aria's dance recital
-                            </div>
-                        </td>
-                		<td>
-                        	<input type="checkbox" name="close" />
-                        </td>
-                    </tr>
+
                 </tbody>
             </table>
         </div>
