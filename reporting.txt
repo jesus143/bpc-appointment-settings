@@ -1,0 +1,45 @@
+Update for Jan 5, 2017
+
+1. create database and table migration
+2. add carbon date
+3. add js, jquery, angular, font, bootstrap, css and custom js files from online
+5. front end - allow close 1 or multiple row
+6. close add text "Closed All Day"
+7. allow closed open again and delete text "Closed All Day"
+8. add dropdown hour an min
+9. allow select "book exact time and book time day via ajax and get request"
+10. add loading when change book exact time .... and book time ..... and change date
+11. add sorting of date if select jan 1, 2017 then display 1 - 7 days of jan 2017
+12. when page loaded set default "book exact tim" display
+13. when ticket checkbox "close all day" set disable dropdown time and checkbox for morning, noon and evening
+
+
+Continue this schedule calendar tomorrow.
+
+
+
+
+Hi Rich,
+
+Update for Jan 6, 2017
+
+allow ajax handle save and update of schedule data
+add form to the calendar schedule this will handle the submition of data via ajax
+remove sleep time interval for response display
+in save and update data file include  main wordpress functionality
+create class query for wordpress database main api
+create class files for specific plugin database functionality
+filter all sent request data from ajax, get specific data and filter specific data, values and etc...
+check if open from then store data to a variable and if open to then start the update variable storage
+allow insert data after filter, allow update data if already exist
+add form field names to schedule files, 2 files
+each form make name of the fields as array
+
+
+I got road blocks in insert and update of schedule due to data complexity and i just fixed it.
+
+Continue this tomorrow.
+
+Thanks
+
+

@@ -54,4 +54,11 @@ function bpc_as_schedule_type(option)
         $("#bpc-as-schedule-loader").css({'display':'none'});
     });
 }
+function bpc_as_save_schedule()
+{
+    $.post( urlNow.local_url + "/wp-content/plugins/bpc-appointment-settings/includes/ajax/save-schedule.php", $( "#testform" ).serialize() )
+        .done(function( data ) {
+            console.log( "Data Loaded: " + data );
+        });
+}
 

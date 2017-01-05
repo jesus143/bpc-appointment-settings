@@ -25,29 +25,40 @@
                 </thead>
                 <tbody>
                     <?php foreach($dates as $petsa => $date): ?>
+
+                        <?php
+                            $nameMorning    = $petsa . '_' . $date['month'] . '_' . $date['year'] . '_' . $date['day'] . '_morning[]';
+                            $nameAfternoon  = $petsa . '_' . $date['month'] . '_' . $date['year'] . '_' . $date['day'] . '_afternoon[]';
+                            $nameEvening    = $petsa . '_' . $date['month'] . '_' . $date['year'] . '_' . $date['day'] . '_evening[]';
+                            $nameClose      = $petsa . '_' . $date['month'] . '_' . $date['year'] . '_' . $date['day'] . '_close[]';
+                            $nameChecking       = $petsa . '_' . $date['month'] . '_' . $date['year'] . '_' . $date['day'] . '_display_checking[]';
+                        ?>
+
+
                         <tr class="bpc-as-row-schedule" id="bpc-as-row-schedule-<?php print $petsa; ?>" >
                             <td class="agenda-date" class="active" rowspan="1">
                                 <div class="dayofmonth"><?php print $petsa; ?></div>
                                 <div class="dayofweek"><?php print $date['day']; ?></div>
                                 <div class="shortdate text-muted"><?php print $date['month'] . ', ' .  $date['year']; ?></div>
+                                <input type="hidden" name="<?php print $nameChecking; ?>" value="" />
                             </td>
                             <td class="agenda-time">
                                 <div class="agenda-event">
-                                    <input type="checkbox"  />
+                                    <input type="checkbox" name="<?php print $nameMorning; ?>" />
                                 </div>
                             </td>
                             <td class="agenda-events">
                                 <div class="agenda-event">
-                                    <input type="checkbox"  />
+                                    <input type="checkbox" name="<?php print $nameAfternoon; ?>" />
                                 </div>
                             </td>
                             <td class="agenda-events">
                                 <div class="agenda-event">
-                                    <input type="checkbox"  />
+                                    <input type="checkbox" name="<?php print $nameEvening; ?>" />
                                 </div>
                             </td>
                             <td>
-                                <input type="checkbox" name="close" onclick="bpc_as_schedule_close('<?php print $petsa; ?>')" />
+                                <input type="checkbox" name="<?php print $nameClose; ?>" onclick="bpc_as_schedule_close('<?php print $petsa; ?>')" />
                                 <message></message>
                             </td>
                         </tr>

@@ -17,8 +17,6 @@
 					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
 				<input type="hidden" id="dtp_input2" value="" /><br/>
-
-
 				<div id="bpc-as-schedule-loader" >
 					<i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i><br>
 					Loading...
@@ -26,8 +24,6 @@
 
             </div>     
 		</div>
-
-
 
 
 

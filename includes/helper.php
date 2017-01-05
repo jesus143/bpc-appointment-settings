@@ -91,3 +91,95 @@ function bpc_as_get_request_option()
 {
     return $_GET['option'];
 }
+
+function bpc_as_set_date_as_db_format($date)
+{
+    $date = date_create($date);
+    return date_format($date, "Y-m-d");
+}
+/**
+ * @param $fieldName
+ * @return bool|string
+ * Form post request
+ * ex: data "5_January_2017_Thursday_open_from"
+ */
+function bpc_as_get_date_db_format($fieldName)
+{
+    if(bpc_as_check_if_input_date($fieldName)) {
+        $date1  = explode('_', $fieldName);
+        $petsa  = $date1[0];
+        $month  = $date1[1];
+        $year   = $date1[3];
+        $day    = $date1[4];
+        $date   = $petsa . ' ' . $month . ' ' . $year;
+        $dateDb = bpc_as_set_date_as_db_format($date);
+        return $dateDb;
+    }
+    return false;
+}
+function bpc_as_get_day($fieldName)
+{
+    if(bpc_as_check_if_input_date($fieldName)) {
+        $date1  = explode('_', $fieldName);
+        return strtolower($date1[3]);
+    }
+    return false;
+}
+
+function bpc_as_get_field_name($fieldName)
+{
+    if(bpc_as_check_if_input_date($fieldName)) {
+        $data  = explode('_', $fieldName);
+        return strtolower($data[count($data)-2] . '_' . $data[count($data)-1]);
+    }
+    return false;
+}
+
+function bpc_as_get_value($fieldName, $fieldValue)
+{
+    if(bpc_as_check_if_input_date($fieldName)) {
+        if (count($fieldValue) > 1) {
+            return $fieldValue[0] . ':' . $fieldValue[1];
+        } else {
+            return $fieldValue[0];
+        }
+    }
+}
+
+function bpc_as_check_if_input_date($fieldName)
+{
+    $underScore = strpos($fieldName, '_');
+    if($underScore  > 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function bpc_as_check_call_back_length($data)
+{
+    return $data['callBackLength'][0] . $data['callBackLength'][1];
+}
+function bpc_as_check_call_back_delay($data)
+{
+    return $data['callBackDelay'][0] . $data['callBackDelay'][1];
+}
+function bpc_as_get_book_time_type($data)
+{
+    return $data['bookTimeSorting'];
+}
+
+function bpc_as_get_current_user_logged_in_id()
+{
+    $current_user = wp_get_current_user();
+    return $current_user->ID;
+}
+function bpc_as_get_and_remove_day_from_field_name($fieldName)
+{
+    $fn = bpc_as_get_field_name($fieldName);
+    $fn_arr = explode("_", $fn);
+    if(count( $fn_arr ) > 1) {
+        return $fn_arr[1];
+    }
+    return false;
+}

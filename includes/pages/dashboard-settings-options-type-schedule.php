@@ -1,5 +1,5 @@
  
-<form>
+
 <div class="container dashboard-settings-option">  
 	<div class="row">
 		<div class="col-md-2">
@@ -11,7 +11,6 @@
 		</div>
 	</div> 
 </div>
-</form> 
 <style type="text/css" media="screen">
 	.dashboard-settings-option select {
 		padding:20px;
