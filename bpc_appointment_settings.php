@@ -14,19 +14,30 @@ add_shortcode("bpc_as_opening_hours", "bpc_as_opening_hours_func");
 
 function bpc_as_opening_hours_func() 
 {	ob_start();
+
+	$book_exact_time = 'checked';
+	$book_exact_day = '';
+
+
 		bpc_as_header();
 		require_once('includes/helper.php');
-		require_once('includes/initialized-data.php');
+//		require_once('includes/initialized-data.php');
 		echo "<form method='POST' id='testform' >";
 		require_once('includes/pages/date-picker.php');
 		require_once('includes/pages/dashboard-settings-options-type-schedule.php');
 		print "<div id='bpc-as-schedule-settings-content'>";
-			require_once('includes/pages/dashboard-time-settings.php');
+//			require_once('includes/pages/dashboard-time-settings.php');
 			//	require_once('includes/pages/dashboard-day-settings.php');
-			require_once('includes/pages/dashboard-settings-options.php');
+//			require_once('includes/pages/dashboard-settings-options.php');
 		print "</div>";
-		require_once('includes/pages/dashboard-settings-options-save.php');
 		echo "</form>";
+
+
+
+
+	require_once('includes/pages/dashboard-settings-options-save.php');
+
+
  	ob_flush(); 
 }
 function bpc_as_install_table()

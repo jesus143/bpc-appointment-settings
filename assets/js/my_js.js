@@ -40,7 +40,7 @@ function bpc_as_schedule_change_date(e)
 {
     var option = $("#bpc-as-bookTimeSorting:checked").val();  //'book exact time';
     $("#bpc-as-schedule-loader").css({'display':'block'});
-    $.get( urlNow.local_url + "/wp-content/plugins/bpc-appointment-settings/includes/ajax/load-schedule.php?date="+e.value+"&option="+option, function( data ) {
+    $.get( urlNow.local_url + "/wp-content/plugins/bpc-appointment-settings/includes/ajax/load-schedule.php?date="+e.value+"&option="+option+"&base=date_picker", function( data ) {
         $('#bpc-as-schedule-settings-content').html(data);
         $("#bpc-as-schedule-loader").css({'display':'none'});
     });
@@ -49,7 +49,7 @@ function bpc_as_schedule_type(option)
 {
     var date = $("#bpc-as-datepicker").val();
     $("#bpc-as-schedule-loader").css({'display':'block'});
-    $.get( urlNow.local_url + "/wp-content/plugins/bpc-appointment-settings/includes/ajax/load-schedule.php?date="+date+"&option="+option, function( data ) {
+    $.get( urlNow.local_url + "/wp-content/plugins/bpc-appointment-settings/includes/ajax/load-schedule.php?date="+date+"&option="+option+"&base=schedule_type", function( data ) {
         $('#bpc-as-schedule-settings-content').html(data);
         $("#bpc-as-schedule-loader").css({'display':'none'});
     });

@@ -43,3 +43,32 @@ Continue this tomorrow.
 Thanks
 
 
+Hi Rich, here are the update for today and todo by monday
+
+Update for Jan 6, 2017
+1. able to update
+2. able to save book time of day
+3. able to update book time of day
+4. when ajax is loaded default values should set in checkbox or dropdown
+5. add insert or update functionality in class
+6. auto generate dropdown for callback lenght and callback delay
+7. set values initialized
+8. remove extra text in the header
+9. add default values for option schedule type
+10. set base ajax request to display either of Book Exact Time or Book Time Of Day
+
+
+Update for Jan 9, 2017
+1. make datepicker to select weekly not each day because display is weekly
+2. if select date update the Book Exact Time and Book Time Of Day will be updated and set default value to time of day and ....
+3. if select Exact Time and Book Time Of Day then only update the content of the schedule
+4. add correct values for call back delay and call back lenght
+5. if update successfully add message that says successfully updated
+6. test multiple users using the calendar
+7. fix ui
+8. upload testing server and do test
+9. add partner id retrieve and check if its saving to database, this is the basis of query in customer side
+10. test again in testing
+
+Thanks
+

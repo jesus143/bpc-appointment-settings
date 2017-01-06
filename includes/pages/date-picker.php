@@ -21,7 +21,6 @@
 					<i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i><br>
 					Loading...
 				</div>
-
             </div>     
 		</div>
 
@@ -42,5 +41,9 @@
 				minView: 2,
 				forceParse: 0
 		    });
+
 	</script>
-	<br><hr><br> 
+	<br><hr><br>
+
+
+

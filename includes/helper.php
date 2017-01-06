@@ -29,6 +29,28 @@ if(!function_exists('bpc_as_generate_minutes_option'))
         endfor;
     }
 }
+
+
+
+function bpc_as_generate_dropDown_option($data, $default=null)
+{
+    $response = '';
+    foreach($data as $val) {
+        print "if($default == $val)";
+        if($default == $val) {
+            $response .= "<option  value='" . $val . "' selected>" . $val . "</option>";
+        } else {
+            $response .= "<option  value='" . $val . "' >" . $val . "</option>";
+        }
+    }
+
+    return $response;
+}
+
+
+
+
+
 if(!function_exists('bpc_as_time_option_set_selected'))
 {
     function bpc_as_time_option_set_selected($i, $default=null)
@@ -158,11 +180,11 @@ function bpc_as_check_if_input_date($fieldName)
 
 function bpc_as_check_call_back_length($data)
 {
-    return $data['callBackLength'][0] . $data['callBackLength'][1];
+    return $data['callBackLength'][0] . ' ' . $data['callBackLength'][1];
 }
 function bpc_as_check_call_back_delay($data)
 {
-    return $data['callBackDelay'][0] . $data['callBackDelay'][1];
+    return $data['callBackDelay'][0] . ' ' . $data['callBackDelay'][1];
 }
 function bpc_as_get_book_time_type($data)
 {
@@ -182,4 +204,12 @@ function bpc_as_get_and_remove_day_from_field_name($fieldName)
         return $fn_arr[1];
     }
     return false;
+}
+function bpc_as_print_r_pre($string)
+{
+    print "<pre>";
+
+        print_r($string);
+
+    print "</pre>";
 }
