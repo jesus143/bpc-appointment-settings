@@ -80,8 +80,7 @@ if(!function_exists('bpc_as_get_next_date_readable')) {
 if(!function_exists('bpc_as_set_scheduled_selected_date_format')) {
     function bpc_as_set_scheduled_selected_date_format()
     {
-        $dateInput = date_create(bpc_as_get_request_date());
-        return date_format($dateInput,"Y-m-d");
+       return  bpc_as_get_moday_in_date_week(bpc_as_get_request_date()); 
     }
 }
 
@@ -109,9 +108,13 @@ function bpc_as_get_request_date()
 {
     return $_GET['date'];
 }
+function bpc_as_get_quest_type()
+{
+    return $_GET['base'];
+}
 function bpc_as_get_request_option()
 {
-    return $_GET['option'];
+    return (!empty($_GET['option']))? $_GET['option'] : 'book exact time';
 }
 
 function bpc_as_set_date_as_db_format($date)
@@ -212,4 +215,103 @@ function bpc_as_print_r_pre($string)
         print_r($string);
 
     print "</pre>";
+}
+
+function bpc_as_get_moday_in_date_week($dateRequest)
+{   
+
+    // print " request datae $dateRequest";
+    //  2017-01-02
+    // $date = bpc_as_set_date_as_db_format($date);  
+     $date = bpc_as_set_date_as_db_format($dateRequest); 
+    $dateArr = explode("-", $date); 
+    $year = $dateArr[0];
+    $month =  $dateArr[1];
+    $day =  $dateArr[2];
+    $monday=strtotime("monday this week", mktime(0,0,0, $month, $day, $year));
+    $mondayOfTheWeek = date("Y-m-d",$monday);
+    // print " monday of the week " . $mondayOfTheWeek . ' <<------ <br><br><Br>';
+    return $mondayOfTheWeek; 
+}
+
+
+// get current user partner id from ontraport
+function bpc_as_get_current_user_partner_id()
+{
+    $opResponse = bpc_as_get_ontraport_info();
+    $opResponse = json_decode($opResponse, true ); 
+    // return $opResponse['data'][0]['id'];
+    return 12345;
+}
+function bpc_as_get_ontraport_info()
+{   
+    $method = 'GET'; 
+    $user   = wp_get_current_user();
+    $API_URL    = 'https://api.ontraport.com/1/objects?';
+    //      print "<brr> current user email " . $user->user_email;
+
+    $API_DATA   = array(
+            'objectID'      => 0,
+            'performAll'    => 'true',
+            'sortDir'       => 'asc',
+            'condition'     => "email='".$user->user_email."'", //use this format since its a sql query condition. For other fields, you may change this value to something else.
+            'searchNotes'   => 'true'
+    );
+
+    $API_KEY    = 'fY4Zva90HP8XFx3';
+    $API_ID     = '2_7818_AFzuWztKz';
+
+    //$API_RESULT   = query_api_call($postargs, $API_ID, $API_KEY);
+
+    $API_RESULT = bpc_as_op_query($API_URL, 'GET', $API_DATA, $API_ID, $API_KEY);
+
+    $getName    = json_decode($API_RESULT);
+
+    //      var_dump($getName->data[0]); //sample for getting all data from the decoded json
+
+    $PARTNER_ID     = $getName->data[0]->id;
+    //      echo $PARTNER_ID; //partner ID
+
+    $FACEBOOK_EMAILSAMPLE = $faceBookEmail;
+
+    $API_UDATA  = array(
+            'objectID'          => 0,
+            'id'            => $PARTNER_ID,
+            'f1583'         => $FACEBOOK_EMAILSAMPLE
+    );
+
+    //GET PUT RESULT
+    return bpc_as_op_query( $API_URL, $method, $API_UDATA, $API_ID, $API_KEY );
+}
+function bpc_as_op_query($url, $method, $data, $appID, $appKey){
+    $ch = curl_init( );
+    switch ($method){
+        case 'POST': {
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json','Content-Length: ' . strlen(json_encode($data)), 'Api-Appid:' . $appID, 'Api-Key:' . $appKey));
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            break;
+        }
+        case 'PUT': {
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json','Content-Length: ' . strlen(json_encode($data)), 'Api-Appid:' . $appID, 'Api-Key:' . $appKey));
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            break;
+        }
+        case 'GET': {
+            $finalURL = $url . urldecode(http_build_query($data));
+            curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt ($ch, CURLOPT_URL, $finalURL);
+            curl_setopt ($ch, CURLOPT_HTTPHEADER, array('Api-Appid:' . $appID, 'Api-Key:' . $appKey));
+            break;
+        }
+    }
+    $response  = curl_exec($ch);
+    curl_close($ch);
+
+    return $response;
 }

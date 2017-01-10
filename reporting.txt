@@ -59,16 +59,22 @@ Update for Jan 6, 2017
 
 
 Update for Jan 9, 2017
-1. make datepicker to select weekly not each day because display is weekly
-2. if select date update the Book Exact Time and Book Time Of Day will be updated and set default value to time of day and ....
-3. if select Exact Time and Book Time Of Day then only update the content of the schedule
-4. add correct values for call back delay and call back lenght
-5. if update successfully add message that says successfully updated
-6. test multiple users using the calendar
-7. fix ui
-8. upload testing server and do test
-9. add partner id retrieve and check if its saving to database, this is the basis of query in customer side
-10. test again in testing
+1. make datepicker to select weekly not each day because display is weekly - d
+2. if select date update the Book Exact Time and Book Time Of Day will be updated and set default value to time of day and .... - d
+3. if select Exact Time and Book Time Of Day then only update the content of the schedule - d
+4. add correct values for call back delay and call back lenght -  d
+5. if update successfully add message that says successfully updated -> d
+6. test multiple users using the calendar - d
+8. display current when page is loaded -  d 
+9. create database creation when plugin activated - d
+ 
+Todo for Jan 10, 2017 
+9. get partner id from ontraport - 
+1. save partner id from ontraport to plugin database  -  
+3. upload testing server and do test  - 
+4. add partner id retrieve and check if its saving to database, this is the basis of query in customer side - 
+5. test again in testing -  
+6. fix ui -   
 
 Thanks
 

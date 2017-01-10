@@ -39,7 +39,8 @@
 				todayHighlight: 1,
 				startView: 2,
 				minView: 2,
-				forceParse: 0
+				forceParse: 0,
+				// daysOfWeekDisabled: [0,2,3,4,5,6] 
 		    });
 
 	</script>

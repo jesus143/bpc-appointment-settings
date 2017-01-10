@@ -12,36 +12,63 @@ define('bpc_as_plugin_url', get_site_url() . '/wp-content/plugins/bpc-appointmen
 register_activation_hook(__FILE__, 'bpc_as_install_table'); 
 add_shortcode("bpc_as_opening_hours", "bpc_as_opening_hours_func"); 
 
+ 
+
 function bpc_as_opening_hours_func() 
-{	ob_start();
-
-	$book_exact_time = 'checked';
-	$book_exact_day = '';
-
-
-		bpc_as_header();
-		require_once('includes/helper.php');
-//		require_once('includes/initialized-data.php');
-		echo "<form method='POST' id='testform' >";
-		require_once('includes/pages/date-picker.php');
-		require_once('includes/pages/dashboard-settings-options-type-schedule.php');
-		print "<div id='bpc-as-schedule-settings-content'>";
-//			require_once('includes/pages/dashboard-time-settings.php');
-			//	require_once('includes/pages/dashboard-day-settings.php');
-//			require_once('includes/pages/dashboard-settings-options.php');
-		print "</div>";
-		echo "</form>";
-
-
-
-
-	require_once('includes/pages/dashboard-settings-options-save.php');
-
-
+{	
+	ob_start(); 
+	print "<body onload='bpc_init()'>";  
+		$book_exact_time = 'checked';
+		$book_exact_day = ''; 
+			bpc_as_header();
+			require_once('includes/helper.php');
+			//	require_once('includes/initialized-data.php');
+			echo "<form method='POST' id='testform' >";
+			require_once('includes/pages/date-picker.php');
+			// require_once('includes/pages/dashboard-settings-options-type-schedule.php'); 
+				print "<div id='bpc-as-schedule-settings-content-and-type'>"; 
+					//	require_once('includes/pages/dashboard-time-settings.php');
+					//	require_once('includes/pages/dashboard-day-settings.php');
+					// require_once('includes/pages/dashboard-settings-options.php');
+				print "</div>";
+			echo "</form>"; 
+		require_once('includes/pages/dashboard-settings-options-save.php');  
+	print "</body>";
  	ob_flush(); 
 }
+
 function bpc_as_install_table()
 {
+	global $wpdb;
+	global $jal_db_version;
+
+	$table_name = $wpdb->prefix . 'bpc_appointment_settings';
+	
+	$charset_collate = $wpdb->get_charset_collate();
+
+    $sql = "CREATE TABLE $table_name   (
+        id bigint(20) NOT NULL AUTO_INCREMENT,
+        user_id bigint(20) NOT NULL,
+        partner_id bigint(20) NOT NULL,  	
+        open_from varchar(50) NOT NULL,  
+        open_to varchar(50) NOT NULL,  
+		call_back_length varchar(50) NOT NULL,
+		call_back_delay varchar(50) NOT NULL,
+		morning varchar(50) NOT NULL,
+		afternoon varchar(50) NOT NULL,
+		evening varchar(50) NOT NULL,
+		close varchar(50) NOT NULL,
+		book_time_type varchar(50) NOT NULL,
+		day varchar(50) NOT NULL,
+		date varchar(50) NOT NULL, 
+        created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY  (id)
+    ) $charset_collate;"; 
+
+	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+	dbDelta( $sql );
+
+	add_option( 'jal_db_version', $jal_db_version );
 	//when install also add talble
 }
 

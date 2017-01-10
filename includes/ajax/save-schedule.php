@@ -18,24 +18,17 @@ use App\BPC_AS_DB;
 
 $bpc_as_wpdb_queries = new PBC_AS_WPDB_QUERIES('wp_bpc_appointment_settings');
 $bpc_as_db           = new BPC_AS_DB('wp_bpc_appointment_settings');
-
-
+ 
 $data = $_REQUEST;
-
-
-
+ 
 $user_id        = bpc_as_get_current_user_logged_in_id();
 $callBackDelay  = bpc_as_check_call_back_delay($data);
 $callBackLength = bpc_as_check_call_back_length($data);
 $bookTimeType   = bpc_as_get_book_time_type($data);
-$partner_id     = 12345;
-
-
-
+$partner_id     = bpc_as_get_current_user_partner_id();
+ 
 print "call back length $callBackLength call back delay $callBackDelay book time type $bookTimeType";
-
-
-
+ 
 print "<pre>";
 
     $counter = 0;
