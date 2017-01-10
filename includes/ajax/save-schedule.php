@@ -1,6 +1,12 @@
 <?php
-require_once("E:/xampp/htdocs/practice/wordpress/wp-load.php");
+ 
 require_once('../helper.php');
+if(bpc_as_is_localhost()) {  
+    require_once("E:/xampp/htdocs/practice/wordpress/wp-load.php");
+} else {
+    require $_SERVER['DOCUMENT_ROOT'] .'/wp-load.php';  
+}
+ 
 require_once('../db/wpdb_queries.class.php');
 require_once('../db/bpc_as_db.php');
 
@@ -27,7 +33,7 @@ $callBackLength = bpc_as_check_call_back_length($data);
 $bookTimeType   = bpc_as_get_book_time_type($data);
 $partner_id     = bpc_as_get_current_user_partner_id();
  
-print "call back length $callBackLength call back delay $callBackDelay book time type $bookTimeType";
+print "call back length $callBackLength call back delay $callBackDelay book time type $bookTimeType partner id $partner_id";
  
 print "<pre>";
 

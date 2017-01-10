@@ -8,16 +8,28 @@
  * Author URI: 
  * License:  
  */
+
 define('bpc_as_plugin_url', get_site_url() . '/wp-content/plugins/bpc-appointment-settings'); 
 register_activation_hook(__FILE__, 'bpc_as_install_table'); 
 add_shortcode("bpc_as_opening_hours", "bpc_as_opening_hours_func"); 
-
+add_action("admin_menu", "bpc_as_admin_menu");
  
+function bpc_as_admin_menu() {  
+    add_menu_page('BPC Appointment Settings', 'BPC Appointment Settings', 'manage_options', "pbc-as-admin", 'bpc_as_admin'); 
+}   
+
+function bpc_as_admin () { 
+ 	?> 
+ 		<br><br><br>
+		1. Add short code post or page <b>[bpc_as_opening_hours]</b> in order to display the partner schedule  
+ 	<?php
+}
 
 function bpc_as_opening_hours_func() 
-{	
-	ob_start(); 
-	print "<body onload='bpc_init()'>";  
+{	  
+	ob_start();  
+	print "<input type='hidden' value='". get_site_url() ."' id='bpc_as_rool_url' />"; 
+	print "<div onload='bpc_init()'>";  
 		$book_exact_time = 'checked';
 		$book_exact_day = ''; 
 			bpc_as_header();
@@ -33,8 +45,9 @@ function bpc_as_opening_hours_func()
 				print "</div>";
 			echo "</form>"; 
 		require_once('includes/pages/dashboard-settings-options-save.php');  
-	print "</body>";
- 	ob_flush(); 
+	print "</div>"; 
+ 	ob_flush();  
+
 }
 
 function bpc_as_install_table()
@@ -74,7 +87,7 @@ function bpc_as_install_table()
 
 function bpc_as_header()
 {	?>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" type="text/css" href="<?php print bpc_as_plugin_url; ?>/assets/css/bootstrap.min.css" />
 		<link rel="stylesheet" type="text/css" href="<?php print bpc_as_plugin_url; ?>/assets/css/bootstrap-select.min.css" />
 		<link rel="stylesheet" type="text/css" href="<?php print bpc_as_plugin_url; ?>/assets/css/font-awesome.min.css" />
@@ -89,5 +102,13 @@ function bpc_as_header()
 		<script src="<?php print bpc_as_plugin_url; ?>/assets/js/my_js.js"></script>
 		<script src="<?php print bpc_as_plugin_url; ?>/assets/js/my_jquery.js"></script>
 		<script src="<?php print bpc_as_plugin_url; ?>/assets/js/my_angular.js"></script>
+	
+		<style type="text/css" media="screen">
+			#page-content {
+				width: 0px !important;
+			}
+
+		</style>
+
 	<?php
 }

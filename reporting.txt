@@ -68,13 +68,24 @@ Update for Jan 9, 2017
 8. display current when page is loaded -  d 
 9. create database creation when plugin activated - d
  
-Todo for Jan 10, 2017 
-9. get partner id from ontraport - 
-1. save partner id from ontraport to plugin database  -  
-3. upload testing server and do test  - 
-4. add partner id retrieve and check if its saving to database, this is the basis of query in customer side - 
-5. test again in testing -  
-6. fix ui -   
 
-Thanks
+
+Hi Rich,
+
+Update for Jan 10, 2017 
+1. get partner id from ontraport  
+2. save partner id from ontraport to plugin database   
+3. if activated check if plugin table if added to database
+4. change file path to adopt online plugin activation
+5. upload testing server and do test   
+6. add partner id retrieve and check if its saving to database, this is the basis of query in customer side  
+7. test again in testing  
+8. fix ui, design missed up when i uploaded to server
+
+please check this url so that you can test adding schedules
+http://testing.umbrellasupport.co.uk/phone-appointment-settings
+
+Todo Jan 11, 2017
+ 
+Google / Apple Calendar Integration
 

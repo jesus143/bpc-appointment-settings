@@ -240,11 +240,16 @@ function bpc_as_get_current_user_partner_id()
 {
     $opResponse = bpc_as_get_ontraport_info();
     $opResponse = json_decode($opResponse, true ); 
-    // return $opResponse['data'][0]['id'];
-    return 12345;
+ 
+    if(bpc_as_is_localhost() ){ 
+        return 12345; // dummy partner id for my localhost 
+    } else {
+        return $opResponse['data'][0]['id'];     
+    } 
 }
 function bpc_as_get_ontraport_info()
 {   
+    $faceBookEmail = '';
     $method = 'GET'; 
     $user   = wp_get_current_user();
     $API_URL    = 'https://api.ontraport.com/1/objects?';
@@ -315,3 +320,10 @@ function bpc_as_op_query($url, $method, $data, $appID, $appKey){
 
     return $response;
 }
+
+    function bpc_as_is_localhost() {  
+        $whitelist = array( '127.0.0.1', '::1' );
+        if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ) { 
+            return true;
+        } 
+    }

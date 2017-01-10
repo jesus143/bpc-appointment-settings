@@ -3,17 +3,20 @@ schedule                 = new Object();
 urlNow                   = new Object();
 schedule.bgRowColorClose = '#fba2a2';
 schedule.bgRowColorOpen  = 'white';
-urlNow.local_url         = 'http://localhost/practice/wordpress';
 
-
-
+// if (location.hostname === "localhost" || location.hostname === "127.0.0.1") { 
+    urlNow.local_url         = $("#bpc_as_rool_url").val();
+// } else { 
+    // urlNow.local_url         = 'http://testing.umbrellasupport.co.uk';
+// } 
+// alert(urlNow.local_url);
+ 
 function bpc_as_schedule_close(petsa)
-{
-
+{ 
     attr_id           = "#bpc-as-row-schedule-"+petsa;
     attr_select_id    = "#bpc-as-row-schedule-"+petsa+ " select";
     attr_checkbox_id  = "#bpc-as-row-schedule-"+petsa+ " .agenda-event input";
-    attr_message_id   = "#bpc-as-row-schedule-"+petsa+ " message";
+    attr_message_id   = "#bpc-as-row-schedule-"+petsa+ " message"; 
 
     // set open or close shedule
     var bg = $(attr_id).css('background-color');
@@ -42,6 +45,9 @@ function bpc_as_schedule_close(petsa)
 }
 
 function bpc_init() {
+ 
+    // alert("Nice test"); 
+    console.log("loaded data");
 
     show_save_button(); 
 
@@ -111,4 +117,7 @@ function show_save_button()
     $("#bpc-as-save-schedule-container").css('display', 'block');
 }
 
-
+ 
+$(document).ready(function(){
+     bpc_init();
+ });

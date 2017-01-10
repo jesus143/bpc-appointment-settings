@@ -4,7 +4,7 @@
 .agenda .agenda-date { width: 170px; }
 .agenda .agenda-date .dayofmonth {
     width: 43px;
-    font-size: 36px;
+    font-size: 19px;
     line-height: 36px;
     float: left;
     text-align: right;
@@ -39,8 +39,27 @@
     display:none;
 }
 
-.dashboard-settings-option select {
-    padding:20px;
-}
+.bpc-as-dashboard-settings-option select {
+   padding:6px;
+} 
 
+.bpc-as-table-display {
+    width: 50% !important;
+}
+#page-content h2:nth-child(1)  {
+    display: none !important; 
+}
+#page-content h5 {
+    font-weight:bold;
+}
+.bpc-as-date-picker {
+    padding-left:35px !important;
+}
+.bpc-as-row-schedule   select {
+      padding:3px !important; 
+}
+ .bpc-as-row-schedule   message em {
+      font-size:12px !important;
+      color:grey;
+}
  

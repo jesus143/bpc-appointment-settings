@@ -1,6 +1,15 @@
 <?php
-require_once("E:/xampp/htdocs/practice/wordpress/wp-load.php");
+
 require_once('../helper.php');
+
+if(bpc_as_is_localhost()) {  
+    require_once("E:/xampp/htdocs/practice/wordpress/wp-load.php");
+} else {
+    require $_SERVER['DOCUMENT_ROOT'] .'/wp-load.php';  
+}
+
+
+
 require_once('../db/wpdb_queries.class.php');
 require_once('../db/bpc_as_db.php');
 

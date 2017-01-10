@@ -12,7 +12,7 @@
 <!--    <hr />-->
 
     <div class="agenda" >
-        <div class="table-responsive">
+        <div class="table-responsive bpc-as-table-display">
             <table class="table table-condensed table-bordered">
                 <thead>
                     <tr>
