@@ -89,3 +89,39 @@ Todo Jan 11, 2017
  
 Google / Apple Calendar Integration
 
+Set default values with open from is 9:00 - 5:30pm - 10min
+Get google calendar events - 10mins
+filter events start date, end date and summary -
+validate if event start and end date is between 9:00 - 5:30pm or  9:00 to 17:30 return true or false
+if its event between 9:00 - 5:30 pm then set specific date as "close all day" else if not then set 9:00 - 5:30pm
+if google calendar integrated then just put a message something "google calendar authenticated"
+if not authenticated with google calendar display button to allow partner click it and when click sync it with their google calendar
+put something integration message above as a title
+check phone settings if its sync google callendar works fine
+install personal-profile plugin to portal with marvin
+discuss with floyd about letter tool
+setup api for testing in console developer
+update code and do testing integration with google calendar
+create a function that will get the time busy from and busy to
+create a function that will get the time available from and available to
+automatic close holiday in the partner calendar when sync from google calendar
+need to create hours for busy
+
+
+Update for 14, 2017
+Set default values with open from is 9:00 - 5:30pm
+Get google calendar events
+filter date for specific event
+filter time start for specific event
+filter time end for specific event
+filter description of the events for specific event
+separate to a function class with result of the google authentication
+set query of google calendar datetime today when authenticated
+check if the event time start and end conflict with the open call back.
+allow to show button "connect google calendar" if not authenticated
+if expired authentication with google calendar allow to automatic refresh token
+
+Todo by  Jan 16, 2017
+
+Add slot for busy in partner's calendar
+Continue with google calendar sync

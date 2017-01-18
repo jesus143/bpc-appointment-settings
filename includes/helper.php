@@ -14,6 +14,9 @@ if(!function_exists('bpc_as_generate_hours_option'))
 {
     function bpc_as_generate_hours_option($default=null)
     {
+
+
+
         for($i=0; $i<24; $i++):
             print "<option value='" . bpc_as_1_to_2numbers($i) . "' ".bpc_as_time_option_set_selected($i, $default)." >" . bpc_as_1_to_2numbers($i) . "</option>";
         endfor;
@@ -23,6 +26,7 @@ if(!function_exists('bpc_as_generate_minutes_option'))
 {
     function bpc_as_generate_minutes_option($default=null)
     {
+
         for($i=0; $i<60; $i++):
 
             print "<option  value='" . bpc_as_1_to_2numbers($i) . "'   ".bpc_as_time_option_set_selected($i, $default)." >" . bpc_as_1_to_2numbers($i) . "</option>";
@@ -327,3 +331,20 @@ function bpc_as_op_query($url, $method, $data, $appID, $appKey){
             return true;
         } 
     }
+    function bpc_as_redirect($url)
+    {
+        print "<script>
+            document.location = '$url';
+        </script>";
+    }
+
+    function bpc_as_google_calendar_get_correct_date()
+    {
+
+    }
+    function bpc_as_google_calendar_get_correct_time()
+    {
+
+    }
+
+

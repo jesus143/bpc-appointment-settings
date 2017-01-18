@@ -3,6 +3,10 @@ Thumbs.db
 ehthumbs.db
 
 
+
+/includes/api/google-api/vendor
+/includes/api/.
+
 .idea/
 .idea\
 # Folder config file

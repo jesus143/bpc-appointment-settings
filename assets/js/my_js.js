@@ -110,14 +110,27 @@ function bpc_as_save_schedule()
             console.log( "Data Loaded: " + data );
         });
 }
-
-
+ 
 function show_save_button()
 {
+
     $("#bpc-as-save-schedule-container").css('display', 'block');
 }
 
  
+
+
+
+function bpc_as_add_time_break()
+{
+    $.get( urlNow.local_url + "/wp-content/plugins/bpc-appointment-settings/includes/ajax/load-break-design.php")
+        .done(function( data ) {
+            $('#bpc-as-break-time-container').append(data);
+            console.log("add new break time design");
+        });
+}
+   
+
 $(document).ready(function(){
      bpc_init();
  });
