@@ -1,4 +1,4 @@
-.agenda {  }
+.agenda {width: 85%;}
 
 /* Dates */
 .agenda .agenda-date { width: 170px; }
@@ -41,13 +41,13 @@
 
 .bpc-as-dashboard-settings-option select {
    padding:6px;
-} 
+}
 
 .bpc-as-table-display {
-    width: 50% !important;
+    width: 89% !important;
 }
 #page-content h2:nth-child(1)  {
-    display: none !important; 
+    display: none !important;
 }
 #page-content h5 {
     font-weight:bold;
@@ -56,10 +56,35 @@
     padding-left:35px !important;
 }
 .bpc-as-row-schedule   select {
-      padding:3px !important; 
+      padding:3px !important;
 }
  .bpc-as-row-schedule   message em {
       font-size:12px !important;
       color:grey;
 }
- 
+
+
+
+
+
+ .bpc-as-break-time-container-td .bpc-as-break-time-container-ul li {
+     list-style:none;
+     font-size:12px;
+ }
+
+ .bpc-as-break-time-container-td .bpc-as-break-time-container-ul select {
+    font-size:12px;
+    border:1px solid #c5c5c5;
+    padding:0px !important;
+    margin:0px !important;
+ }
+
+ .bpc-as-break-time-container-td input {
+     font-size:11px;
+      background-color:#efefef;
+      border:1px solid #bdbdbd;
+      padding:2px;
+      margin: 0px;
+      color:black;
+
+ }

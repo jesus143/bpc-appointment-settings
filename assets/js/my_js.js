@@ -15,8 +15,17 @@ function bpc_as_schedule_close(petsa)
 { 
     attr_id           = "#bpc-as-row-schedule-"+petsa;
     attr_select_id    = "#bpc-as-row-schedule-"+petsa+ " select";
+    attr_input_id    = "#bpc-as-row-schedule-"+petsa+ " input[type='button']";
     attr_checkbox_id  = "#bpc-as-row-schedule-"+petsa+ " .agenda-event input";
-    attr_message_id   = "#bpc-as-row-schedule-"+petsa+ " message"; 
+    attr_message_id   = "#bpc-as-row-schedule-"+petsa+ " message";
+    attr_table_id   = "#bpc-as-row-schedule-"+petsa+ " table";
+
+
+
+
+
+
+
 
     // set open or close shedule
     var bg = $(attr_id).css('background-color');
@@ -27,8 +36,12 @@ function bpc_as_schedule_close(petsa)
         // disable select dropdown
         $(attr_select_id).prop("disabled", false);
         $(attr_checkbox_id).prop("disabled", false);
+        $(attr_input_id).prop("disabled", false);
         // change css select dropdown
         $(attr_select_id).css({'cursor': 'pointer', 'background-color':'white'});
+        $(attr_input_id).css({'cursor': 'pointer', 'background-color':'white'});
+        $(attr_table_id).css({'background-color':'white'});
+        // change).css({'background-color':'white'});
         // set close message empty
         $(attr_message_id).html("");
     } else {
@@ -37,8 +50,14 @@ function bpc_as_schedule_close(petsa)
         // disable select dropdown
         $(attr_select_id).prop("disabled", true);
         $(attr_checkbox_id).prop("disabled", true);
+        $(attr_input_id).prop("disabled", true);
         // change css select dropdown
         $(attr_select_id).css({'cursor': 'not-allowed', 'background-color':schedule.bgRowColorClose});
+        $(attr_input_id).css({'cursor': 'not-allowed', 'background-color':schedule.bgRowColorClose});
+        $(attr_table_id).css({'background-color':schedule.bgRowColorClose});
+
+
+
         // set close message not empty
         $(attr_message_id).html("<em>Colosed All Day</em>");
     }
@@ -102,8 +121,9 @@ function bpc_as_save_schedule()
     $("#bpc-as-schedule-update-loader-message").html('loading..').attr('style', 'visibility:visible'); 
     
     
-
-    $.post( urlNow.local_url + "/wp-content/plugins/bpc-appointment-settings/includes/ajax/save-schedule.php", $( "#testform" ).serialize() )
+     var formValues = $( "#testform" ).serialize(); 
+     console.log(formValues);
+    $.post( urlNow.local_url + "/wp-content/plugins/bpc-appointment-settings/includes/ajax/save-schedule.php", formValues )
         .done(function( data ) {
             $("#bpc-as-schedule-update-loader").attr('style', 'display:inline; visibility: hidden;');
             $("#bpc-as-schedule-update-loader-message").html("<span style='color:green'>updated..</span>").attr('style', 'visibility:visible');  
@@ -112,22 +132,76 @@ function bpc_as_save_schedule()
 }
  
 function show_save_button()
-{
+{ 
 
     $("#bpc-as-save-schedule-container").css('display', 'block');
-}
+}  
 
- 
-
-
-
-function bpc_as_add_time_break()
+function bpc_as_add_time_break(strDate)
 {
-    $.get( urlNow.local_url + "/wp-content/plugins/bpc-appointment-settings/includes/ajax/load-break-design.php")
+    console.log("clicked add break time");
+    $.get( urlNow.local_url + "/wp-content/plugins/bpc-appointment-settings/includes/ajax/load-break-design.php?strDate="+strDate)
         .done(function( data ) {
-            $('#bpc-as-break-time-container').append(data);
+            $('#bpc-as-break-time-container-'+strDate).append(data);
             console.log("add new break time design");
         });
+}
+function bpc_as_delete_time_break(breakId, strDate)
+{
+    //$('#bpc-as-break-time-content-container-'+strDate).remove();
+     if(confirm("Are you sure you want to delete this break?")) {
+
+        console.log( "#bpc-as-break-time-content-container-"+breakId+"-"+strDate);
+
+         $('#bpc-as-break-time-content-container-'+breakId+'-'+strDate).remove();
+
+         /*
+         var breakTime = $( "#bpc-as-break-time-container-form-"+strDate ).serialize();
+         // remove from database
+         $.post( urlNow.local_url + "/wp-content/plugins/bpc-appointment-settings/includes/ajax/load-delete-break-time.php", breakTime)
+            
+
+         .done(function( data ) {
+
+             if(data == true) {
+                 // remove li element
+                 $('#bpc-as-break-time-content-container-'+strDate).remove();
+                 console.log("Break successfully deleted");
+             } else {
+                 console.log("something wrong, failed to delete break");
+             }
+         })
+
+         .fail(function() {
+             alert( "Error something wrong." );
+         })
+         */
+     }
+}
+
+
+ function bpc_as_update_time_break(strDate)
+{   
+    //if(confirm("Are you sure you want to update this break?")) {
+        // get all the breaks
+        $("#bpc-loader-break-time-"+strDate).css('display', 'block');
+        var breakTime = $( "#bpc-as-break-time-container-form-"+strDate ).serialize();
+        console.log( " id " + "#bpc-as-break-time-container-"+strDate + " = " + breakTime);
+        // remove from database
+        $.post( urlNow.local_url + "/wp-content/plugins/bpc-appointment-settings/includes/ajax/load-update-break-time.php",
+            breakTime)
+            .done(function( data ) {
+                $("#bpc-message-break-time-"+strDate).html("<small>Updated..</small>");
+                console.log("Updated..");
+                $("#bpc-loader-break-time-"+strDate).css('display', 'none');
+            })    
+            .fail(function() {
+                $("#bpc-message-break-time-"+strDate).html("Error something wrong.");
+                $("#bpc-loader-break-time-"+strDate).css('display', 'none');
+                alert( "Error something wrong." );
+            });
+
+    //}
 }
    
 

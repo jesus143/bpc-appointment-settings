@@ -14,9 +14,6 @@ if(!function_exists('bpc_as_generate_hours_option'))
 {
     function bpc_as_generate_hours_option($default=null)
     {
-
-
-
         for($i=0; $i<24; $i++):
             print "<option value='" . bpc_as_1_to_2numbers($i) . "' ".bpc_as_time_option_set_selected($i, $default)." >" . bpc_as_1_to_2numbers($i) . "</option>";
         endfor;
@@ -26,9 +23,7 @@ if(!function_exists('bpc_as_generate_minutes_option'))
 {
     function bpc_as_generate_minutes_option($default=null)
     {
-
         for($i=0; $i<60; $i++):
-
             print "<option  value='" . bpc_as_1_to_2numbers($i) . "'   ".bpc_as_time_option_set_selected($i, $default)." >" . bpc_as_1_to_2numbers($i) . "</option>";
         endfor;
     }
@@ -52,6 +47,53 @@ function bpc_as_generate_dropDown_option($data, $default=null)
 }
 
 
+
+function bpc_phone_schedule_break_design(
+    $breakId,
+    $strDate,
+    $break_from_hour,
+    $break_from_min,
+    $break_to_hour,
+    $break_to_min,
+    $scheduleStatusStyle,
+    $scheduleStatusDropDownStyle,
+    $scheduleStatusButton
+
+)
+{?>
+    <li id="bpc-as-break-time-content-container-<?php print $breakId; ?>-<?php print $strDate ?>" >
+        <table  class="table" style="<?php print $scheduleStatusStyle; ?>" >
+            <tr>
+                <td>
+                    Break From:
+                    <select name="break_time_hour_min[]" style="<?php print $scheduleStatusDropDownStyle; ?>"  >
+                        <?php print bpc_as_generate_hours_option($break_from_hour); ?>
+                    </select>
+                     <select  name="break_time_hour_min[]" style="<?php print $scheduleStatusDropDownStyle; ?>" >
+                        <?php bpc_as_generate_minutes_option($break_from_min); ?>
+                     </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Break From:
+                    <select  name="break_time_hour_min[]" style="<?php print $scheduleStatusDropDownStyle; ?>" >
+                        <?php print bpc_as_generate_hours_option($break_to_hour); ?>
+                    </select>
+                    <select  name="break_time_hour_min[]" style="<?php print $scheduleStatusDropDownStyle; ?>" >
+                        <?php bpc_as_generate_minutes_option($break_to_min); ?>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input <?php print $scheduleStatusButton; ?>  style="<?php print $scheduleStatusDropDownStyle; ?>" type="button" value="Delete"  onclick="bpc_as_delete_time_break('<?php print $breakId; ?>', '<?php print $strDate; ?>')" />
+                </td>
+            </tr>
+        </table>
+    </li>
+    <?php
+}
 
 
 
@@ -201,7 +243,14 @@ function bpc_as_get_book_time_type($data)
 function bpc_as_get_current_user_logged_in_id()
 {
     $current_user = wp_get_current_user();
-    return $current_user->ID;
+    if($current_user->ID == 0) {
+        print "<script>
+            alert('Please login first in order to do this action');
+        </script>";
+        exit;
+    }else {
+        return $current_user->ID;
+    }
 }
 function bpc_as_get_and_remove_day_from_field_name($fieldName)
 {
@@ -242,12 +291,12 @@ function bpc_as_get_moday_in_date_week($dateRequest)
 // get current user partner id from ontraport
 function bpc_as_get_current_user_partner_id()
 {
-    $opResponse = bpc_as_get_ontraport_info();
-    $opResponse = json_decode($opResponse, true ); 
- 
     if(bpc_as_is_localhost() ){ 
         return 12345; // dummy partner id for my localhost 
     } else {
+
+        $opResponse = bpc_as_get_ontraport_info();
+        $opResponse = json_decode($opResponse, true );
         return $opResponse['data'][0]['id'];     
     } 
 }
@@ -325,7 +374,9 @@ function bpc_as_op_query($url, $method, $data, $appID, $appKey){
     return $response;
 }
 
-    function bpc_as_is_localhost() {  
+    function bpc_as_is_localhost() {
+//        return true;
+//        exit;
         $whitelist = array( '127.0.0.1', '::1' );
         if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ) { 
             return true;

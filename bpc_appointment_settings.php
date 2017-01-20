@@ -9,24 +9,34 @@ if(!session_id()) {
  * Version: 1.0
  * Author: Jesus Erwin Suarez
  * Author URI: 
- * License:  
+ * License:   
  */
 
-define('bpc_as_plugin_url', get_site_url() . '/wp-content/plugins/bpc-appointment-settings'); 
-register_activation_hook(__FILE__, 'bpc_as_install_table'); 
-add_shortcode("bpc_as_opening_hours", "bpc_as_opening_hours_func"); 
+define('bpc_as_plugin_url', get_site_url() . '/wp-content/plugins/bpc-appointment-settings');
+register_activation_hook(__FILE__, 'bpc_as_install_table');
+add_shortcode("bpc_as_opening_hours", "bpc_as_opening_hours_func");
 add_shortcode("bpc_as_calendar_google_apple", "bpc_as_calendar_google_apple_func");
 add_shortcode("bpc_as_google_calendar_settings", "bpc_as_google_calendar_settings_func");
 add_action("admin_menu", "bpc_as_admin_menu");
 
+require_once("includes/helper.php");
+require_once('includes/db/Bpc_As_Calendar.php');
+require_once("includes/db/wpdb_queries.class.php");
+require_once("includes/db/bpc_as_db.php");
+require_once("includes/db/bpc_appointment_setting_breaks.php");
 
+if(bpc_as_is_localhost()) {
+	require_once("E:/xampp/htdocs/wp-load.php");
+} else {
+	require $_SERVER['DOCUMENT_ROOT'] .'/wp-load.php';
+}
 
-require_once('includes/helper.php');
-require_once ('includes/db/Bpc_As_Calendar.php');
+use App\Bpc_Appointment_Settings_Breaks;
+use App\BPC_AS_DB;
 use App\Bpc_As_Calendar;
 
-
-
+//$included_files = get_included_files();
+//bpc_as_print_r_pre($included_files );
 
 function bpc_as_admin_menu()
 {
@@ -41,6 +51,7 @@ function bpc_as_admin () {
 		1. Add short code post or page <b>[bpc_as_google_calendar_settings]</b> google calendar settings<br>
  	<?php
 }
+
 function bpc_as_opening_hours_func() 
 {	  
 	ob_start();  
@@ -73,7 +84,7 @@ function bpc_as_install_table()
 	
 	$charset_collate = $wpdb->get_charset_collate();
 
-    $sql = "CREATE TABLE $table_name   (
+    $sql1 = "CREATE TABLE $table_name   (
         id bigint(20) NOT NULL AUTO_INCREMENT,
         user_id bigint(20) NOT NULL,
         partner_id bigint(20) NOT NULL,  	
@@ -90,41 +101,83 @@ function bpc_as_install_table()
 		date varchar(50) NOT NULL, 
         created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY  (id)
-    ) $charset_collate;"; 
+    ) $charset_collate;";
+
+
+	$table_name = $wpdb->prefix . 'bpc_appointment_setting_breaks';
+	$sql2 = "CREATE TABLE $table_name   (
+        id bigint(20) NOT NULL AUTO_INCREMENT,
+        appointment_setting_id bigint(20) NOT NULL,
+        break_from varchar(50) NOT NULL,
+      	break_to varchar(50) NOT NULL,
+        created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY  (id)
+    ) $charset_collate;";
+
+
+	/**
+	 * example input
+	 * [access_token] => ya29.GlzZA_oQrsou7xDzCqQuslKTTdE9qqaXvrH1QnLrMEhaWmwoEBSpragLQCnPXqR7uyp1WE_3ScK5lUlGL6skuPTVfjFdtYYtI58aOqQJg5HE4j3y7eqVbpkT58YDtQ
+	 * [token_type] => Bearer
+	 * [expires_in] => 3598
+	 * [created] => 1484899159
+	 */
+
+	$table_name = $wpdb->prefix . 'bpc_user_api';
+	$sql3 = "CREATE TABLE $table_name   (
+        id int(11) NOT NULL AUTO_INCREMENT,
+        user_id int(11) NOT NULL,
+        name varchar(50) NOT NULL,
+        access_token varchar(500) NOT NULL,
+      	token_type varchar(50) NOT NULL,
+        expires_in int(11) NOT NULL,
+        created_api_at int(11) NOT NULL,
+        created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY  (id)
+    ) $charset_collate;";
+
+
 
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-	dbDelta( $sql );
+	dbDelta( $sql1 );
+	dbDelta( $sql2 );
+	dbDelta( $sql3 );
+
 
 	add_option( 'jal_db_version', $jal_db_version );
 	//when install also add talble
 }
 function bpc_as_calendar_google_apple_func()
 {
-
- 
-
 	ob_start();
+	bpc_as_header();
+	?>
+	<style>
+		#page-content {
+			width:96% !important;
+		}
+	</style>
+	<?php
+
+
+	$bpc_AS_DB = new BPC_AS_DB('wp_bpc_appointment_settings');
+	$bpc_Appointment_Settings_Breaks  = new Bpc_Appointment_Settings_Breaks();
 
 	require_once __DIR__.'/includes/api/google-api/vendor/autoload.php';
 	require_once __DIR__.'/includes/api/google-api/helper.php';
-
-
-
-
-
-	print "<pre>";
-	print_r($_SESSION);
-	print "</pre>";
-
+		print "<pre>";
+		print_r($_SESSION);
+		print "</pre>";
 	// google calendar connect
 	$client = new Google_Client();
 	$client->setAuthConfig( __DIR__ . '/includes/api/google-api/client_secret.json');
 	$client->addScope(Google_Service_Calendar::CALENDAR);
 	$bpc_As_Calendar = new Bpc_As_Calendar();
-
-
 	// set if not empty, meaning its already authenticated
 	if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
+
+
+		print "<div style='width: 96%;' class='alert alert-success'>Authenticated with google calendar..</div>";
 		// allow try ang catch functions
 		try {
 			$client->setAccessToken($_SESSION['access_token']);
@@ -140,35 +193,50 @@ function bpc_as_calendar_google_apple_func()
 			);
 			$results = $service->events->listEvents($calendarId, $optParams);
 			if (count($results->getItems()) == 0) {
-				print "No upcoming events found.\n";
+				print "<div style='width: 96%;' class='alert alert-danger'> No upcoming events found. </div>";
 			} else {
-				print "Upcoming events:\n";
+				print "<div style='width: 96%;' class='alert alert-info'> Upcoming events synced to <a href='/phone-appointment-settings'> phone appointment settings</a> </div>";
+				$googleSchedule = [];
 				foreach ($results->getItems() as $index => $event) {
-
-
 					$bpc_As_Calendar->setEventResult([
 							'event'=>$event,
 							'summary'=>$event->getSummary(),
 					]);
-
-					print "<br>";
-//					$eventDate = $bpc_As_Calendar->getEventDate($bpc_As_Calendar->getDateTimeStart());
-//					$description = $bpc_As_Calendar->getDescription();
-//					print "<br> description: $description date: $eventDate";
-
-
-					// print " start time " . $event->start->dateTime;
-					print $index  . ' .) description ' .  $bpc_As_Calendar->getDescription() . " date " . $bpc_As_Calendar->getEventDate() . ' time from ' . $bpc_As_Calendar->getEventTimeStart() . ' time to ' . $bpc_As_Calendar->getEventTimeEnd();
-					//					print "<br>";
-					// print_r_pre_exit($event);
-
-
-
-
+					// print "<br>";
+					// print $index  . ' .)  ' . " date " . $bpc_As_Calendar->getEventDate() . ' time from ' . $bpc_As_Calendar->getEventTimeStart() . ' time to ' . $bpc_As_Calendar->getEventTimeEnd();
+					$googleSchedule[$bpc_As_Calendar->getEventDate()][] = ["break_from"=>$bpc_As_Calendar->getEventTimeStart(),"break_to"=>$bpc_As_Calendar->getEventTimeEnd(), 'description'=>$bpc_As_Calendar->getDescription()];
 				}
+
+				// bpc_as_print_r_pre($googleSchedule);
+				$date = '';
+				$break_from = '';
+				$break_to = '';
+				$counter = 0;
+
+				print '<div style="width:102%" class="list-group" >';
+					foreach($googleSchedule as $date => $breaks) {
+						if(!empty($date)) {
+							$appointment_setting_id = $bpc_AS_DB->InsertGetOrGetPhoneCallSettings($date)[0]['id'];
+							// print "<br> appointment id $appointment_setting_id";
+							 $bpc_Appointment_Settings_Breaks->deleteAllAppointmentSettingBreakByAppointmentId($appointment_setting_id);
+							foreach ($breaks as $break) {
+								$counter ++;
+								$break_from = $break['break_from'];
+								$break_to   = $break['break_to'];
+								$description   = $break['description'];
+								if(!empty($break_from) and !empty($break_to)) {
+									print '<button  style="width:94%" type="button" class="list-group-item"> '. $counter .'
+									 	date ' . $date . ' break from ' . $break_from . '  ' . $break_to . ' - <b> ' . $description . '</b>' . ' - <span style=\'color:green\'>Break successfully added</span>
+									</button>';
+									$bpc_Appointment_Settings_Breaks->addNewAppointmentBreakIndividual($appointment_setting_id, $break_from, $break_to);
+								}
+							}
+						}
+					}
+				print '<div class="list-group">';
 			}
 		}catch (Exception $e){
-			print "<br> Error " . $e->getMessage();
+			//			print "<br> Error " . $e->getMessage();
 			$redirect_uri = 'http://' . $_SERVER['HTTP_HOST'] . '/wp-content/plugins/bpc-appointment-settings/includes/api/google-api/oauth2callback.php';
 			bpc_as_redirect(filter_var($redirect_uri, FILTER_SANITIZE_URL));
 		}
@@ -177,13 +245,10 @@ function bpc_as_calendar_google_apple_func()
 		//bpc_as_redirect(filter_var($redirect_uri, FILTER_SANITIZE_URL));
 		print "
 			<a href='".$redirect_uri."'>
-				<input type='text' value='Sync with google calendar' >
+				<input type='button' value='Sync with google calendar' />
 			</a>
 		";
-
 	}
-
-
 	ob_flush();
 }
 function bpc_as_google_calendar_settings_func()
@@ -209,13 +274,12 @@ function bpc_as_header()
 		<script src="<?php print bpc_as_plugin_url; ?>/assets/js/my_js.js"></script>
 		<script src="<?php print bpc_as_plugin_url; ?>/assets/js/my_jquery.js"></script>
 		<script src="<?php print bpc_as_plugin_url; ?>/assets/js/my_angular.js"></script>
-	
+
 		<style type="text/css" media="screen">
 			#page-content {
 				width: 0px !important;
 			}
 
 		</style>
-
 	<?php
 }

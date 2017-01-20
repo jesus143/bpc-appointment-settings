@@ -125,3 +125,41 @@ Todo by  Jan 16, 2017
 
 Add slot for busy in partner's calendar
 Continue with google calendar sync
+
+
+Update for Jan 18, 2017
+1. install plugin to new installed fresh wordpress install
+2. activate plugin and check if created table phone call settings and phone call breaks
+3. if exist settings then get id and insert break from and break to
+4. create database table for plugin to activate auto create table
+5. fix error when phone call settings not exist then auto create phone call settings - this show an error need to fix
+6. upload to server for testing
+7. google integration for break time
+8. debug google calendar and get all break time
+9. check if specific date google calendar exist in book phone call schedule
+10. if exist then get id and do insert breaks based on the results from google calendar
+11. if not then insert new phone settings and add default values
+12. Integration with google calendar and adding manula breaks done - just need to upload tomorrow because it has many files to upload estimate 4k+
+13. Provide access to mj with partner calendar database
+14. login with partner and play here http://testing.umbrellasupport.co.uk/phone-appointment-settings/
+
+
+Hi Rich, 
+Todo 19, 2017 
+1. Upload all the codes of google calendar api 
+2. Setup console google developer for Auth with google calendar
+3. set google calendar authentication call back path return correct testing url
+4. Do testing with google sync break and fix ui
+5. discuss with mj about call back delay and call back length
+6. add text and update ui with fb login
+7. Fix Fb login in text in book phone call
+8. Add fb login go to step 3 after authenticated successfully   
+9. please check google calendar sync here http://testing.umbrellasupport.co.uk/google-calendar-settings 
+
+Todo 20, 2017 
+1. Check again with google calendar sync and review doc and do testing if found issue then start fixing it.
+2. Continue reading with the doc if there are some remaining tasks and if there is a review then continue with the reviews  
+3. get all holidays and include make it close in a day or include it in a break
+4. Question: if user already authenticated to google calendar then everytime they logged in back to portal, their google calendar needs to sync always?  
+
+Thanks. 

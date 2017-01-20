@@ -48,10 +48,60 @@ class BPC_AS_DB {
         }
     }
     public function selectOneWeek($startDate, $endDate)
-    {
-//        print $startDate . ' '.  $endDate;
+    { 
         $user_id = bpc_as_get_current_user_logged_in_id();
         $response = $this->bpc_as_wpdb_queries->wpdb_get_result("select * from wp_bpc_appointment_settings where date >= '$startDate' and date <= '$endDate' and user_id = $user_id ");
+        return $response;
+    }
+    public function InsertGetOrGetPhoneCallSettings($date)
+    {
+
+        // get appointment settings based on the user_id and date
+
+        $user_id  = bpc_as_get_current_user_logged_in_id();
+
+
+
+        $response = $this->bpc_as_wpdb_queries->wpdb_get_result("select * from wp_bpc_appointment_settings where date = '$date' and user_id = $user_id ");
+
+
+        // if exist then return specific id 
+
+        if($response) {
+
+            return $response;
+
+        } else {
+
+            // if not exist then do insert
+            // after insert return specific id
+
+            $this->bpc_as_wpdb_queries->wpdb_insert(
+                [
+
+                    'user_id'=>$user_id,
+                    'partner_id'=>bpc_as_get_current_user_partner_id(),
+                    'open_from'=>'09:30',
+                    'open_to'=>'17:30',
+                    'close'=>'no',
+                    'book_time_type'=>'book exact time',
+                    'date'=>$date
+                ]
+            );
+
+            $response = $this->bpc_as_wpdb_queries->wpdb_get_result("select * from wp_bpc_appointment_settings where date = '$date' and user_id = $user_id ");
+
+            return $response;
+
+        }
+
+    }
+
+    public function getPhoneCallSettings($date) {
+
+        $user_id  = bpc_as_get_current_user_logged_in_id();
+        $response = $this->bpc_as_wpdb_queries->wpdb_get_result("select * from wp_bpc_appointment_settings where date = '$date' and user_id = $user_id ");
+
         return $response;
     }
 }
