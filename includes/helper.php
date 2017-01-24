@@ -242,6 +242,8 @@ function bpc_as_get_book_time_type($data)
 
 function bpc_as_get_current_user_logged_in_id()
 {
+ 
+//    return 1;
     $current_user = wp_get_current_user();
     if($current_user->ID == 0) {
         print "<script>
@@ -290,11 +292,10 @@ function bpc_as_get_moday_in_date_week($dateRequest)
 
 // get current user partner id from ontraport
 function bpc_as_get_current_user_partner_id()
-{
+{ 
     if(bpc_as_is_localhost() ){ 
         return 12345; // dummy partner id for my localhost 
-    } else {
-
+    } else { 
         $opResponse = bpc_as_get_ontraport_info();
         $opResponse = json_decode($opResponse, true );
         return $opResponse['data'][0]['id'];     
@@ -398,4 +399,33 @@ function bpc_as_op_query($url, $method, $data, $appID, $appKey){
 
     }
 
+    function bpc_as_google_calendar_print_connect_button($link) {
+        ?>
+        <br>
+         <input type='button' value='Sync with google calendar' onClick="openWindowAndCloseAfterPageLoaded('<?php print $link; ?>' )" />
 
+        <?php
+    }
+
+    function bpc_as_google_calendar_auto_connect_with_popup($link)
+    {?>
+       <script>
+           window.onload = function() {
+               openWindowAndCloseAfterPageLoaded('<?php print $link ?>');
+           };
+       </script>
+    <?php
+    }
+    function bpc_as_google_calendar_get_path_call_back_file()
+    {
+        return 'http://' . $_SERVER['HTTP_HOST'] . '/wp-content/plugins/bpc-appointment-settings/includes/api/google-api/oauth2callback.php';
+    }
+    function bpc_as_google_calendar_get_path_disconnect() {
+        return 'http://' . $_SERVER['HTTP_HOST'] . '/wp-content/plugins/bpc-appointment-settings/includes/ajax/google-calendar-disconnect.php';
+    }
+    function bpc_as_google_calendar_print_disconnect_button()
+    {
+        ?><br>
+        <input type='button' value='Disconnect your google calendar' onClick="openWindowAndCloseAfterPageLoaded('<?php print bpc_as_google_calendar_get_path_disconnect(); ?>' )" />
+    <?php
+    }
