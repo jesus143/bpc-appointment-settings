@@ -95,9 +95,9 @@ class PBC_AS_WPDB_QUERIES
     public function wpdb_insert($data_array=array(), $conn=null)
     {
 
-        //        print "<pre>";
-        //            print_r($data_array);
-        //        print "</pre>";
+//        print "<pre>";
+//            print_r($data_array);
+//        print "</pre>";
         if($conn == null) {
             global $wpdb;
         } else {

@@ -10,7 +10,7 @@
 			</select>
 		</div>
 		<div class="col-md-3">
-			<h5>Call Back Lenght:</h5>
+			<h5>Call Back Length:</h5>
 			<select name="callBackLength[]" >
 				<?php
 			 		  print bpc_as_generate_dropDown_option($call_back_length_val_num, $call_back_length_arr0);

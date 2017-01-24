@@ -162,4 +162,39 @@ Todo 20, 2017
 3. get all holidays and include make it close in a day or include it in a break
 4. Question: if user already authenticated to google calendar then everytime they logged in back to portal, their google calendar needs to sync always?  
 
-Thanks. 
+Thanks.
+
+
+
+Hi Rich,
+
+Update for today Jan 20, 2017
+
+ 1. Create database for google caledar api athentication this way we can set user authenticated even he logsout and comeback
+ 2. Allow auto open new window when google calendar access token is expired
+ 3. When visit phone appointment settings auto refresh tocken via popup show in separate page
+ 4. instead of session token change to insert to database and unset session and get tocken from database
+ 5. add buttons and text messages, depends on status and response
+ 6. connect user to its the api google calendar database
+ 7. Allow disconnect with google calendar and allow reconnect again
+ 8. get data from user api and used with authentication
+ 9 fix spelling
+ 10. if connected to google calendar and when user refresh the phone appointment settings page then google calendar should auto sync to portal calendar database
+
+ You can do testing again with the calendar now and sync
+
+
+Todo for 23, 2017
+Fix Some ui issue in testing phone appointment settings and google calendar settings
+Fb login ui and data in bpc site
+Fb login not saving fix the issue
+Fb login redirect after success fix issue
+Fb login auto fill and proceed next step
+read new updates and documentation
+
+Thanks,
+
+
+
+
+

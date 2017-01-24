@@ -59,7 +59,7 @@ function bpc_as_schedule_close(petsa)
 
 
         // set close message not empty
-        $(attr_message_id).html("<em>Colosed All Day</em>");
+        $(attr_message_id).html("<em>Close All Day</em>");
     }
 }
 
@@ -203,7 +203,17 @@ function bpc_as_delete_time_break(breakId, strDate)
 
     //}
 }
-   
+
+
+function openWindowAndCloseAfterPageLoaded(link){
+    console.log("open popup");
+    var temp = window.open(link, "mywindow","menubar=1,resizable=1,width=350,height=250");
+    temp[temp.addEventListener ? 'addEventListener' : 'attachEvent']( (temp.attachEvent ? 'on' : '') + 'load', function() {
+        console.log("reload page now");
+        window.location.reload();
+        temp.close();
+    }, false );
+}
 
 $(document).ready(function(){
      bpc_init();

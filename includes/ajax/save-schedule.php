@@ -11,8 +11,7 @@ if(bpc_as_is_localhost()) {
  
 require_once('../db/wpdb_queries.class.php');
 require_once('../db/bpc_as_db.php');
-
-
+ 
 // bpc_as_print_r_pre($_POST);
 //
 //
@@ -44,7 +43,10 @@ print "<pre>";
     $counter2 = 0;
     $previewDate = '';
     $dataToUpdate = [];
-    $dataToUpdateWhere = [];
+    $dataToUpdateWhere = []; 
+    $dateTime = date("Y-m-d h:i:s");
+//print " date time " . $dateTime ;
+//exit;
     foreach ($data as $fieldName => $fieldValue) {
         if($bookTimeType == 'book exact time') {
 
@@ -66,6 +68,7 @@ print "<pre>";
                 $dataToUpdate[$counter2]['close']             = 'no';
                 $dataToUpdate[$counter2]['partner_id']        = $partner_id;
                 $dataToUpdate[$counter2]['day']               = $day;
+                $dataToUpdate[$counter2]['updated_at']        = $dateTime;
                 $counter2++;
             } else {
                 $dataToUpdate[$counter2]['call_back_length']  = $callBackLength;
@@ -78,6 +81,7 @@ print "<pre>";
                 $dataToUpdate[$counter2]['close']             = 'yes';
                 $dataToUpdate[$counter2]['partner_id']        = $partner_id;
                 $dataToUpdate[$counter2]['day']               = $day;
+                $dataToUpdate[$counter2]['updated_at']        = $dateTime;
                 $counter2++;
             }
 
@@ -103,6 +107,7 @@ print "<pre>";
                 $dataUpdateOrInsert['day']               = $day;
                 $dataUpdateOrInsert['call_back_delay']   = $callBackDelay;
                 $dataUpdateOrInsert['call_back_length']  = $callBackLength;
+                $dataUpdateOrInsert['updated_at']        = $dateTime;
                 $bpc_as_db->addOrCreate($dataUpdateOrInsert, $user_id, $dateDb);
 //                bpc_as_print_r_pre($dataUpdateOrInsert);
 
@@ -119,25 +124,18 @@ print "<pre>";
                     $updateData['user_id'] = $user_id;
                     $updateData['call_back_delay']   = $callBackDelay;
                     $updateData['call_back_length']  = $callBackLength;
-
+                    $updateData['updated_at']        = $dateTime;
 //                    bpc_as_print_r_pre($updateData);
                     $bpc_as_db->addOrCreate($updateData, $user_id, $dateDb);
                     unset($updateData);
                 }
             }
         }
-
-
-
-
-
 //        exit;
     }
 
 
 bpc_as_print_r_pre($dataToUpdate);
-
-
 
 
 foreach($dataToUpdate as $data) {
@@ -152,9 +150,11 @@ foreach($dataToUpdate as $data) {
         if($bpc_as_db->isExistScheduleByDbDate($user_id, $date)) {
             // update
             $bpc_as_db->updateEntryByDateDb($data, ['user_id'=>$user_id, 'date'=>$date]);
+            print "updated";
         } else {
             // insert
             $bpc_as_db->insertEntry($data);
+            print "insert ";
         }
     }
 }

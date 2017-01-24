@@ -36,7 +36,12 @@ class BPC_AS_DB {
         );
     }
     public function insertEntry($data)
-    {
+    { 
+        // print "<br><br> to be insert ";
+        // print "<pre>";
+        // unset($data['updated_at']);
+        // print_r($data);
+        // print"</pre>";
         return $this->bpc_as_wpdb_queries->wpdb_insert($data);
     }
     public function addOrCreate($data, $user_id, $dateDb)
