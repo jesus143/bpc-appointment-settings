@@ -1,7 +1,11 @@
 #page-content {
-    width: 0px !important;
+    width: 890px !important;
 }
 
+
+body {
+    background-color: #f5f5f5 !important; 
+}
 
 .agenda {width: 85%;}
 
