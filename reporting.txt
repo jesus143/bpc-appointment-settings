@@ -197,4 +197,65 @@ Thanks,
 
 
 
+Hi Rich,
+
+Update for March 8, 2017
+
+Custom Opening Hours moved to "/custom-opening-hours" page
+Add short code for custom page
+Add code under short code for custom pages function
+In standard date remove the 1st march and so on...
+Work with new specs and understanding how it works
+Remove calendar in standard page
+Separate query to show schedules with standard and custom in via js
+Allow reload page display schedule in custom and standard in realtime
+
+Todo tomorrow, continue with bpc updates
+
+
+Hi Rich,
+
+Update for march 8, 2017
+
+1. Create map diagram for standard because it needs to be separated database and i to do coding in this part because standard is another functions of the bpc
+2. In standard set saturday and sunday with closed status as default settings
+3. Create database table for bpc standard settings
+4. Fix background color select in calendar pbc
+5. Set time in standard from 9-5:30pm as default time and can be applied to custom
+6. Fix js load with data
+--------------------------------------------------
+Todo Tomorrow, continue coding with bpc updates and allow insert/update standard settings via partner end side
+and allow break added when update and remove when deleted, before save break it should be in serialize
+so that our database can read it and save to db success
+
+
+
+Hi Rich,
+
+Update for march
+
+I'm focused with functions for now, separate from standard from custom.
+
+1. remove callback delay "days" dropdown
+2. Rearrange files, database and classes to work with standard
+3. Load data connected to the database standard
+4. Allow to select first the standard data and check if partner id is exist
+5. When partner id is already exist in standard then allow update data, mon-sun and with close or open status
+6. When partner id is not exist in standard then allow Insert date, mon-sun and with close or open status
+7. When hit save button then it should save to standard database from the specific path to separate from custom
+8. Fix the reputation radar with site rating management - got roadblock with this but its fixed now
+http://reputationradar.umbrellasupport.co.uk/reputation-radar-partners-agent
+
+
+Tomorrow, Continue Standard functions
+
+Thanks
+
+
+
+
+
+
+
+
 

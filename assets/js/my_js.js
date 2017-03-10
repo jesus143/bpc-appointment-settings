@@ -10,7 +10,6 @@ schedule.bgRowColorOpen  = 'white';
     // urlNow.local_url         = 'http://testing.umbrellasupport.co.uk';
 // } 
 // alert(urlNow.local_url);
- 
 function bpc_as_schedule_close(petsa)
 { 
     attr_id           = "#bpc-as-row-schedule-"+petsa;
@@ -19,14 +18,6 @@ function bpc_as_schedule_close(petsa)
     attr_checkbox_id  = "#bpc-as-row-schedule-"+petsa+ " .agenda-event input";
     attr_message_id   = "#bpc-as-row-schedule-"+petsa+ " message";
     attr_table_id   = "#bpc-as-row-schedule-"+petsa+ " table";
-
-
-
-
-
-
-
-
     // set open or close shedule
     var bg = $(attr_id).css('background-color');
     console.log(bg);
@@ -62,9 +53,14 @@ function bpc_as_schedule_close(petsa)
         $(attr_message_id).html("<em>Close All Day</em>");
     }
 }
-
 function bpc_init() {
- 
+
+
+
+
+
+
+
     // alert("Nice test"); 
     console.log("loaded data");
 
@@ -77,14 +73,28 @@ function bpc_init() {
     // console.log(" booking type value " + option); 
 
     $("#bpc-as-schedule-loader").css({'display':'block'});
-    $.get( urlNow.local_url + "/wp-content/plugins/bpc-appointment-settings/includes/ajax/load-schedule.php?date="+date+"&option=&base=date_picker", function( data ) {
 
+
+    // set url based on the page type
+    var page = $("#bpc_kind_of_page").val();
+    var url = '';
+    if(page == 'standard') {
+        url = urlNow.local_url + "/wp-content/plugins/bpc-appointment-settings/includes/ajax/standard/standard-load-schedule.php?date="+date+"&option=&base=date_picker";
+    } else {
+        url = urlNow.local_url + "/wp-content/plugins/bpc-appointment-settings/includes/ajax/load-schedule.php?date="+date+"&option=&base=date_picker";
+    }
+
+
+    console.log(" url " + url);
+
+
+
+    $.get( url, function( data ) {
         $('#bpc-as-schedule-settings-content-and-type').html(data);
 
         $("#bpc-as-schedule-loader").css({'display':'none'});
     });
 }
-
 function bpc_as_schedule_change_date(e)
 {
     show_save_button(); 
@@ -114,29 +124,41 @@ function bpc_as_schedule_type(option)
         $("#bpc-as-schedule-loader").css({'display':'none'});
     });
 }
-function bpc_as_save_schedule()
+
+function bpc_as_save_schedule(type)
 {
 
+    var url = '';
+
+    if(type == 'standard') {
+        url = urlNow.local_url + "/wp-content/plugins/bpc-appointment-settings/includes/ajax/standard/standard-save-schedule.php"
+    } else {
+        url = urlNow.local_url + "/wp-content/plugins/bpc-appointment-settings/includes/ajax/save-schedule.php"
+    }
+
     $("#bpc-as-schedule-update-loader").attr('style', 'display:inline; visibility: visible;');
+
     $("#bpc-as-schedule-update-loader-message").html('loading..').attr('style', 'visibility:visible'); 
-    
-    
-     var formValues = $( "#testform" ).serialize(); 
+
+     var formValues = $( "#testform" ).serialize();
+
      console.log(formValues);
-    $.post( urlNow.local_url + "/wp-content/plugins/bpc-appointment-settings/includes/ajax/save-schedule.php", formValues )
+
+
+    console.log(" url " + url );
+
+    $.post( url, formValues )
         .done(function( data ) {
             $("#bpc-as-schedule-update-loader").attr('style', 'display:inline; visibility: hidden;');
             $("#bpc-as-schedule-update-loader-message").html("<span style='color:green'>updated..</span>").attr('style', 'visibility:visible');  
             console.log( "Data Loaded: " + data );
         });
 }
- 
 function show_save_button()
 { 
 
     $("#bpc-as-save-schedule-container").css('display', 'block');
-}  
-
+}
 function bpc_as_add_time_break(strDate)
 {
     console.log("clicked add break time");
@@ -178,8 +200,6 @@ function bpc_as_delete_time_break(breakId, strDate)
          */
      }
 }
-
-
  function bpc_as_update_time_break(strDate)
 {   
     //if(confirm("Are you sure you want to update this break?")) {
@@ -203,8 +223,6 @@ function bpc_as_delete_time_break(breakId, strDate)
 
     //}
 }
-
-
 function openWindowAndCloseAfterPageLoaded(link){
     console.log("open popup");
     var temp = window.open(link, "mywindow","menubar=1,resizable=1,width=350,height=250");
@@ -215,6 +233,11 @@ function openWindowAndCloseAfterPageLoaded(link){
     }, false );
 }
 
+
 $(document).ready(function(){
      bpc_init();
  });
+
+
+
+

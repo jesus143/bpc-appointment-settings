@@ -2,6 +2,8 @@
 if(!session_id()) {
 	session_start();
 }
+
+
 /**
  * Plugin Name:  BPC Appointment Settings
  * Plugin URI:  
@@ -16,7 +18,7 @@ define('bpc_as_plugin_url', get_site_url() . '/wp-content/plugins/bpc-appointmen
 register_activation_hook(__FILE__, 'bpc_as_install_table');
 add_shortcode("bpc_as_opening_hours", "bpc_as_opening_hours_func");
 add_shortcode("bpc_as_calendar_google_apple", "bpc_as_calendar_google_apple_func");
-add_shortcode("bpc_as_google_calendar_settings", "bpc_as_google_calendar_settings_func");
+add_shortcode("bpc_as_opening_hours_func_custom", "bpc_as_opening_hours_func_custom_func");
 add_action("admin_menu", "bpc_as_admin_menu");
 
 require_once("includes/helper.php");
@@ -50,21 +52,52 @@ function bpc_as_admin () {
 		1. Add short code post or page <b>[bpc_as_google_calendar_settings]</b> google calendar settings<br>
  	<?php
 }
+
+/**
+ * No standard
+ */
+function bpc_as_opening_hours_func_custom_func()
+{
+	ob_start();
+	 	bpc_as_calendar_google_apple_authenticate();
+	print "<input type='hidden' value='". get_site_url() ."' id='bpc_as_rool_url' />";
+	print "<div onload='bpc_init()'>";
+	$book_exact_time = 'checked';
+	$book_exact_day = '';
+	bpc_as_header();
+	echo "<form method='POST' id='testform' >";
+	require_once('includes/pages/date-picker.php');
+	print "<div id='bpc-as-schedule-settings-content-and-type'>";
+	print "</div>";
+	echo "</form>";
+	require_once('includes/pages/dashboard-settings-options-save.php');
+	print "</div>";
+	ob_flush();
+}
+
+/**
+ * Standard
+ */
 function bpc_as_opening_hours_func() 
 {
 	ob_start();
-	bpc_as_calendar_google_apple_authenticate();
+
+
+	print "<input type='hidden' id='bpc_kind_of_page' value='standard' />";
+// 	bpc_as_calendar_google_apple_authenticate();
 	print "<input type='hidden' value='". get_site_url() ."' id='bpc_as_rool_url' />";
 	print "<div onload='bpc_init()'>";  
 		$book_exact_time = 'checked';
 		$book_exact_day = ''; 
 			bpc_as_header();
 			echo "<form method='POST' id='testform' >";
-			require_once('includes/pages/date-picker.php');
+				print "<div style='visibility: hidden'>";
+				 require_once('includes/pages/date-picker.php');
+				print "</div>";
 				print "<div id='bpc-as-schedule-settings-content-and-type'>";
 				print "</div>";
 			echo "</form>"; 
-		require_once('includes/pages/dashboard-settings-options-save.php');  
+		require_once('includes/ajax/standard/pages/standard-dashboard-settings-options-save.php');
 	print "</div>"; 
  	ob_flush();
 }

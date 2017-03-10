@@ -262,6 +262,14 @@ function bpc_as_get_and_remove_day_from_field_name($fieldName)
         return $fn_arr[1];
     }
     return false;
+} 
+if(!function_exists('dd')) {  
+    function dd($array) {
+        print "<pre>"; 
+            print_r($array); 
+        print "</pre>"; 
+        die(1); 
+    }
 }
 function bpc_as_print_r_pre($string)
 {
