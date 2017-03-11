@@ -1,6 +1,7 @@
 <?php
 
 require_once('../../helper.php');
+require("../../db/bpc_appointment_setting_standard.class.php");
 
 if(bpc_as_is_localhost()) {
 
@@ -16,16 +17,14 @@ require_once('../../db/bpc_as_db.php');
 
 use APP\PBC_AS_WPDB_QUERIES;
 use App\BPC_AS_DB;
+use App\bpc_appointment_setting_standard;
 
 $dateRequest = bpc_as_get_request_date(); 
 $mondayOfTheWeek = bpc_as_get_moday_in_date_week($dateRequest); 
-
-
-
-print " THis is the content";
-
+  
 $bpc_as_wpdb_queries = new PBC_AS_WPDB_QUERIES('wp_bpc_appointment_settings');
 $bpc_as_db           = new BPC_AS_DB('wp_bpc_appointment_settings');
+$bpc_appointment_setting_standard = new bpc_appointment_setting_standard(); 
 $dates               = bpc_as_get_scheduled_date_array();
  
 foreach($dates as  $petsa => $date) { 
@@ -37,7 +36,15 @@ foreach($dates as $petsa => $date) {
 }
 $dateDbStart    = bpc_as_set_date_as_db_format($dateStart);
 $dateDbEnd      = bpc_as_set_date_as_db_format($dateEnd);
-$scheduleRange  = $bpc_as_db->selectOneWeek($dateDbStart, $dateDbEnd);
+
+// $scheduleRange  = $bpc_as_db->selectOneWeek($dateDbStart, $dateDbEnd);
+/**
+* Get schedule for standar settings of specific person
+*/
+$scheduleRange = $bpc_appointment_setting_standard->selectByUserId(bpc_as_get_current_user_logged_in_id());   
+// print "test";
+// bpc_as_print_r_pre($scheduleStandard); 
+
 
 $option = bpc_as_get_request_option();
  
@@ -51,6 +58,7 @@ $call_back_delay_arr1 = '';
  
 // call back value default
 if(!empty($scheduleRange)) {
+
     $call_back_length_arr = explode(' ', $scheduleRange[0]['call_back_length']);
     $call_back_delay_arr  = explode(' ', $scheduleRange[0]['call_back_delay']);
 

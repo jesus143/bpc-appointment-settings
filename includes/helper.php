@@ -76,7 +76,7 @@ function bpc_phone_schedule_break_design(
             </tr>
             <tr>
                 <td>
-                    Break From:
+                    Break To:
                     <select  name="break_time_hour_min[]" style="<?php print $scheduleStatusDropDownStyle; ?>" >
                         <?php print bpc_as_generate_hours_option($break_to_hour); ?>
                     </select>
@@ -437,3 +437,5 @@ function bpc_as_op_query($url, $method, $data, $appID, $appKey){
         <input type='button' value='Disconnect your google calendar' onClick="openWindowAndCloseAfterPageLoaded('<?php print bpc_as_google_calendar_get_path_disconnect(); ?>' )" />
     <?php
     }
+
+    

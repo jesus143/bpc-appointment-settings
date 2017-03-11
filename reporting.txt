@@ -253,9 +253,26 @@ Thanks
 
 
 
+ 
 
+ Hi Rich,  
 
+Update for  March 11, 2017
 
+Standard tasks: set default values fro open from
+Standard tasks: set default values fro open to
+Standard tasks: set default values fro close
+Standard tasks:allow add content if no array value found, this will allow data refresh first before insert
+Standard tasks: Fix call back length and call back display
+Standard tasks: Display current request and print as human visible array
+Standard tasks: Check if current partner has already saved standard schedule to database
+Standard tasks: Compose parameter parameter and prepare to insert
+Standard tasks: Add business day close, this will help allow clear data before update database
+ 
+Continue standard calendar tomorrow with 
+click break break - this will allow auto insert database so that automatically saved
+When change values in break from, and break to then this will automatically update content in database 
+etc...
 
 
 

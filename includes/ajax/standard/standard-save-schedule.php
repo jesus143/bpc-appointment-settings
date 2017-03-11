@@ -74,14 +74,17 @@ foreach($_REQUEST as $index => $request) {
     $data = bpc_set_parameter_callbacks($index, $data, $request); 
     $data = bpc_set_parameter_callbacks($index, $data, $request); 
 } 
-     
-bpc_as_print_r_pre($data); 
+       
+/**
+ * add business day close, this will help allow clear data before update database
+ */
+ $data = bpc_set_parameter_empty_close_tatus($data);  
 
 /**
  * Update standard schedule now 
- */ 
+ */  
 $isUpdated = $bpc_as_wpdb_queries->wpdb_update($data, array('user_id'=> $user_id)); 
-
+ 
 /**
  * print status of update standard schedule
  */
@@ -103,7 +106,7 @@ function bpc_set_parameter_standardard($dayLcase, $keyword, $response, $request)
     elseif(strpos($keyword, $dayUcase . '_open_to')):
         $response[$dayLcase . '_open_to'] = $request[0] . ':' . $request[1]; 
     elseif(strpos($keyword, $dayUcase. '_business_close')):
-        $response[$dayLcase . '_close'] = $request[0];  
+        $response[$dayLcase . '_close'] = ($request[0] == 'on') ? 'yes' : null;  
     endif; 
     return $response;
 }
@@ -123,4 +126,22 @@ function bpc_set_parameter_callbacks($keyword, $response, $request)
         $response['call_back_length'] = $request[0] . ' ' . $request[1];
     endif;   
     return $response;
+}
+
+/**
+ *  Allow add blank content when content is empty this will allow remove first the close value and then allow update again, in short 
+ *  its like refresh data 
+ */
+function bpc_set_parameter_empty_close_tatus($data) 
+{    
+
+    $rows = ['monday_close', 'tuesday_close', 'wednesday_close', 'thursday_close', 'friday_close', 'saturday_close', 'sunday_close'];  
+
+    foreach($rows as $row) {  
+        if(!array_key_exists($row, $data)) { 
+            $data[$row] = ''; 
+        }  
+    } 
+
+    return $data; 
 }

@@ -1,13 +1,16 @@
  <hr>
-<?php 
+<?php  
+
 
     if(bpc_as_is_localhost()) {  require_once("E:/xampp/htdocs/practice/wordpress/wp-load.php"); } else { require $_SERVER['DOCUMENT_ROOT'] .'/wp-load.php'; }
 
     use App\Bpc_Appointment_Settings_Breaks;
-    use App\BPC_AS_DB;
+    use App\BPC_AS_DB; 
+    
 
     $bpc_AS_DB = new BPC_AS_DB('wp_bpc_appointment_settings');
-    $bpc_Appointment_Settings_Breaks  = new Bpc_Appointment_Settings_Breaks(); 
+    $bpc_Appointment_Settings_Breaks  = new Bpc_Appointment_Settings_Breaks();  
+   
 ?> 
 
 <div class="container">
@@ -43,10 +46,15 @@
                         $scheduleStatusDropDownStyle = '';
                         $scheduleStatusMessage  = '';
                         $scheduleStatusButton = '';
-                        $notAjax = true;
-                        $scheduleRange = (!empty($scheduleRange)) ? $scheduleRange : null;
-
+                        $notAjax = true; 
+                        $scheduleStandard = (!empty($scheduleRange)) ? $scheduleRange : null; 
+                        // bpc_as_print_r_pre($dates); 
  
+                   
+
+                        /**
+                         *  Start looping date so that we can display the ui 
+                         */
                         foreach($dates as $petsa => $date):
 
                             // set names of the fields
@@ -54,17 +62,34 @@
                             $nameOpenTo      = $petsa . '_' . $date['month'] . '_' . $date['year'] . '_' . $date['day'] . '_open_to[]';
                             $nameClose       = $petsa . '_' . $date['month'] . '_' . $date['year'] . '_' . $date['day'] . '_business_close[]'; 
                             $strDate         = $petsa . '-' . $date['month'] . '-' . $date['year'];
-                            $scheduleRangeArr = (!empty($scheduleRange[$counter])) ? $scheduleRange[$counter]  : null;
+                            // $scheduleRangeArr = (!empty($scheduleRange[$counter])) ? $scheduleRange[$counter]  : null; 
 
-                            // set database default values
-                            if(is_array($scheduleRangeArr)) {
+                            /**
+                             *  get results by day only
+                             */
+                            $scheduleRange = $bpc_appointment_setting_standard->getResultByDay($date['day'], $scheduleStandard, $counter); 
+
+                            /**
+                             *   result assignment, to enable adopt custom version
+                             */
+                            $scheduleRangeArr =   $scheduleRange;  
+                            // bpc_as_print_r_pre($scheduleRangeArr);
+
+                            /**
+                             * set database default values, if saved already
+                             */
+                            if(is_array($scheduleRangeArr)) {  
+
                                 $open_from_arr                 = explode(':', $scheduleRange[$counter]['open_from']);
                                 $open_to_arr                   = explode(':', $scheduleRange[$counter]['open_to']);
+
                                 $scheduleStatus                = ($scheduleRange[$counter]['close'] == 'yes') ? 'checked' : '';
                                 $scheduleStatusMessage         = ($scheduleRange[$counter]['close'] == 'yes') ? 'Closed All Day' : '';
                                 $scheduleStatusStyle           = ($scheduleRange[$counter]['close'] == 'yes') ? 'background-color: rgb(251, 162, 162)' : '';
                                 $scheduleStatusDropDownStyle   = ($scheduleRange[$counter]['close'] == 'yes') ? 'cursor: not-allowed; background-color: rgb(251, 162, 162);' : '';
                                 $scheduleStatusButton          = ($scheduleRange[$counter]['close'] == 'yes') ? 'disabled="disabled"' : '';
+
+
                             } else if ($date['day'] == 'Saturday' ||$date['day']  == 'Sunday') {
                                 $scheduleStatus                = 'checked';
                                 $scheduleStatusMessage         = 'Closed All Day';
@@ -113,27 +138,40 @@
 
                                         <ul class="bpc-as-break-time-container-ul" id="bpc-as-break-time-container-<?php print $strDate; ?>" >
                                            <?php
+
                                                 $breaks = [];
+
                                                 $phoneCallSettings = $bpc_AS_DB->getPhoneCallSettings(bpc_as_set_date_as_db_format($strDate));
+
                                                 if(!empty($phoneCallSettings)) {
-                                                    $appointment_setting_id = $phoneCallSettings[0]['id'];
-                                                    $breaks = $bpc_Appointment_Settings_Breaks->getAllBreaksByAppointmentId($appointment_setting_id);
-                                                    foreach($breaks as $break) {
-                                                        $breakId = $break['id'];
+
+                                                    $appointment_setting_id = $phoneCallSettings[0]['id']; 
+                                                    $breaks                 = $bpc_Appointment_Settings_Breaks->getAllBreaksByAppointmentId($appointment_setting_id);
+
+                                                    foreach($breaks as $break) { 
+
+                                                        /** 
+                                                         *  Break id assignment
+                                                         */
+                                                        $breakId = $break['id']; 
+
+                                                        /**
+                                                         *  explode break times 
+                                                         */ 
                                                         $break_from_arr = explode(':',$break['break_from']);
                                                         $break_to_arr   = explode(':',$break['break_to']);
-
+ 
+                                                        /**
+                                                         *  separate breaks in order to display break in the right side 
+                                                         */
                                                         $break_from_hour = $break_from_arr[0];
                                                         $break_from_min  = $break_from_arr[1];
                                                         $break_to_hour   = $break_to_arr[0];
-                                                        $break_to_min    = $break_to_arr[1];
-
-//                                                        print "
-//                                                            $break_from_hour
-//                                                             $break_from_min
-//                                                           $break_to_hour
-//                                                             $break_to_min <br>
-//                                                        ";
+                                                        $break_to_min    = $break_to_arr[1];  
+ 
+                                                        /**
+                                                         * Print the break designs
+                                                         */
                                                         bpc_phone_schedule_break_design(
                                                             $breakId,
                                                             $strDate,
@@ -144,20 +182,22 @@
                                                             $scheduleStatusStyle,
                                                             $scheduleStatusDropDownStyle,
                                                             $scheduleStatusButton
-                                                        );
+                                                        ); 
                                                     }
                                                 }
                                            ?>
                                         </ul>
                                     </form>
+
+                                    <!-- allow update schedule when hit button -->
                                     <input <?php print $scheduleStatusButton; ?> style="<?php print $scheduleStatusDropDownStyle; ?>" type="button" value="Update" onClick="bpc_as_update_time_break('<?php print $strDate; ?>')" />
                                     <div id="bpc-message-break-time-<?php print $strDate; ?>">
                                     </div>
+
+                                    <!-- loading area, show waiting/done saving status for all schedule -->
                                     <div id="bpc-loader-break-time-<?php print $strDate; ?>" style="display:none">
                                         Loading...
-                                    </div>
-
-
+                                    </div> 
                                 </td>   
                             </tr><?php
                             $counter++;

@@ -2,8 +2,7 @@
 schedule                 = new Object();
 urlNow                   = new Object();
 schedule.bgRowColorClose = '#fba2a2';
-schedule.bgRowColorOpen  = 'white';
-
+schedule.bgRowColorOpen  = 'white'; 
 // if (location.hostname === "localhost" || location.hostname === "127.0.0.1") { 
     urlNow.local_url         = $("#bpc_as_rool_url").val();
 // } else { 
@@ -45,36 +44,19 @@ function bpc_as_schedule_close(petsa)
         // change css select dropdown
         $(attr_select_id).css({'cursor': 'not-allowed', 'background-color':schedule.bgRowColorClose});
         $(attr_input_id).css({'cursor': 'not-allowed', 'background-color':schedule.bgRowColorClose});
-        $(attr_table_id).css({'background-color':schedule.bgRowColorClose});
-
-
-
+        $(attr_table_id).css({'background-color':schedule.bgRowColorClose}); 
         // set close message not empty
         $(attr_message_id).html("<em>Close All Day</em>");
     }
 }
-function bpc_init() {
-
-
-
-
-
-
-
+function bpc_init() { 
     // alert("Nice test"); 
-    console.log("loaded data");
-
-    show_save_button(); 
-
-    var date = $("#bpc-as-datepicker").val();
-
-    var option = $("#bpc-as-bookTimeSorting:checked").val();  //'book exact time';
-
-    // console.log(" booking type value " + option); 
-
-    $("#bpc-as-schedule-loader").css({'display':'block'});
-
-
+    console.log("loaded data"); 
+    show_save_button();  
+    var date = $("#bpc-as-datepicker").val(); 
+    var option = $("#bpc-as-bookTimeSorting:checked").val();  //'book exact time'; 
+    // console.log(" booking type value " + option);  
+    $("#bpc-as-schedule-loader").css({'display':'block'}); 
     // set url based on the page type
     var page = $("#bpc_kind_of_page").val();
     var url = '';
@@ -82,13 +64,8 @@ function bpc_init() {
         url = urlNow.local_url + "/wp-content/plugins/bpc-appointment-settings/includes/ajax/standard/standard-load-schedule.php?date="+date+"&option=&base=date_picker";
     } else {
         url = urlNow.local_url + "/wp-content/plugins/bpc-appointment-settings/includes/ajax/load-schedule.php?date="+date+"&option=&base=date_picker";
-    }
-
-
-    console.log(" url " + url);
-
-
-
+    } 
+    console.log(" url " + url); 
     $.get( url, function( data ) {
         $('#bpc-as-schedule-settings-content-and-type').html(data);
 
@@ -123,8 +100,7 @@ function bpc_as_schedule_type(option)
 
         $("#bpc-as-schedule-loader").css({'display':'none'});
     });
-}
-
+} 
 function bpc_as_save_schedule(type)
 {
 

@@ -2,8 +2,9 @@
 require("../helper.php");
 require("../db/wpdb_queries.class.php");
 require("../db/bpc_as_db.php");
-require("../db/bpc_appointment_setting_breaks.php");
-require("../db/bpc_user_api.php");
+require("../db/bpc_appointment_setting_breaks.php"); 
+require("../db/bpc_user_api.php"); 
+ 
 if(bpc_as_is_localhost()) {
 
     require_once("E:/xampp/htdocs/wordpress/wp-load.php");
