@@ -1,15 +1,14 @@
 <?php
-require("../helper.php");
-require("../db/wpdb_queries.class.php");
-require("../db/bpc_as_db.php");
-require("../db/bpc_appointment_setting_breaks.php"); 
-require("../db/bpc_user_api.php"); 
+require($ext . "../helper.php");
+require($ext . "../db/wpdb_queries.class.php");
+require($ext . "../db/bpc_as_db.php");
+require($ext . "../db/bpc_appointment_setting_breaks.php"); 
+require($ext . "../db/bpc_user_api.php"); 
  
-if(bpc_as_is_localhost()) {
-
+if(bpc_as_is_localhost()) {  
     require_once("E:/xampp/htdocs/wordpress/wp-load.php");
-} else {
-    require $_SERVER['DOCUMENT_ROOT'] .'/wp-load.php';
+} else { 
+    require $_SERVER['DOCUMENT_ROOT'] .'/wp-load.php'; 
 }
 use App\Bpc_Appointment_Settings_Breaks;
 use App\BPC_AS_DB;

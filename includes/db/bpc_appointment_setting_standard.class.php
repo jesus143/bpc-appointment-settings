@@ -2,7 +2,7 @@
 
 namespace App; 
 
-use App\PBC_AS_WPDB_QUERIES;  
+use APP\PBC_AS_WPDB_QUERIES;  
 
 /**
 * This class manage table name  "bpc_appointment_setting_standard" this will be the storage of all the 
@@ -34,7 +34,9 @@ class bpc_appointment_setting_standard
 
     public function insert($where=[]) {}
 
-    public function update($data=[], $where=[]) {}
+    public function update($data=[], $where=[]) {
+        return $this->bpc_as_wpdb_queries->wpdb_update($data, $where);
+    }
 
 
     public function getResultByDay($day, $response, $counter)

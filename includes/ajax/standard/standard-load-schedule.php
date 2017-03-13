@@ -42,6 +42,7 @@ $dateDbEnd      = bpc_as_set_date_as_db_format($dateEnd);
 * Get schedule for standar settings of specific person
 */
 $scheduleRange = $bpc_appointment_setting_standard->selectByUserId(bpc_as_get_current_user_logged_in_id());   
+ 
 // print "test";
 // bpc_as_print_r_pre($scheduleStandard); 
 

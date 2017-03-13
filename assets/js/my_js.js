@@ -1,4 +1,3 @@
-
 schedule                 = new Object();
 urlNow                   = new Object();
 schedule.bgRowColorClose = '#fba2a2';
@@ -9,6 +8,21 @@ schedule.bgRowColorOpen  = 'white';
     // urlNow.local_url         = 'http://testing.umbrellasupport.co.uk';
 // } 
 // alert(urlNow.local_url);
+ 
+/**
+ *  when break dropdown is changed, then capture this area and allow everytime changed need to update database for settings
+ */
+function bpc_change_break(day) 
+{ 
+    $('#break-time-update-loader-'+day).css('display', 'block');  
+    url = urlNow.local_url + "/wp-content/plugins/bpc-appointment-settings/includes/ajax/standard/standard-update-break.php";   
+    $.post( url,  $( "."+ day + "_form_class" ).serialize() )
+    // $.post( url, {'name':'test'})
+    .done(function( data ) {
+        console.log( "Data Loaded: " + data );
+        $('#break-time-update-loader-'+day).css('display', 'none'); 
+    });  
+}
 function bpc_as_schedule_close(petsa)
 { 
     attr_id           = "#bpc-as-row-schedule-"+petsa;
@@ -59,6 +73,8 @@ function bpc_init() {
     $("#bpc-as-schedule-loader").css({'display':'block'}); 
     // set url based on the page type
     var page = $("#bpc_kind_of_page").val();
+ 
+    console.log( " current page " + page)
     var url = '';
     if(page == 'standard') {
         url = urlNow.local_url + "/wp-content/plugins/bpc-appointment-settings/includes/ajax/standard/standard-load-schedule.php?date="+date+"&option=&base=date_picker";
@@ -67,8 +83,7 @@ function bpc_init() {
     } 
     console.log(" url " + url); 
     $.get( url, function( data ) {
-        $('#bpc-as-schedule-settings-content-and-type').html(data);
-
+        $('#bpc-as-schedule-settings-content-and-type').html(data); 
         $("#bpc-as-schedule-loader").css({'display':'none'});
     });
 }
@@ -135,14 +150,41 @@ function show_save_button()
 
     $("#bpc-as-save-schedule-container").css('display', 'block');
 }
-function bpc_as_add_time_break(strDate)
-{
-    console.log("clicked add break time");
-    $.get( urlNow.local_url + "/wp-content/plugins/bpc-appointment-settings/includes/ajax/load-break-design.php?strDate="+strDate)
-        .done(function( data ) {
-            $('#bpc-as-break-time-container-'+strDate).append(data);
-            console.log("add new break time design");
-        });
+function bpc_as_add_time_break(strDate, type, day)
+{ 
+    /** loader */
+    $("#break-time-update-loader-"+day).css("display", "block"); 
+
+    /**
+    *  initialized data  
+    */
+    var url = ''; 
+ 
+    /**
+    * Set url for standard schedule and non standard schedule
+    */
+    if(type == "standard") {  
+        url = urlNow.local_url + "/wp-content/plugins/bpc-appointment-settings/includes/ajax/standard/standard-load-break-design.php?strDate="+strDate+"&day="+day;
+    } else {
+        url = urlNow.local_url + "/wp-content/plugins/bpc-appointment-settings/includes/ajax/load-break-design.php?strDate="+strDate; 
+    }  
+
+    /**
+    *  Print status in console
+    */
+    console.log("clicked add break time url = " + url); 
+  
+    /**
+    * Send get request to generate the ui for break, 
+    * it must be saved automatically to database together with ui generate 
+    */
+    $.get( url ) 
+    .done(function( data ) {
+        $('#bpc-as-break-time-container-'+strDate).append(data);
+        console.log("add new break time design");
+        $("#break-time-update-loader-"+day).css("display", "none"); 
+    }); 
+
 }
 function bpc_as_delete_time_break(breakId, strDate)
 {
@@ -207,13 +249,8 @@ function openWindowAndCloseAfterPageLoaded(link){
         window.location.reload();
         temp.close();
     }, false );
-}
-
-
+} 
 $(document).ready(function(){
+
      bpc_init();
- });
-
-
-
-
+}); 

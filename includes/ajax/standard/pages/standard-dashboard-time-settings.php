@@ -48,7 +48,10 @@
                         $scheduleStatusButton = '';
                         $notAjax = true; 
                         $scheduleStandard = (!empty($scheduleRange)) ? $scheduleRange : null; 
-                        // bpc_as_print_r_pre($dates); 
+
+
+
+                        bpc_as_print_r_pre($scheduleStandard); 
  
                    
 
@@ -57,12 +60,20 @@
                          */
                         foreach($dates as $petsa => $date):
 
+                            $day = $date['day'];
+
                             // set names of the fields
                             $nameOpenFrom    = $petsa . '_' . $date['month'] . '_' . $date['year'] . '_' . $date['day'] . '_open_from[]';
                             $nameOpenTo      = $petsa . '_' . $date['month'] . '_' . $date['year'] . '_' . $date['day'] . '_open_to[]';
                             $nameClose       = $petsa . '_' . $date['month'] . '_' . $date['year'] . '_' . $date['day'] . '_business_close[]'; 
                             $strDate         = $petsa . '-' . $date['month'] . '-' . $date['year'];
                             // $scheduleRangeArr = (!empty($scheduleRange[$counter])) ? $scheduleRange[$counter]  : null; 
+
+                            /**  This will get specific break of the day */ 
+                            $break = unserialize($scheduleStandard[0][strtolower($day) . '_break']);
+
+
+                            bpc_as_print_r_pre($break);
 
                             /**
                              *  get results by day only
@@ -98,7 +109,7 @@
                                 $scheduleStatusButton          = 'disabled="disabled"';
                             }
 
-                            // set default values for all partners
+                            // set default values for all partners, for open from and open to schedule
                             $open_from_arr[0]  = ($open_from_arr[0] == '00') ? 9 : $open_from_arr[0];
                             $open_from_arr[1]  = ($open_from_arr[1] == '00') ? 0 : $open_from_arr[1];
                             $open_to_arr[0]    = ($open_to_arr[0] == '00') ? 17 : $open_to_arr[0];
@@ -125,16 +136,19 @@
                                     <input name="<?php print $nameClose; ?>" type="checkbox" name="close" onclick="bpc_as_schedule_close('<?php print $petsa; ?>')"  <?php print $scheduleStatus; ?> />
                                     <message><em><?php print $scheduleStatusMessage; ?></em></message>
                                 </td> 
+ 
+                                <td class="bpc-as-break-time-container-td">   
 
 
-
-                                <td class="bpc-as-break-time-container-td"> 
-                                
-                                    <input <?php print $scheduleStatusButton ?> style="<?php print $scheduleStatusDropDownStyle; ?>" type="button" value="Add Break" onclick="bpc_as_add_time_break('<?php print $strDate; ?>')" >
+                                    <input <?php print $scheduleStatusButton ?> style="<?php print $scheduleStatusDropDownStyle; ?>" type="button" value="Add Break" onclick="bpc_as_add_time_break('<?php print $strDate; ?>', 'standard',  '<?php print $day; ?>')" >
                                     <br>
                                     <form> </form>
-                                    <form id="bpc-as-break-time-container-form-<?php print $strDate; ?>" >
+
+                                    <form id="bpc-as-break-time-container-form-<?php print $strDate; ?>"   class="<?php print $date['day']; ?>_form_class">
+
+
                                         <input type="hidden" value="<?php print $strDate; ?>" name="strDate" />
+                                        <input type="hidden" value="<?php print $day; ?>" name="day" />
 
                                         <ul class="bpc-as-break-time-container-ul" id="bpc-as-break-time-container-<?php print $strDate; ?>" >
                                            <?php
@@ -190,7 +204,10 @@
                                     </form>
 
                                     <!-- allow update schedule when hit button -->
+                                    <div style="display:none">
                                     <input <?php print $scheduleStatusButton; ?> style="<?php print $scheduleStatusDropDownStyle; ?>" type="button" value="Update" onClick="bpc_as_update_time_break('<?php print $strDate; ?>')" />
+
+                                    </div>
                                     <div id="bpc-message-break-time-<?php print $strDate; ?>">
                                     </div>
 
@@ -198,6 +215,10 @@
                                     <div id="bpc-loader-break-time-<?php print $strDate; ?>" style="display:none">
                                         Loading...
                                     </div> 
+
+                                    <div style="display:none" id="break-time-update-loader-<?php print $day; ?>" >
+                                        <i class=" fa fa-spinner fa-spin"   ></i> 
+                                    </div>
                                 </td>   
                             </tr><?php
                             $counter++;

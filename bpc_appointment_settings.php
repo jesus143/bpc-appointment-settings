@@ -79,10 +79,9 @@ function bpc_as_opening_hours_func_custom_func()
  * Standard
  */
 function bpc_as_opening_hours_func() 
-{
+{  
 	ob_start();
-
-
+ 
 	print "<input type='hidden' id='bpc_kind_of_page' value='standard' />";
 // 	bpc_as_calendar_google_apple_authenticate();
 	print "<input type='hidden' value='". get_site_url() ."' id='bpc_as_rool_url' />";
@@ -392,6 +391,9 @@ function bpc_as_header()
 		<link rel="stylesheet" type="text/css" href="<?php print bpc_as_plugin_url; ?>/assets/css/font-awesome.min.css" />
 		<link rel="stylesheet" type="text/css" href="<?php print bpc_as_plugin_url; ?>/assets/css/bootstrap-theme.min.css" />
 		<link rel="stylesheet" type="text/css" href="<?php print bpc_as_plugin_url; ?>/assets/css/style.css" />
+
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 		<script src="<?php print bpc_as_plugin_url; ?>/assets/js/jquery-3.1.1.min.js"></script>
 		<script src="<?php print bpc_as_plugin_url; ?>/assets/js/angular-1.6.1.js"></script>
