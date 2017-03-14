@@ -87,7 +87,11 @@ function bpc_as_opening_hours_func()
 	print "<input type='hidden' value='". get_site_url() ."' id='bpc_as_rool_url' />";
 	print "<div onload='bpc_init()'>";  
 
-		print  "Loading...";
+		print '<div id="standard-settings-loader" >'; 
+		print '<i class=" fa fa-spinner fa-spin"    ></i>'; 
+		print '<p>Please wait..</p>';
+		print '</div>'; 
+
 		$book_exact_time = 'checked';
 		$book_exact_day = ''; 
 			bpc_as_header();

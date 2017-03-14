@@ -76,15 +76,20 @@ function bpc_init() {
  
     console.log( " current page " + page)
     var url = '';
-    if(page == 'standard') {
+    if(page == 'standard') { 
+        $("#standard-settings-loader").css('display', 'block'); 
+        
         url = urlNow.local_url + "/wp-content/plugins/bpc-appointment-settings/includes/ajax/standard/standard-load-schedule.php?date="+date+"&option=&base=date_picker";
     } else {
         url = urlNow.local_url + "/wp-content/plugins/bpc-appointment-settings/includes/ajax/load-schedule.php?date="+date+"&option=&base=date_picker";
     } 
     console.log(" url " + url); 
     $.get( url, function( data ) {
-        $('#bpc-as-schedule-settings-content-and-type').html(data); 
-        $("#bpc-as-schedule-loader").css({'display':'none'});
+
+        $( "#bpc-as-schedule-settings-content-and-type" ).html(data);  
+        $("#bpc-as-schedule-loader").css({'display':'none'}); 
+        $("#standard-settings-loader").css('display', 'none');     
+        
     });
 }
 function bpc_as_schedule_change_date(e)
