@@ -24,8 +24,7 @@
 		$break_to_hour   = '';
 		$break_to_min    = '';
 	}
-
-
+ 
 /**
  *  Print data for ui 
  */ 
@@ -49,14 +48,14 @@
 				<select  name="break_time_hour_min[]" onchange="bpc_change_break('<?php print $day; ?>')" >
 					<?php print bpc_as_generate_hours_option($break_to_hour); ?>
 				</select>
-				<select  name="break_time_hour_min[]" onchange="bpc_change_break('<?php print $day; ?>')" >
+				<select  name="break_time_hour_min[]" onchange="bpc_change_break('<?php print $day; ?>')" > 
 					<?php bpc_as_generate_minutes_option($break_to_min); ?>
 				</select>
 			</td>
 		<tr>
 		<tr>
 			<td>
-				<input type="button" value="Delete"  onclick="bpc_as_delete_time_break('<?php print $breakId; ?>', '<?php print $strDate; ?>')" />
+				<input type="button" value="Delete"  onclick="bpc_as_delete_time_standard_break('<?php print $breakId; ?>', '<?php print $strDate; ?>', '<?php print $day; ?>')" />
 			</td>
 		</tr>	
 	</table>

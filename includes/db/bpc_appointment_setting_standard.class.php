@@ -50,4 +50,32 @@ class bpc_appointment_setting_standard
 
     	return $data;
     }
+
+    public function convertToPropperDateTime($var_array)
+    {
+        $data  = [];     
+        $index = 0;
+        $c     = 1;
+        $custom_break = [];  
+        foreach($var_array as $b) {      
+            if($c==1) {
+                $custom_break[$index]['break_from'] .= $b;
+            } else if ($c==2) {
+                $custom_break[$index]['break_from'] .= ':' . $b; 
+            } else if ($c==3) {
+                $custom_break[$index]['break_to'] .= $b; 
+            } else if ($c==4){
+                $custom_break[$index]['break_to'] .= ':' . $b;  
+            }   
+            $c++;
+            if($c%5 == 0) {
+                $c=1;
+                $index++;
+            } 
+        }    
+
+        return $custom_break; 
+    }
+
+
 }

@@ -48,6 +48,55 @@ function bpc_as_generate_dropDown_option($data, $default=null)
 
 
 
+function bpc_phone_schedule_standard_break_design( 
+    $breakId,
+    $strDate,
+    $break_from_hour,
+    $break_from_min,
+    $break_to_hour,
+    $break_to_min,
+    $scheduleStatusStyle,
+    $scheduleStatusDropDownStyle,
+    $scheduleStatusButton,
+    $day
+)
+{?>
+    <li id="bpc-as-break-time-content-container-<?php print $breakId; ?>-<?php print $strDate ?>" >
+        <table  class="table" style="<?php print $scheduleStatusStyle; ?>" >
+            <tr>
+                <td>
+                    Break From:
+                    <select name="break_time_hour_min[]" style="<?php print $scheduleStatusDropDownStyle; ?>" onchange="bpc_change_break('<?php print $day; ?>')" >
+                        <?php print bpc_as_generate_hours_option($break_from_hour); ?>
+                    </select>
+                     <select  name="break_time_hour_min[]" style="<?php print $scheduleStatusDropDownStyle; ?>" onchange="bpc_change_break('<?php print $day; ?>')" >
+                        <?php bpc_as_generate_minutes_option($break_from_min); ?>
+                     </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Break To:
+                    <select  name="break_time_hour_min[]" style="<?php print $scheduleStatusDropDownStyle; ?>" onchange="bpc_change_break('<?php print $day; ?>')" >
+                        <?php print bpc_as_generate_hours_option($break_to_hour); ?>
+                    </select>
+                    <select  name="break_time_hour_min[]" style="<?php print $scheduleStatusDropDownStyle; ?>" onchange="bpc_change_break('<?php print $day; ?>')" >
+                        <?php bpc_as_generate_minutes_option($break_to_min); ?>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input <?php print $scheduleStatusButton; ?>  style="<?php print $scheduleStatusDropDownStyle; ?>" type="button" value="Delete"  onclick="bpc_as_delete_time_standard_break('<?php print $breakId; ?>', '<?php print $strDate; ?>', '<?php print $day; ?>')" />
+                </td>
+            </tr>
+        </table>
+    </li>
+    <?php
+}
+
+
+
 function bpc_phone_schedule_break_design(
     $breakId,
     $strDate,

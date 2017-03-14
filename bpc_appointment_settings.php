@@ -86,6 +86,8 @@ function bpc_as_opening_hours_func()
 // 	bpc_as_calendar_google_apple_authenticate();
 	print "<input type='hidden' value='". get_site_url() ."' id='bpc_as_rool_url' />";
 	print "<div onload='bpc_init()'>";  
+
+		print  "Loading...";
 		$book_exact_time = 'checked';
 		$book_exact_day = ''; 
 			bpc_as_header();

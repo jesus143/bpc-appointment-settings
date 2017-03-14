@@ -36,8 +36,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
-
+                    <?php 
                         $counter = 0;
                         $open_from_arr = [9, 30];
                         $open_to_arr = [17, 30];
@@ -47,14 +46,10 @@
                         $scheduleStatusMessage  = '';
                         $scheduleStatusButton = '';
                         $notAjax = true; 
-                        $scheduleStandard = (!empty($scheduleRange)) ? $scheduleRange : null; 
+                        $scheduleStandard = (!empty($scheduleRange)) ? $scheduleRange : null;  
 
-
-
-                        bpc_as_print_r_pre($scheduleStandard); 
+                        // bpc_as_print_r_pre($scheduleStandard); 
  
-                   
-
                         /**
                          *  Start looping date so that we can display the ui 
                          */
@@ -70,10 +65,18 @@
                             // $scheduleRangeArr = (!empty($scheduleRange[$counter])) ? $scheduleRange[$counter]  : null; 
 
                             /**  This will get specific break of the day */ 
-                            $break = unserialize($scheduleStandard[0][strtolower($day) . '_break']);
+                            $break = unserialize($scheduleStandard[0][strtolower($day) . '_break']); 
+                            // bpc_as_print_r_pre($break); 
 
 
-                            bpc_as_print_r_pre($break);
+                            /** new compose break */   
+                               $breaks = $bpc_appointment_setting_standard->convertToPropperDateTime($break['break_time_hour_min']);  
+                            /** end compose break */
+
+
+                                // print "<pre>"; 
+                                // print_r($breaks);     
+                                // print "<br><br><br>";
 
                             /**
                              *  get results by day only
@@ -85,6 +88,7 @@
                              */
                             $scheduleRangeArr =   $scheduleRange;  
                             // bpc_as_print_r_pre($scheduleRangeArr);
+
 
                             /**
                              * set database default values, if saved already
@@ -152,29 +156,27 @@
 
                                         <ul class="bpc-as-break-time-container-ul" id="bpc-as-break-time-container-<?php print $strDate; ?>" >
                                            <?php
+  
+                                                // $phoneCallSettings = $bpc_AS_DB->getPhoneCallSettings(bpc_as_set_date_as_db_format($strDate));
 
-                                                $breaks = [];
+                                                if(!empty($breaks)) {
 
-                                                $phoneCallSettings = $bpc_AS_DB->getPhoneCallSettings(bpc_as_set_date_as_db_format($strDate));
-
-                                                if(!empty($phoneCallSettings)) {
-
-                                                    $appointment_setting_id = $phoneCallSettings[0]['id']; 
-                                                    $breaks                 = $bpc_Appointment_Settings_Breaks->getAllBreaksByAppointmentId($appointment_setting_id);
-
+                                                    // $appointment_setting_id = $phoneCallSettings[0]['id']; 
+                                                    // $breaks                 = $bpc_Appointment_Settings_Breaks->getAllBreaksByAppointmentId($appointment_setting_id);
+                                                    
                                                     foreach($breaks as $break) { 
 
                                                         /** 
                                                          *  Break id assignment
                                                          */
-                                                        $breakId = $break['id']; 
+                                                        $breakId = 1;
 
                                                         /**
                                                          *  explode break times 
                                                          */ 
                                                         $break_from_arr = explode(':',$break['break_from']);
-                                                        $break_to_arr   = explode(':',$break['break_to']);
- 
+                                                        $break_to_arr   = explode(':',$break['break_to']); 
+
                                                         /**
                                                          *  separate breaks in order to display break in the right side 
                                                          */
@@ -182,11 +184,11 @@
                                                         $break_from_min  = $break_from_arr[1];
                                                         $break_to_hour   = $break_to_arr[0];
                                                         $break_to_min    = $break_to_arr[1];  
- 
+                                                         
                                                         /**
                                                          * Print the break designs
                                                          */
-                                                        bpc_phone_schedule_break_design(
+                                                        bpc_phone_schedule_standard_break_design(
                                                             $breakId,
                                                             $strDate,
                                                             $break_from_hour,
@@ -195,7 +197,8 @@
                                                             $break_to_min,
                                                             $scheduleStatusStyle,
                                                             $scheduleStatusDropDownStyle,
-                                                            $scheduleStatusButton
+                                                            $scheduleStatusButton, 
+                                                            $day
                                                         ); 
                                                     }
                                                 }

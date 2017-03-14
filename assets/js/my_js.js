@@ -186,23 +186,27 @@ function bpc_as_add_time_break(strDate, type, day)
     }); 
 
 }
+function bpc_as_delete_time_standard_break(breakId, strDate, day)
+{
+    if(confirm("Are you sure you want to delete this break?")) { 
+        console.log( "#bpc-as-break-time-content-container-"+breakId+"-"+strDate); 
+        $('#bpc-as-break-time-content-container-'+breakId+'-'+strDate).remove();  
+        bpc_change_break(day)   
+    }
+}
 function bpc_as_delete_time_break(breakId, strDate)
 {
     //$('#bpc-as-break-time-content-container-'+strDate).remove();
-     if(confirm("Are you sure you want to delete this break?")) {
+    if(confirm("Are you sure you want to delete this break?")) { 
+        console.log( "#bpc-as-break-time-content-container-"+breakId+"-"+strDate); 
+        $('#bpc-as-break-time-content-container-'+breakId+'-'+strDate).remove(); 
 
-        console.log( "#bpc-as-break-time-content-container-"+breakId+"-"+strDate);
-
-         $('#bpc-as-break-time-content-container-'+breakId+'-'+strDate).remove();
-
+        bpc_change_break(day)
          /*
          var breakTime = $( "#bpc-as-break-time-container-form-"+strDate ).serialize();
          // remove from database
-         $.post( urlNow.local_url + "/wp-content/plugins/bpc-appointment-settings/includes/ajax/load-delete-break-time.php", breakTime)
-            
-
-         .done(function( data ) {
-
+         $.post( urlNow.local_url + "/wp-content/plugins/bpc-appointment-settings/includes/ajax/load-delete-break-time.php", breakTime) 
+         .done(function( data ) { 
              if(data == true) {
                  // remove li element
                  $('#bpc-as-break-time-content-container-'+strDate).remove();
@@ -211,10 +215,9 @@ function bpc_as_delete_time_break(breakId, strDate)
                  console.log("something wrong, failed to delete break");
              }
          })
-
-         .fail(function() {
+        .fail(function() {
              alert( "Error something wrong." );
-         })
+        })
          */
      }
 }

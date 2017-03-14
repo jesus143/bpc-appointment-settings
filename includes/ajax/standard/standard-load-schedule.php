@@ -25,7 +25,7 @@ $mondayOfTheWeek = bpc_as_get_moday_in_date_week($dateRequest);
 $bpc_as_wpdb_queries = new PBC_AS_WPDB_QUERIES('wp_bpc_appointment_settings');
 $bpc_as_db           = new BPC_AS_DB('wp_bpc_appointment_settings');
 $bpc_appointment_setting_standard = new bpc_appointment_setting_standard(); 
-$dates               = bpc_as_get_scheduled_date_array();
+$dates                            = bpc_as_get_scheduled_date_array();
  
 foreach($dates as  $petsa => $date) { 
     $dateStart = $petsa  . ' ' . $date['month'] . ' '.  $date['year'];
