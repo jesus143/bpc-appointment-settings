@@ -1,37 +1,32 @@
 schedule                 = new Object();
 urlNow                   = new Object();
 schedule.bgRowColorClose = '#fba2a2';
-schedule.bgRowColorOpen  = 'white'; 
-// if (location.hostname === "localhost" || location.hostname === "127.0.0.1") { 
-    urlNow.local_url         = $("#bpc_as_rool_url").val();
-// } else { 
-    // urlNow.local_url         = 'http://testing.umbrellasupport.co.uk';
-// } 
-// alert(urlNow.local_url);
- 
-/**
- *  when break dropdown is changed, then capture this area and allow everytime changed need to update database for settings
- */
+schedule.bgRowColorOpen  = 'white';  
+
+urlNow.local_url         = $("#bpc_as_rool_url").val(); 
+/** when break dropdown is changed, then capture this area and allow everytime changed need to update database for settings  */
 function bpc_change_break(day) 
 { 
     $('#break-time-update-loader-'+day).css('display', 'block');  
     url = urlNow.local_url + "/wp-content/plugins/bpc-appointment-settings/includes/ajax/standard/standard-update-break.php";   
-    $.post( url,  $( "."+ day + "_form_class" ).serialize() )
-    // $.post( url, {'name':'test'})
+    $.post( url,  $( "."+ day + "_form_class" ).serialize() ) 
     .done(function( data ) {
         console.log( "Data Loaded: " + data );
         $('#break-time-update-loader-'+day).css('display', 'none'); 
     });  
 }
+
+/**
+ *  Set schedule close status 
+ */
 function bpc_as_schedule_close(petsa)
 { 
     attr_id           = "#bpc-as-row-schedule-"+petsa;
     attr_select_id    = "#bpc-as-row-schedule-"+petsa+ " select";
-    attr_input_id    = "#bpc-as-row-schedule-"+petsa+ " input[type='button']";
+    attr_input_id     = "#bpc-as-row-schedule-"+petsa+ " input[type='button']";
     attr_checkbox_id  = "#bpc-as-row-schedule-"+petsa+ " .agenda-event input";
     attr_message_id   = "#bpc-as-row-schedule-"+petsa+ " message";
-    attr_table_id   = "#bpc-as-row-schedule-"+petsa+ " table";
-    // set open or close shedule
+    attr_table_id     = "#bpc-as-row-schedule-"+petsa+ " table"; 
     var bg = $(attr_id).css('background-color');
     console.log(bg);
     if(bg == 'rgb(251, 162, 162)') {
@@ -63,7 +58,11 @@ function bpc_as_schedule_close(petsa)
         $(attr_message_id).html("<em>Close All Day</em>");
     }
 }
-function bpc_init() { 
+
+/**
+ * Initialized data schedule load when page is loaded. 
+ */
+function bpc_init() {  
     // alert("Nice test"); 
     console.log("loaded data"); 
     show_save_button();  
@@ -72,26 +71,25 @@ function bpc_init() {
     // console.log(" booking type value " + option);  
     $("#bpc-as-schedule-loader").css({'display':'block'}); 
     // set url based on the page type
-    var page = $("#bpc_kind_of_page").val();
- 
+    var page = $("#bpc_kind_of_page").val(); 
     console.log( " current page " + page)
     var url = '';
     if(page == 'standard') { 
-        $("#standard-settings-loader").css('display', 'block'); 
-        
+        $("#standard-settings-loader").css('display', 'block');      
         url = urlNow.local_url + "/wp-content/plugins/bpc-appointment-settings/includes/ajax/standard/standard-load-schedule.php?date="+date+"&option=&base=date_picker";
     } else {
         url = urlNow.local_url + "/wp-content/plugins/bpc-appointment-settings/includes/ajax/load-schedule.php?date="+date+"&option=&base=date_picker";
     } 
     console.log(" url " + url); 
-    $.get( url, function( data ) {
-
+    $.get( url, function( data ) { 
         $( "#bpc-as-schedule-settings-content-and-type" ).html(data);  
         $("#bpc-as-schedule-loader").css({'display':'none'}); 
-        $("#standard-settings-loader").css('display', 'none');     
-        
+        $("#standard-settings-loader").css('display', 'none');      
     });
 }
+/**
+ * load schedule, select date
+ */
 function bpc_as_schedule_change_date(e)
 {
     show_save_button(); 
@@ -108,6 +106,9 @@ function bpc_as_schedule_change_date(e)
         $("#bpc-as-schedule-loader").css({'display':'none'});
     });
 }
+/**
+ * Load schedule
+ */
 function bpc_as_schedule_type(option)
 {
     show_save_button(); 
@@ -120,7 +121,11 @@ function bpc_as_schedule_type(option)
 
         $("#bpc-as-schedule-loader").css({'display':'none'});
     });
-} 
+}  
+
+/**
+ * save and update schedule
+ */
 function bpc_as_save_schedule(type)
 {
 
@@ -150,11 +155,18 @@ function bpc_as_save_schedule(type)
             console.log( "Data Loaded: " + data );
         });
 }
+
+/**
+ * Show buttons 
+ */
 function show_save_button()
 { 
-
     $("#bpc-as-save-schedule-container").css('display', 'block');
 }
+
+/**
+ * Append time to breaks
+ */
 function bpc_as_add_time_break(strDate, type, day)
 { 
     /** loader */
@@ -188,9 +200,12 @@ function bpc_as_add_time_break(strDate, type, day)
         $('#bpc-as-break-time-container-'+strDate).append(data);
         console.log("add new break time design");
         $("#break-time-update-loader-"+day).css("display", "none"); 
-    }); 
-
+    });  
 }
+
+/**
+ * delete standard break, allow delete break standard
+ */
 function bpc_as_delete_time_standard_break(breakId, strDate, day)
 {
     if(confirm("Are you sure you want to delete this break?")) { 
@@ -199,6 +214,10 @@ function bpc_as_delete_time_standard_break(breakId, strDate, day)
         bpc_change_break(day)   
     }
 }
+
+/**
+ * Allow for custom break
+ */
 function bpc_as_delete_time_break(breakId, strDate)
 {
     //$('#bpc-as-break-time-content-container-'+strDate).remove();
@@ -207,6 +226,7 @@ function bpc_as_delete_time_break(breakId, strDate)
         $('#bpc-as-break-time-content-container-'+breakId+'-'+strDate).remove(); 
 
         bpc_change_break(day)
+        
          /*
          var breakTime = $( "#bpc-as-break-time-container-form-"+strDate ).serialize();
          // remove from database
@@ -226,7 +246,11 @@ function bpc_as_delete_time_break(breakId, strDate)
          */
      }
 }
- function bpc_as_update_time_break(strDate)
+
+/**
+ * custom update break
+ */
+function bpc_as_update_time_break(strDate)
 {   
     //if(confirm("Are you sure you want to update this break?")) {
         // get all the breaks
@@ -249,6 +273,10 @@ function bpc_as_delete_time_break(breakId, strDate)
 
     //}
 }
+
+/**
+ * open window when page loaded, this will allow generate the google calendar
+ */
 function openWindowAndCloseAfterPageLoaded(link){
     console.log("open popup");
     var temp = window.open(link, "mywindow","menubar=1,resizable=1,width=350,height=250");
@@ -258,6 +286,10 @@ function openWindowAndCloseAfterPageLoaded(link){
         temp.close();
     }, false );
 } 
+
+/** 
+ * Initialized data, show calendar when page is loaded
+ */
 $(document).ready(function(){
 
      bpc_init();
