@@ -115,8 +115,17 @@ function bpc_as_schedule_type(option)
     
     var date = $("#bpc-as-datepicker").val();
     $("#bpc-as-schedule-loader").css({'display':'block'});
-    $.get( urlNow.local_url + "/wp-content/plugins/bpc-appointment-settings/includes/ajax/load-schedule.php?date="+date+"&option="+option+"&base=schedule_type", function( data ) {
 
+
+    var url = ''; 
+
+    // url = urlNow.local_url + "/wp-content/plugins/bpc-appointment-settings/includes/ajax/load-schedule.php?date="+date+"&option="+option+"&base=schedule_type"; 
+
+    url = urlNow.local_url + "/wp-content/plugins/bpc-appointment-settings/includes/ajax/standard/standard-load-schedule.php?date="+date+"&option="+option+"&base=schedule_type";
+ 
+    $.get( url , function( data ) {
+
+ 
         $('#bpc-as-schedule-settings-content').html(data);
 
         $("#bpc-as-schedule-loader").css({'display':'none'});

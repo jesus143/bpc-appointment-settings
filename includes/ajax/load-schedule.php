@@ -5,9 +5,7 @@ if(bpc_as_is_localhost()) {
     require_once("E:/xampp/htdocs/wp-load.php");
 } else {
     require $_SERVER['DOCUMENT_ROOT'] .'/wp-load.php';  
-}
-
-
+} 
 require_once('../db/wpdb_queries.class.php');
 require_once('../db/bpc_as_db.php');
 require_once('../db/bpc_appointment_setting_standard.class.php');
@@ -17,11 +15,7 @@ use App\BPC_AS_DB;
 
 $dateRequest = bpc_as_get_request_date(); 
 $mondayOfTheWeek = bpc_as_get_moday_in_date_week($dateRequest); 
-
-
-
-
-
+ 
 $bpc_as_wpdb_queries = new PBC_AS_WPDB_QUERIES('wp_bpc_appointment_settings');
 $bpc_as_db           = new BPC_AS_DB('wp_bpc_appointment_settings');
 $dates               = bpc_as_get_scheduled_date_array();
@@ -37,7 +31,7 @@ $dateDbStart    = bpc_as_set_date_as_db_format($dateStart);
 $dateDbEnd      = bpc_as_set_date_as_db_format($dateEnd);
 $scheduleRange  = $bpc_as_db->selectOneWeek($dateDbStart, $dateDbEnd);
 
-$option = bpc_as_get_request_option();
+$option         = bpc_as_get_request_option();
  
 // footer
 $call_back_length_arr = [];
@@ -69,7 +63,7 @@ $call_back_length_val_num = [ 10, 15, 20, 30, 45, 60, 90 ];
 $call_back_length_val_text = ['mins', 'hours', 'days'];
  
 // print "<br> request option [" . bpc_as_get_request_option() . '] db option in first date [' . $scheduleRange[0]['book_time_type'] . ']'; 
-
+ 
 // sorting option
 $book_exact_time = '';
 $book_exact_day = ''; 
@@ -78,8 +72,6 @@ if(bpc_as_get_quest_type() == 'date_picker') {
     // print "<br> date picker request";
     $option  = (!empty($scheduleRange[0]['book_time_type'])) ? $scheduleRange[0]['book_time_type'] : $option;  
 }  else {
-
- 
     // print "<br> option type request";
 }
   
@@ -89,14 +81,15 @@ if($option =='book exact time') {
     $book_exact_day = 'checked';
 }
   
-if(bpc_as_get_quest_type() == 'date_picker') 
-{   
-    require_once('../pages/dashboard-settings-options-type-schedule.php');
+if(bpc_as_get_quest_type() == 'date_picker')  {   
+    print "<div style='display:none'>"; 
+        require_once('../pages/dashboard-settings-options-type-schedule.php');
+    print "</div>";
 }  
 
 print "<div id='bpc-as-schedule-settings-content' >"; 
 if($option == 'book exact time') {
-require_once('../pages/dashboard-time-settings.php');
+    require_once('../pages/dashboard-time-settings.php');
 } else {
     require_once('../pages/dashboard-day-settings.php');
 }
