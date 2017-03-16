@@ -216,7 +216,7 @@ function bpc_as_delete_time_standard_break(breakId, strDate, day)
 }
 
 /**
- * Allow for custom break
+ * Allow for custom break for custom
  */
 function bpc_as_delete_time_break(breakId, strDate)
 {
@@ -225,7 +225,11 @@ function bpc_as_delete_time_break(breakId, strDate)
         console.log( "#bpc-as-break-time-content-container-"+breakId+"-"+strDate); 
         $('#bpc-as-break-time-content-container-'+breakId+'-'+strDate).remove(); 
 
-        bpc_change_break(day)
+        /** Delete break in real time */
+        bpc_as_update_time_break(strDate);
+
+
+        // bpc_change_break(day)
         
          /*
          var breakTime = $( "#bpc-as-break-time-container-form-"+strDate ).serialize();
@@ -246,7 +250,7 @@ function bpc_as_delete_time_break(breakId, strDate)
          */
      }
 }
-
+ 
 /**
  * custom update break
  */

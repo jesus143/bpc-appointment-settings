@@ -110,5 +110,7 @@ class Bpc_Appointment_Settings_Breaks
     public function getAllBreaksByAppointmentId($appointment_setting_id)
     {
         return $this->bpc_as_wpdb_queries->wpdb_get_result("select * from $this->table_name where appointment_setting_id = $appointment_setting_id ");
-    }
+    } 
+    
+ 
 }

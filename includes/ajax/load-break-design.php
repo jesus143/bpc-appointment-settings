@@ -15,10 +15,10 @@
 		<tr>
 			<td>
 				Break From:
-				<select name="break_time_hour_min[]">
+				<select name="break_time_hour_min[]" onchange="bpc_as_update_time_break('<?php print $strDate; ?>')" >
 					<?php print bpc_as_generate_hours_option($break_from_hour); ?>
 				</select>
-				<select  name="break_time_hour_min[]" >
+				<select  name="break_time_hour_min[]" onchange="bpc_as_update_time_break('<?php print $strDate; ?>')" >
 					<?php bpc_as_generate_minutes_option($break_from_min); ?>
 				</select>
 			</td>
@@ -26,17 +26,17 @@
 		<tr>
 			<td>
 				Break From:
-				<select  name="break_time_hour_min[]" >
+				<select  name="break_time_hour_min[]" onchange="bpc_as_update_time_break('<?php print $strDate; ?>')" >
 					<?php print bpc_as_generate_hours_option($break_to_hour); ?>
 				</select>
-				<select  name="break_time_hour_min[]" >
+				<select  name="break_time_hour_min[]" onchange="bpc_as_update_time_break('<?php print $strDate; ?>')" >
 					<?php bpc_as_generate_minutes_option($break_to_min); ?>
 				</select>
 			</td>
 		<tr>
 		<tr>
 			<td>
-				<input type="button" value="Delete"  onclick="bpc_as_delete_time_break('<?php print $breakId; ?>', '<?php print $strDate; ?>')" />
+				<input type="button" value="Delete"  onclick="bpc_as_delete_time_standard_break('<?php print $breakId; ?>', '<?php print $strDate; ?>')" />
 			</td>
 		</tr>
 	</table>

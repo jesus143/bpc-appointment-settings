@@ -1,3 +1,30 @@
+<?php 
+
+
+
+if(empty($scheduleRange)) {
+
+    /** Get specific user standard schedule */
+    $standardAppointmentSettings = $appointment_setting_standard->getSpecificSchedule($user_id);    
+    $call_back_length = $standardAppointmentSettings[0]['call_back_length']; 
+    $call_back_delay  = $standardAppointmentSettings[0]['call_back_delay'];  
+    
+    $call_back_length_arr = explode(' ', $call_back_length);
+    $call_back_delay_arr  = explode(' ', $call_back_delay); 
+
+    if(!empty($call_back_length_arr[0])) {
+        $call_back_length_arr0 = $call_back_length_arr[0];
+        $call_back_length_arr1 = $call_back_length_arr[1];
+    } 
+
+    if(!empty($call_back_delay_arr[0])) {
+        $call_back_delay_arr0 = $call_back_delay_arr[0];
+        $call_back_delay_arr1 = $call_back_delay_arr[1];
+    } 
+}
+ 
+?>
+
  <div class="container bpc-as-dashboard-settings-option">
 	<div class="row">
 		<div class="col-md-3">

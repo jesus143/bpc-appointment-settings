@@ -1,6 +1,6 @@
-<?php 
+<?php  
 
-namespace App; 
+namespace App;  
 
 use APP\PBC_AS_WPDB_QUERIES;  
 
@@ -39,6 +39,14 @@ class bpc_appointment_setting_standard
     }
 
 
+
+
+    public function getSpecificSchedule($user_id)
+    { 
+        return $this->bpc_as_wpdb_queries->wpdb_get_result("select * from $this->table_name where  user_id = $user_id ");
+    }
+
+
     public function getResultByDay($day, $response, $counter)
     {
     	$day = strtolower($day); 
@@ -49,8 +57,11 @@ class bpc_appointment_setting_standard
     	$data[$counter]['breaks']    = $response[0][$day . '_break']; 
 
     	return $data;
-    }
-
+    }  
+    
+    /**
+     *  This will convert the serialized format of data 
+     */
     public function convertToPropperDateTime($var_array)
     {
         $data  = [];     
@@ -72,10 +83,9 @@ class bpc_appointment_setting_standard
                 $c=1;
                 $index++;
             } 
-        }    
-
+        }     
         return $custom_break; 
-    }
-
+    } 
+ 
 
 }

@@ -109,4 +109,14 @@ class BPC_AS_DB {
 
         return $response;
     }
+
+    public function getSpecificSchedule($user_id, $day, $strDate)
+    {
+        $day = strtolower($day); 
+        $time = strtotime($strDate); 
+        $strDate = date('Y-m-d',$time); 
+        // print " parameter getSpecificSchedule($user_id, $day, $strDate) "; 
+         return  $this->bpc_as_wpdb_queries->wpdb_get_result("select * from $this->table_name where user_id = $user_id and  date = '$strDate' ");
+       
+    }
 }

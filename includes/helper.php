@@ -115,10 +115,10 @@ function bpc_phone_schedule_break_design(
             <tr>
                 <td>
                     Break From:
-                    <select name="break_time_hour_min[]" style="<?php print $scheduleStatusDropDownStyle; ?>"  >
+                    <select name="break_time_hour_min[]" style="<?php print $scheduleStatusDropDownStyle; ?>" onchange="bpc_as_update_time_break('<?php print $strDate; ?>')" >
                         <?php print bpc_as_generate_hours_option($break_from_hour); ?>
                     </select>
-                     <select  name="break_time_hour_min[]" style="<?php print $scheduleStatusDropDownStyle; ?>" >
+                     <select  name="break_time_hour_min[]" style="<?php print $scheduleStatusDropDownStyle; ?>" onchange="bpc_as_update_time_break('<?php print $strDate; ?>')" >
                         <?php bpc_as_generate_minutes_option($break_from_min); ?>
                      </select>
                 </td>
@@ -126,10 +126,10 @@ function bpc_phone_schedule_break_design(
             <tr>
                 <td>
                     Break To:
-                    <select  name="break_time_hour_min[]" style="<?php print $scheduleStatusDropDownStyle; ?>" >
+                    <select  name="break_time_hour_min[]" style="<?php print $scheduleStatusDropDownStyle; ?>" onchange="bpc_as_update_time_break('<?php print $strDate; ?>')" >
                         <?php print bpc_as_generate_hours_option($break_to_hour); ?>
                     </select>
-                    <select  name="break_time_hour_min[]" style="<?php print $scheduleStatusDropDownStyle; ?>" >
+                    <select  name="break_time_hour_min[]" style="<?php print $scheduleStatusDropDownStyle; ?>" onchange="bpc_as_update_time_break('<?php print $strDate; ?>')" >
                         <?php bpc_as_generate_minutes_option($break_to_min); ?>
                     </select>
                 </td>

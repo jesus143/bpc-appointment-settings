@@ -1,3 +1,82 @@
+
+Standard - Click "add break" - do nothing 
+
+Hi Rich, 
+
+Update for March 3, 2017
+1. Standard - Accept post request from server via ajax request, this will allow generate break
+2. Standard - Before saving to database seriazlized break post data first and prepare to insert database  
+3. Standard - Change time - get all date via ajax and update with parameter - user_id, date, post value - done  
+4. Standard - set js to call on change break auto save data - done 
+5. Standard - change break add loading - done 
+6. Standard - update parameters and content js to adopt standard with custom
+7. Standard - allow dynamic add new break, with functions already to auto save when dropdown change for time break
+ 
+Todo tomorrow
+
+
+Hi Rich,
+
+Update for March 14, 2017
+standard - set load from standard database 
+standard - get all the break saved to database and un-serialized
+standard - compose to match the current code for break in order to display properly
+standard - check break id how we can set to match our standard values and functions from custom, i think this works with delete in real-time
+standard - when standard page loader, it should show the saved breaks for standard automatically
+
+
+
+
+Update March 15, 2017 
+1. Custom - Allow when update break then delete current breaks and insert new breaks to custom settings database
+2. Custom - Change dropdown break, will auto update content breaks
+3. Custom - Every-time select break time and change it needs to be updated in database
+4. Custom - Break delete should auto update database
+5. Custom - Adding new break should show loading icon before new break design show up 
+6. Custom - Remove call delay "days"    
+7. Custom and Standard merge: when custom using standard values for custom view closed need to be checked if standard closed it.
+8. Custom and standard merge: validate, populate by schedule
+ 
+Todo tomorrow
+
+1. Custom and standard merge: validate, populate by break with standard value if no custom se   t
+2. Custom and standard merge: validate, populate for call back delay with standard value if no custom set
+3. Custom and standard merge: validate, populate for call back length with standard value if no custom set
+4. Standard: moving between this  "Book Exact Time" and "Book Time Of Day" radio button can cause loading custom values instead of standard values for Book Exact Time
+5. etc...
+
+
+Todo for March 16, 2017 
+Custom and standard merge
+
+ 
+
+Thanks 
+
+Standard - Delete - get all date via ajax and update with parameter - user_id, date, post value 
+ 
+Custom - when custom page loaded then check custom mon - sun schedule in the database and if now found saved data then use the standard data
+Standard - Load schedule open dates 
+Standard - Load schedule closed dates 
+Standard - Load callback delay and call back length
+Standard - Load break - this will only allow data to display and when partner do the saving that should point to custom database
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Update for Jan 5, 2017
 
 1. create database and table migration

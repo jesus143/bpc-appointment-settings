@@ -1,10 +1,7 @@
-<?php
+<?php 
+require_once('../helper.php'); 
 
-require_once('../helper.php');
-
-if(bpc_as_is_localhost()) {
-
-//    require_once("D:/xampp/htdocs/wordpress/wp-load.php");
+if(bpc_as_is_localhost()) { 
     require_once("E:/xampp/htdocs/wp-load.php");
 } else {
     require $_SERVER['DOCUMENT_ROOT'] .'/wp-load.php';  
@@ -13,6 +10,7 @@ if(bpc_as_is_localhost()) {
 
 require_once('../db/wpdb_queries.class.php');
 require_once('../db/bpc_as_db.php');
+require_once('../db/bpc_appointment_setting_standard.class.php');
 
 use APP\PBC_AS_WPDB_QUERIES;
 use App\BPC_AS_DB;
@@ -52,14 +50,12 @@ $call_back_delay_arr1 = '';
 // call back value default
 if(!empty($scheduleRange)) {
     $call_back_length_arr = explode(' ', $scheduleRange[0]['call_back_length']);
-    $call_back_delay_arr  = explode(' ', $scheduleRange[0]['call_back_delay']);
-
-//    bpc_as_print_r_pre($call_back_length_arr);
+    $call_back_delay_arr  = explode(' ', $scheduleRange[0]['call_back_delay']); 
+    //bpc_as_print_r_pre($call_back_length_arr);
     if(!empty($call_back_length_arr[0])) {
         $call_back_length_arr0 = $call_back_length_arr[0];
         $call_back_length_arr1 = $call_back_length_arr[1];
-    }
-
+    } 
     if(!empty($call_back_delay_arr[0])) {
         $call_back_delay_arr0 = $call_back_delay_arr[0];
         $call_back_delay_arr1 = $call_back_delay_arr[1];
@@ -68,7 +64,7 @@ if(!empty($scheduleRange)) {
  
 // callback values
 $call_back_delay_val_num = [1, 2, 4, 15, 30, 45, 60, 90];
-$call_back_delay_val_text = ['mins', 'hours', 'days'];
+$call_back_delay_val_text = ['mins', 'hours'];
 $call_back_length_val_num = [ 10, 15, 20, 30, 45, 60, 90 ];
 $call_back_length_val_text = ['mins', 'hours', 'days'];
  
@@ -93,14 +89,17 @@ if($option =='book exact time') {
     $book_exact_day = 'checked';
 }
   
-if(bpc_as_get_quest_type() == 'date_picker') {   
+if(bpc_as_get_quest_type() == 'date_picker') 
+{   
     require_once('../pages/dashboard-settings-options-type-schedule.php');
 }  
+
 print "<div id='bpc-as-schedule-settings-content' >"; 
 if($option == 'book exact time') {
-    require_once('../pages/dashboard-time-settings.php');
+require_once('../pages/dashboard-time-settings.php');
 } else {
     require_once('../pages/dashboard-day-settings.php');
 }
+
 require_once('../pages/dashboard-settings-options.php');
 print "</div>";
