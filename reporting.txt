@@ -39,11 +39,27 @@ Update March 15, 2017
  
 Todo tomorrow
 
-1. Custom and standard merge: validate, populate by break with standard value if no custom se   t
-2. Custom and standard merge: validate, populate for call back delay with standard value if no custom set
-3. Custom and standard merge: validate, populate for call back length with standard value if no custom set
-4. Standard: moving between this  "Book Exact Time" and "Book Time Of Day" radio button can cause loading custom values instead of standard values for Book Exact Time
-5. etc...
+
+Hi Rich 
+
+Update for March 17, 2017
+1. Custom and standard merge: validate, populate by break with standard value if no custom -> done
+2. Custom and standard merge: validate, populate for call back delay with standard value if no custom set -> done
+3. Custom and standard merge: validate, populate for call back length with standard value if no custom set -> done
+5. Remove "Book Exact Time" and "Book Time Of Day" in custom url -> done  
+4. Standard: moving between this  "Book Exact Time" and "Book Time Of Day" radio button can cause loading custom values instead of standard values for Book Exact Time -> done 
+5. Custom: Change close to closed.
+6. Add callback length plugin dashboard help notes
+7. Add callback delay plugin dashboard help notes
+
+
+Todo tomorrow
+1. Figure out and fix google calendar forever loading
+2. google calendar look
+3. site footer issue
+4. code new data in bpc site
+5. etc..
+
 
 
 Todo for March 16, 2017 

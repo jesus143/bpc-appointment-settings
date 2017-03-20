@@ -59,7 +59,7 @@ error_reporting(E_ALL & ~E_NOTICE);
                         <th>Days</th>
                         <th>Open From</th>
                         <th>Open To</th>
-                        <th>Close</th>
+                        <th>Closed</th>
                         <th>Break</th>
                     </tr>
                 </thead>

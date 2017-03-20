@@ -55,7 +55,7 @@ function bpc_as_schedule_close(petsa)
         $(attr_input_id).css({'cursor': 'not-allowed', 'background-color':schedule.bgRowColorClose});
         $(attr_table_id).css({'background-color':schedule.bgRowColorClose}); 
         // set close message not empty
-        $(attr_message_id).html("<em>Close All Day</em>");
+        $(attr_message_id).html("<em>Closed All Day</em>");
     }
 }
 
@@ -291,6 +291,7 @@ function bpc_as_update_time_break(strDate)
  * open window when page loaded, this will allow generate the google calendar
  */
 function openWindowAndCloseAfterPageLoaded(link){
+    console.log(" link " + link);
     console.log("open popup");
     var temp = window.open(link, "mywindow","menubar=1,resizable=1,width=350,height=250");
     temp[temp.addEventListener ? 'addEventListener' : 'attachEvent']( (temp.attachEvent ? 'on' : '') + 'load', function() {

@@ -44,12 +44,49 @@ function bpc_as_admin_menu()
 
     add_menu_page('BPC Appointment Settings', 'BPC Appointment Settings', 'manage_options', "pbc-as-admin", 'bpc_as_admin'); 
 }
-function bpc_as_admin () { 
- 	?> 
- 		<br><br><br>
+
+function bpc_as_admin () 
+{  
+	$posts = $_POST;  
+	// print "<pre>"; 
+	// 	print_r($posts);
+	// print "</pre>";  
+	foreach($posts as $key => $post) { 
+		// print "$key , $post<br>";
+		update_option( $key , $post);
+	}  
+ 	?>  
+
+		<!-- To update url, allow you need to visit this page https://www.ephox.com/my-account/ -->
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	    <script src="http://cloud.tinymce.com/stable/tinymce.min.js?apiKey=o2rim480e9ixjtiuyes05u9iu2930pqx4xow0tg25vta8k2t"></script>
+	    <script>tinymce.init({ selector:'textarea' });</script>
+	   
+	<div style="width:50%; margin:0px auto;" > 
+ 		<br> 
+ 		<label class="label label-success">Reminder:</label><br> 
 		1. Add short code post or page <b>[bpc_as_opening_hours]</b> in order to display the partner schedule calendar<br>
-		1. Add short code post or page <b>[bpc_as_calendar_google_apple]</b> in order to display partner calendar from google or apple calendar<br>
-		1. Add short code post or page <b>[bpc_as_google_calendar_settings]</b> google calendar settings<br>
+		2. Add short code post or page <b>[bpc_as_calendar_google_apple]</b> in order to display partner calendar from google or apple calendar<br>
+		3. Add short code post or page <b>[bpc_as_google_calendar_settings]</b> google calendar settings<br>
+		<br>	 
+		   
+	
+	 		<form action="" name="helpNotesForm" method="POST" >
+				<br><br>
+				 <label class="label label-success">Call back length help notes </label>  <br> 
+				<textarea name="bpc_call_back_length_standard" style="resize:none;height: 200px;width: 300px;" ><?php print get_option('bpc_call_back_length_standard'); ?></textarea>
+				<br><br>
+				 <label class="label label-success">Call back delay help notes</label><br> 
+				<textarea name="bpc_call_back_delay_standard" style="resize:none;height: 200px;width: 300px;"  ><?php print get_option('bpc_call_back_delay_standard'); ?></textarea>
+				<!-- <p>Custom Call back length help notes </p> 
+				<textarea name="bpc_call_back_length_custom" style="resize:none;height: 100px;width: 300px;"  ><?php print get_option('bpc_call_back_length_custom'); ?></textarea>
+				<p>Custom Call back delay help notes </p> 
+				<textarea name="bpc_call_back_delay_custom" style="resize:none;height: 100px;width: 300px;"  ><?php print get_option('bpc_call_back_delay_custom'); ?></textarea> -->
+				<br><br> 
+				<input type="submit" value="Update" class="btn btn-default"/>
+			</form>
+		</div>
+
  	<?php
 }
 
@@ -83,7 +120,7 @@ function bpc_as_opening_hours_func()
 	ob_start();
  
 	print "<input type='hidden' id='bpc_kind_of_page' value='standard' />";
-// 	bpc_as_calendar_google_apple_authenticate();
+    // 	bpc_as_calendar_google_apple_authenticate();
 	print "<input type='hidden' value='". get_site_url() ."' id='bpc_as_rool_url' />";
 	print "<div onload='bpc_init()'>";  
 
@@ -106,6 +143,7 @@ function bpc_as_opening_hours_func()
 	print "</div>"; 
  	ob_flush();
 }
+
 function bpc_as_install_table()
 {
 	global $wpdb;
@@ -177,12 +215,24 @@ function bpc_as_install_table()
 	add_option( 'jal_db_version', $jal_db_version );
 	//when install also add talble
 }
+
 function bpc_as_calendar_google_apple_func()
 {
-//	unset($_SESSION['access_token']);
-	ob_start();
+    //	unset($_SESSION['access_token']); 
+	ob_start();  
 
+	if($_SESSION['type'] == 'auth') {
 	?>
+		<style>
+			.authenticate-google-api, body{
+				display:none !important;
+			}
+		</style> <?php 
+		print "Connecting...";
+	} 
+	unset($_SESSION['type']); 
+	?>
+ 
 	<style>
 		#page-content {
 			width:1024px !important;
@@ -201,8 +251,7 @@ function bpc_as_calendar_google_apple_func()
 	// google calendar connect
 
 	$bpc_User_Api		 			  = new Bpc_User_Api();
-
-
+ 
 	// execute new insert for google authentication
 	if(!empty($_SESSION['access_token'])) {
 		//		print "session is not emopty";
@@ -222,6 +271,8 @@ function bpc_as_calendar_google_apple_func()
 	$accessToken  = $bpc_User_Api->getGoogleCalendarAccessToken();
 	//	print "token $accessToken";
 	// set if not empty, meaning its already authenticated
+	
+	print "<div style='width:90%' class='authenticate-google-api'>"; 
 	if (!empty($accessToken)) {
 
 
@@ -262,7 +313,27 @@ function bpc_as_calendar_google_apple_func()
 				$break_to = '';
 				$counter = 0;
 
-				print '<div style="width:102%" class="list-group" >';
+
+
+
+		print '
+			<table id="example" class="display" cellspacing="0" width="100%">
+		        <thead>
+		            <tr>
+		                <th>Event Date</th>
+		                <th>Event Date</th>
+		                <th>Event Name</th> 
+		            </tr>
+		        </thead>
+		        <tfoot>
+		         <tr>
+		            <th>Event Date</th>
+		            <th>Event Date</th>
+		            <th>Event Name</th> 
+		        </tr>
+		        </tfoot>
+		        <tbody>
+		        	'; 
 					foreach($googleSchedule as $date => $breaks) {
 						if(!empty($date)) {
 							$appointment_setting_id = $bpc_AS_DB->InsertGetOrGetPhoneCallSettings($date)[0]['id'];
@@ -273,19 +344,23 @@ function bpc_as_calendar_google_apple_func()
 								$break_from = $break['break_from'];
 								$break_to   = $break['break_to'];
 								$description   = $break['description'];
-								if(!empty($break_from) and !empty($break_to)) {
-									print '<button  style="width:94%" type="button" class="list-group-item"> '. $counter .'
-									 	date ' . $date . ' break from ' . $break_from . '  ' . $break_to . ' - <b> ' . $description . '</b>' . ' - <span style=\'color:green\'>Break successfully added</span>
-									</button>';
+								if(!empty($break_from) and !empty($break_to)) { 
+									print '<tr>'; 
+									print "<td>$date</td>"; 
+									print "<td>$break_from</td>"; 
+									print "<td>$description</td>";  
+									print "</tr>";     
 									$bpc_Appointment_Settings_Breaks->addNewAppointmentBreakIndividual($appointment_setting_id, $break_from, $break_to);
 								}
 							}
 						}
 					}
-				print '<div class="list-group">';
-			}
+				// print '<div class="list-group">';
+				        print ' 
+			        </tbody>
+			    </table> '; 
 
-
+			}  
 			// print disconnect button
 			bpc_as_google_calendar_print_disconnect_button();
 
@@ -297,19 +372,29 @@ function bpc_as_calendar_google_apple_func()
 	} else {
 		print "<div style='width: 96%;' class='alert alert-info'> Click <a href='/phone-appointment-settings'>here</a> to visit phone appointment settings  </div>";
 		bpc_as_google_calendar_print_connect_button(bpc_as_google_calendar_get_path_call_back_file());
-	}
+	} 
+	print "</div>"; 
+
+
 	ob_flush();
 }
+
 function bpc_as_calendar_google_apple_authenticate()
 {
 	ob_start();
 	bpc_as_header();
+
+
+
+
 	?>
 	<style>
 		#page-content {
 			width:1024px !important;
 		}
 	</style>
+
+
 	<?php
 
 	$bpc_AS_DB = new BPC_AS_DB('wp_bpc_appointment_settings');
@@ -326,34 +411,58 @@ function bpc_as_calendar_google_apple_authenticate()
 	$bpc_User_Api 	 = new Bpc_User_Api();
 	$accessToken  	 = $bpc_User_Api->getGoogleCalendarAccessToken();
 
+
+
+
 	if (!empty($accessToken)) {
 		print "<div style='width: 96%;' class='alert alert-info'>Synced with google calendar.. click <a href='/google-calendar-settings'>here</a> to visit google calendar settings </div>";
 		try {
+
+			/** Set access token */
 			$client->setAccessToken($accessToken);
+
+			/** Set google celendar service instance */
 			$service = new Google_Service_Calendar($client);
-			// Print the next 10 events on the user's calendar.
-			$calendarId = 'primary';
+
+			/** Print the next 10 events on the user's calendar. */ 
+			$calendarId = 'primary'; 
+
+			/** Set parameter for calendar query */
 			$optParams = array(
 				'maxResults' => 100,
 				'orderBy' => 'startTime',
 				'singleEvents' => TRUE,
 				'timeMin' => date("c", strtotime($bpc_As_Calendar->getCurrentDate()))
 			);
+
+			/** Query calendar ang get results */
 			$results = $service->events->listEvents($calendarId, $optParams);
+ 			
+			/** If result is zero then do nothing */
 			if (count($results->getItems()) == 0) {
-			} else {
+			} 
+
+			/** Else result is greater than zero then execute results do filter and display */
+			else {
+
 				$googleSchedule = [];
+
 				foreach ($results->getItems() as $index => $event) {
+
 					$bpc_As_Calendar->setEventResult([
 							'event'=>$event,
 							'summary'=>$event->getSummary(),
 					]);
+
 					$googleSchedule[$bpc_As_Calendar->getEventDate()][] = ["break_from"=>$bpc_As_Calendar->getEventTimeStart(),"break_to"=>$bpc_As_Calendar->getEventTimeEnd(), 'description'=>$bpc_As_Calendar->getDescription()];
+
 				}
+
 				$date = '';
 				$break_from = '';
 				$break_to = '';
 				$counter = 0;
+				
 				print '<div style="width:102%" class="list-group" >';
 					foreach($googleSchedule as $date => $breaks) {
 						if(!empty($date)) {
@@ -383,12 +492,14 @@ function bpc_as_calendar_google_apple_authenticate()
 	}
 	ob_flush();
 }
+
 function bpc_as_google_calendar_settings_func()
 {
 	?>
 		<h1>This is the google calendar settings</h1>
 	<?php
 }
+
 function bpc_as_header()
 {	?>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -408,7 +519,17 @@ function bpc_as_header()
 
 		<script src="<?php print bpc_as_plugin_url; ?>/assets/js/my_js.js"></script>
 		<script src="<?php print bpc_as_plugin_url; ?>/assets/js/my_jquery.js"></script>
-		<script src="<?php print bpc_as_plugin_url; ?>/assets/js/my_angular.js"></script>
+		<script src="<?php print bpc_as_plugin_url; ?>/assets/js/my_angular.js"></script> 
 
+		
+		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" >
+		<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+		<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+		<script>
+			
+			$(document).ready(function() {
+			    $('#example').DataTable();
+			} );
+		</script>
 	<?php
 }

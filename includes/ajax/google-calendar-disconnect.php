@@ -1,8 +1,8 @@
 <?php
 if(!session_id()) {
     session_start();
-}
-require_once('config.php');
+} 
+require_once('config.php');  
 
 if($bpc_User_Api->disconnectGoogleCalendar()){
     unset($_SESSION['access_token']);

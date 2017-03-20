@@ -28,7 +28,8 @@ if(empty($scheduleRange)) {
  <div class="container bpc-as-dashboard-settings-option">
 	<div class="row">
 		<div class="col-md-3">
-			<h5>Call Back Delay:</h5>
+			<?php print get_option('bpc_call_back_delay_standard'); ?> 
+			<!-- <h5>Call Back Delay:</h5> -->
 			<select name="callBackDelay[]" >
 				<?php print bpc_as_generate_dropDown_option($call_back_delay_val_num, $call_back_delay_arr0); ?>
 			</select>
@@ -37,7 +38,8 @@ if(empty($scheduleRange)) {
 			</select>
 		</div>
 		<div class="col-md-3">
-			<h5>Call Back Length:</h5>
+			<?php print get_option('bpc_call_back_length_standard'); ?>
+			<!-- <h5>Call Back Length:</h5> -->
 			<select name="callBackLength[]" >
 				<?php
 			 		  print bpc_as_generate_dropDown_option($call_back_length_val_num, $call_back_length_arr0);
