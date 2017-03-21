@@ -110,7 +110,7 @@ function bpc_as_opening_hours_func_custom_func()
 	require_once('includes/pages/dashboard-settings-options-save.php');
 	print "</div>";
 	print "</div>";
-	print "</div>"; 
+	print "</div>";
 	ob_flush();
 }
 
@@ -118,9 +118,9 @@ function bpc_as_opening_hours_func_custom_func()
  * Standard
  */
 function bpc_as_opening_hours_func() 
-{  
+{
 	ob_start();
- 
+
 	print "<input type='hidden' id='bpc_kind_of_page' value='standard' />";
     // 	bpc_as_calendar_google_apple_authenticate();
 	print "<input type='hidden' value='". get_site_url() ."' id='bpc_as_rool_url' />";

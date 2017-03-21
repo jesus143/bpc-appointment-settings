@@ -155,26 +155,31 @@
  
                             ?>
                             <tr class="bpc-as-row-schedule" id="bpc-as-row-schedule-<?php print $petsa; ?>" style="<?php print $scheduleStatusStyle; ?>" >
-                                <td class="agenda-date active" rowspan="1" id="agenda-time-0-<?php print $petsa; ?>"    >
+
+                                <td class="agenda-date" class="active" rowspan="1">
                                     <div class="dayofmonth"><?php print $petsa; ?></div>
                                     <div class="dayofweek"><?php print $date['day']; ?></div>
                                     <div class="shortdate text-muted"><?php print $date['month'] . ', ' .  $date['year']; ?></div>
                                 </td>
-                                <td class="agenda-time"  id="agenda-time-1-<?php print $petsa; ?>"     >
+
+                                <td class="agenda-time" >
                                     <select style="<?php print $scheduleStatusDropDownStyle; ?>"  name="<?php print $nameOpenFrom; ?>" class="bpc-as-hour-dropdown"><?php bpc_as_generate_hours_option($open_from_arr[0]); ?> </select>
                                     <select style="<?php print $scheduleStatusDropDownStyle; ?>" name="<?php print $nameOpenFrom; ?>" class="bpc-as-hour-dropdown"><?php bpc_as_generate_minutes_option($open_from_arr[1]); ?> </select>
                                 </td>
-                                <td class="agenda-events"  id="agenda-time-2-<?php print $petsa; ?>"   >
+
+                                <td class="agenda-events" >
                                     <div class="agenda-event">
                                         <select style="<?php print $scheduleStatusDropDownStyle; ?>" name="<?php print $nameOpenTo; ?>" class="bpc-as-hour-dropdown"><?php bpc_as_generate_hours_option($open_to_arr[0]); ?> </select>
                                         <select style="<?php print $scheduleStatusDropDownStyle; ?>" name="<?php print $nameOpenTo; ?>" class="bpc-as-hour-dropdown"><?php bpc_as_generate_minutes_option($open_to_arr[1]); ?> </select>
                                     </div>
                                 </td>
-                                <td    id="agenda-time-3-<?php print $petsa; ?>"  >
+
+                                <td  >
                                     <input name="<?php print $nameClose; ?>" type="checkbox" name="close" onclick="bpc_as_schedule_close('<?php print $petsa; ?>')"  <?php print $scheduleStatus; ?> />
                                     <message><em><?php print $scheduleStatusMessage; ?></em></message>
                                 </td>
-                                <td class="bpc-as-break-time-container-td"  id="agenda-time-4-<?php print $petsa; ?>"  style="<?php print $scheduleStatusStyle; ?>" >
+
+                                <td class="bpc-as-break-time-container-td"  >
                                 
                                     <input <?php print $scheduleStatusButton ?> style="<?php print $scheduleStatusDropDownStyle; ?>" type="button" value="Add Break" onclick="bpc_as_add_time_break('<?php print $strDate; ?>')" >
                                     <br>

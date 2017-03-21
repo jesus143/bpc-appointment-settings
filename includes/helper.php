@@ -466,12 +466,13 @@ function bpc_as_op_query($url, $method, $data, $appID, $appKey){
 
     function bpc_as_google_calendar_auto_connect_with_popup($link)
     {
-//        print " link to open new window " . $link;
+        print " link to open new window " . $link;
         ?>
        <script>
-           window.onload = function() {
+//           window.onload = function() {
+//               alert("page is loaded");
                openWindowAndCloseAfterPageLoaded('<?php print $link ?>');
-           };
+//           };
        </script>
     <?php
     }
