@@ -116,7 +116,7 @@
                                 // exit; 
                                 // print " day" . $day;   
                                 
-                                if(!empty($break['break_time_hour_min'])) {
+                                if(!empty($breakTime['break_time_hour_min'])) {
                                         $breaks = $appointment_setting_standard->convertToPropperDateTime($breakTime['break_time_hour_min']); 
                                 }
                                 
