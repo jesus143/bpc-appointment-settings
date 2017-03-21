@@ -109,6 +109,8 @@ function bpc_as_opening_hours_func_custom_func()
 	echo "</form>";
 	require_once('includes/pages/dashboard-settings-options-save.php');
 	print "</div>";
+	print "</div>";
+	print "</div>"; 
 	ob_flush();
 }
 
@@ -217,10 +219,11 @@ function bpc_as_install_table()
 }
 
 function bpc_as_calendar_google_apple_func()
-{
+{ 
     //	unset($_SESSION['access_token']); 
-	ob_start();  
-
+	ob_start();   
+	// print " type " . $_SESSION['type'];  
+	 
 	if($_SESSION['type'] == 'auth') {
 	?>
 		<style>
@@ -245,20 +248,20 @@ function bpc_as_calendar_google_apple_func()
 	require_once __DIR__.'/includes/api/google-api/vendor/autoload.php';
 	require_once __DIR__.'/includes/api/google-api/helper.php';
 
-	//		print "<pre>";
-	//		print_r($_SESSION);
-	//		print "</pre>";
+			// print "<pre>";
+			// print_r($_SESSION);
+			// print "</pre>";
 	// google calendar connect
 
 	$bpc_User_Api		 			  = new Bpc_User_Api();
  
 	// execute new insert for google authentication
 	if(!empty($_SESSION['access_token'])) {
-		//		print "session is not emopty";
+				// print "session is not emopty";
 		$_SESSION['access_token']['name'] = 'google calendar';
 		$bpc_User_Api->addOrUpdate($_SESSION['access_token']);
 	} else {
-		//		print "sesssion is empty";
+				// print "sesssion is empty";
 	}
 
 
@@ -269,20 +272,17 @@ function bpc_as_calendar_google_apple_func()
 
 	// execute insert to wp_bpc_user_api
 	$accessToken  = $bpc_User_Api->getGoogleCalendarAccessToken();
-	//	print "token $accessToken";
+		// print "token $accessToken";
 	// set if not empty, meaning its already authenticated
 	
 	print "<div style='width:90%' class='authenticate-google-api'>"; 
-	if (!empty($accessToken)) {
-
-
-
+	if (!empty($accessToken)) { 
 		print "<div style='width: 96%;' class='alert alert-success'>Authenticated with google calendar..</div>";
 		// allow try ang catch functions
 		try {
 			$client->setAccessToken($accessToken);
 			$service = new Google_Service_Calendar($client);
-			// Print the next 10 events on the user's calendar.
+			// Print "the next 10 events on the user's calendar"; 
 			$calendarId = 'primary';
 			$optParams = array(
 					'maxResults' => 100,
@@ -291,11 +291,16 @@ function bpc_as_calendar_google_apple_func()
 					'timeMin' => date("c", strtotime($bpc_As_Calendar->getCurrentDate()))
 					// 'timeMax' => '2017-03-28T23:59:59-04:00'
 			);
+
 			$results = $service->events->listEvents($calendarId, $optParams);
+
+			// print "<br>results:"; 
+			// bpc_as_print_r_pre($results ); 
+
 			if (count($results->getItems()) == 0) {
 				print "<div style='width: 96%;' class='alert alert-danger'> No upcoming events found. </div>";
 			} else {
-				print "<div style='width: 96%;' class='alert alert-info'> Upcoming events synced to <a href='/phone-appointment-settings'> phone appointment settings</a> </div>";
+				print "<div style='width: 96%;' class='alert alert-info'> Change your schedule in <a href='/custom-opening-hours'> custom opening hours </a> </div>";
 				$googleSchedule = [];
 				foreach ($results->getItems() as $index => $event) {
 					$bpc_As_Calendar->setEventResult([
@@ -312,10 +317,7 @@ function bpc_as_calendar_google_apple_func()
 				$break_from = '';
 				$break_to = '';
 				$counter = 0;
-
-
-
-
+ 
 		print '
 			<table id="example" class="display" cellspacing="0" width="100%">
 		        <thead>
@@ -367,9 +369,11 @@ function bpc_as_calendar_google_apple_func()
 			unset($_SESSION['access_token']);
 
 		}catch (Exception $e){
+			print "auto load google calendar!"; 
 			bpc_as_google_calendar_auto_connect_with_popup(bpc_as_google_calendar_get_path_call_back_file());
 		}
 	} else {
+		print " print button to authenticate in to google calendar"; 
 		print "<div style='width: 96%;' class='alert alert-info'> Click <a href='/phone-appointment-settings'>here</a> to visit phone appointment settings  </div>";
 		bpc_as_google_calendar_print_connect_button(bpc_as_google_calendar_get_path_call_back_file());
 	} 
@@ -521,15 +525,16 @@ function bpc_as_header()
 		<script src="<?php print bpc_as_plugin_url; ?>/assets/js/my_jquery.js"></script>
 		<script src="<?php print bpc_as_plugin_url; ?>/assets/js/my_angular.js"></script> 
 
-		
-		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" >
-		<script src="//code.jquery.com/jquery-1.12.4.js"></script>
-		<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
-		<script>
 			
-			$(document).ready(function() {
-			    $('#example').DataTable();
-			} );
+		<!-- <script src="//code.jquery.com/jquery-1.12.4.js" > </script> -->
+		<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js" ></script>
+		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
+	 
+		<script>
+		   	$.noConflict();
+		  	jQuery( document ).ready(function( $ ) {
+				  $('#example').DataTable(); 
+			}); 
 		</script>
 	<?php
 }

@@ -63,9 +63,10 @@ class bpc_appointment_setting_standard
      *  This will convert the serialized format of data 
      */
     public function convertToPropperDateTime($var_array)
-    {
-
-        if(!empty($var_array)) {  
+    { 
+        // bpc_as_print_r_pre($var_array); 
+ 
+        // if(!empty($var_array)) {  
             $data  = [];     
             $index = 0;
             $c     = 1;
@@ -87,9 +88,9 @@ class bpc_appointment_setting_standard
                 } 
             }     
             return $custom_break; 
-        } else {
-            return null;
-        }
+        // } else {
+        //     return null;
+        // }
     } 
  
 

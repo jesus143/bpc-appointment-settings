@@ -1,6 +1,4 @@
- <hr>
-
-
+<br><br>
 <div class="container"> 
 <!--    <p class="lead">-->
 <!--        This agenda viewer will let you see multiple events cleanly!-->
@@ -58,7 +56,7 @@
 
                                 $scheduleStatus                = ($scheduleRange[$counter]['close'] == 'yes') ? 'checked' : '';
                                 $scheduleStatusMessage         = ($scheduleRange[$counter]['close'] == 'yes') ? 'Closed All Day' : '';
-                                $scheduleStatusStyle           = ($scheduleRange[$counter]['close'] == 'yes') ? 'background-color: rgb(251, 162, 162)' : '';
+                                $scheduleStatusStyle           = ($scheduleRange[$counter]['close'] == 'yes') ? 'background-color: rgb(251, 162, 162) !important' : '';
                                 $scheduleStatusDisable         = ($scheduleRange[$counter]['close'] == 'yes') ? 'disabled' : '';
                             }
 
@@ -66,28 +64,28 @@
 
 
                         <tr class="bpc-as-row-schedule" id="bpc-as-row-schedule-<?php print $petsa; ?>" style="<?php print $scheduleStatusStyle; ?>"  >
-                            <td class="agenda-date" class="active" rowspan="1">
+                            <td class="agenda-date active" id="agenda-time-0-<?php print $petsa; ?>"   rowspan="1">
                                 <div class="dayofmonth"><?php print $petsa; ?></div>
                                 <div class="dayofweek"><?php print $date['day']; ?></div>
                                 <div class="shortdate text-muted"><?php print $date['month'] . ', ' .  $date['year']; ?></div>
                                 <input type="hidden" name="<?php print $nameChecking; ?>" value="" />
                             </td>
-                            <td class="agenda-time">
+                            <td class="agenda-time" id="agenda-time-1-<?php print $petsa; ?>"  >
                                 <div class="agenda-event">
                                     <input type="checkbox" name="<?php print $nameMorning; ?>"    <?php print $scheduleStatusDisable; ?>  <?php print $morningSelected; ?> />
                                 </div>
                             </td>
-                            <td class="agenda-events">
+                            <td class="agenda-events" id="agenda-time-2-<?php print $petsa; ?>"   >
                                 <div class="agenda-event">
                                     <input type="checkbox" name="<?php print $nameAfternoon; ?>" <?php print $scheduleStatusDisable; ?>  <?php print $afternoonSelected; ?>  />
                                 </div>
                             </td>
-                            <td class="agenda-events">
+                            <td class="agenda-events" id="agenda-time-3-<?php print $petsa; ?>"  >
                                 <div class="agenda-event">
                                     <input type="checkbox" name="<?php print $nameEvening; ?>"   <?php print $scheduleStatusDisable; ?>  <?php print $eveningSelected; ?>  />
                                 </div>
                             </td>
-                            <td>
+                            <td  id="agenda-time-4-<?php print $petsa; ?>"   >
                                 <input type="checkbox" name="<?php print $nameClose; ?>" onclick="bpc_as_schedule_close('<?php print $petsa; ?>')"  <?php print $scheduleStatus; ?> />
                                 <message><em><?php print $scheduleStatusMessage; ?></em></message>
                             </td>

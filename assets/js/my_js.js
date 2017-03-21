@@ -26,10 +26,24 @@ function bpc_as_schedule_close(petsa)
     attr_input_id     = "#bpc-as-row-schedule-"+petsa+ " input[type='button']";
     attr_checkbox_id  = "#bpc-as-row-schedule-"+petsa+ " .agenda-event input";
     attr_message_id   = "#bpc-as-row-schedule-"+petsa+ " message";
-    attr_table_id     = "#bpc-as-row-schedule-"+petsa+ " table"; 
+    attr_table_id     = "#bpc-as-row-schedule-"+petsa+ " table";
     var bg = $(attr_id).css('background-color');
     console.log(bg);
     if(bg == 'rgb(251, 162, 162)') {
+
+
+        console.log("tes1t111");
+        //$("#bpc-as-row-schedule-"+petsa+ " td").css("background-color", '');
+        $( "#agenda-events-"  + petsa ).css("background-color", 'none');
+
+
+        // remove td bg color
+        /*
+        for(var k = 0; k < 6; k++) {
+            $("#agenda-time-"+k+"-" + petsa).css({'background-color':schedule.bgRowColorOpen});
+        }
+        */
+
         // white bg color
         $(attr_id).css({'background-color':schedule.bgRowColorOpen});
         // disable select dropdown
@@ -44,6 +58,18 @@ function bpc_as_schedule_close(petsa)
         // set close message empty
         $(attr_message_id).html("");
     } else {
+
+        console.log("test22");
+
+
+        // add td bg color
+        /*
+        for(var k = 0; k < 6; k++) {
+            $("#agenda-time-"+k+"-" + petsa).attr('style','background-color:#fba2a2 !important');
+        }
+        */
+
+
         // red bg color
         $(attr_id).css({'background-color':schedule.bgRowColorClose});
         // disable select dropdown
@@ -291,7 +317,7 @@ function bpc_as_update_time_break(strDate)
  * open window when page loaded, this will allow generate the google calendar
  */
 function openWindowAndCloseAfterPageLoaded(link){
-    console.log(" link " + link);
+    //alert(" link " + link);
     console.log("open popup");
     var temp = window.open(link, "mywindow","menubar=1,resizable=1,width=350,height=250");
     temp[temp.addEventListener ? 'addEventListener' : 'attachEvent']( (temp.attachEvent ? 'on' : '') + 'load', function() {

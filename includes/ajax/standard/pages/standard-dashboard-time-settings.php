@@ -1,4 +1,4 @@
- <hr>
+<br><br>
 <?php  
 
 
@@ -6,14 +6,15 @@
 
     use App\Bpc_Appointment_Settings_Breaks;
     use App\BPC_AS_DB; 
-    
 
     $bpc_AS_DB = new BPC_AS_DB('wp_bpc_appointment_settings');
     $bpc_Appointment_Settings_Breaks  = new Bpc_Appointment_Settings_Breaks();  
-   
+
+
 ?> 
 
 <div class="container">
+
 <!--    <p class="lead">-->
 <!--        This agenda viewer will let you see multiple events cleanly!-->
 <!--    </p> -->
@@ -56,6 +57,7 @@
                         foreach($dates as $petsa => $date):
 
                             $day = $date['day'];
+                            $breaks = [];
 
                             // set names of the fields
                             $nameOpenFrom    = $petsa . '_' . $date['month'] . '_' . $date['year'] . '_' . $date['day'] . '_open_from[]';
@@ -66,11 +68,12 @@
 
                             /**  This will get specific break of the day */ 
                             $break = unserialize($scheduleStandard[0][strtolower($day) . '_break']); 
-                            // bpc_as_print_r_pre($break); 
-
-
+                            // bpc_as_print_r_pre($break);  
+                             
                             /** new compose break */   
+                            if(!empty($break['break_time_hour_min'])) {
                                $breaks = $bpc_appointment_setting_standard->convertToPropperDateTime($break['break_time_hour_min']);  
+                            }
                             /** end compose break */
 
 
@@ -100,16 +103,16 @@
 
                                 $scheduleStatus                = ($scheduleRange[$counter]['close'] == 'yes') ? 'checked' : '';
                                 $scheduleStatusMessage         = ($scheduleRange[$counter]['close'] == 'yes') ? 'Closed All Day' : '';
-                                $scheduleStatusStyle           = ($scheduleRange[$counter]['close'] == 'yes') ? 'background-color: rgb(251, 162, 162)' : '';
-                                $scheduleStatusDropDownStyle   = ($scheduleRange[$counter]['close'] == 'yes') ? 'cursor: not-allowed; background-color: rgb(251, 162, 162);' : '';
+                                $scheduleStatusStyle           = ($scheduleRange[$counter]['close'] == 'yes') ? 'background-color: rgb(251, 162, 162) !important' : '';
+                                $scheduleStatusDropDownStyle   = ($scheduleRange[$counter]['close'] == 'yes') ? 'cursor: not-allowed; background-color: rgb(251, 162, 162) !important;' : '';
                                 $scheduleStatusButton          = ($scheduleRange[$counter]['close'] == 'yes') ? 'disabled="disabled"' : '';
 
 
                             } else if ($date['day'] == 'Saturday' ||$date['day']  == 'Sunday') {
                                 $scheduleStatus                = 'checked';
                                 $scheduleStatusMessage         = 'Closed All Day';
-                                $scheduleStatusStyle           = 'background-color: rgb(251, 162, 162)';
-                                $scheduleStatusDropDownStyle   = 'cursor: not-allowed; background-color: rgb(251, 162, 162);';
+                                $scheduleStatusStyle           = 'background-color: rgb(251, 162, 162) !important';
+                                $scheduleStatusDropDownStyle   = 'cursor: not-allowed; background-color: rgb(251, 162, 162) !important;';
                                 $scheduleStatusButton          = 'disabled="disabled"';
                             }
 
@@ -121,27 +124,24 @@
 
                             ?>
                             <tr class="bpc-as-row-schedule" id="bpc-as-row-schedule-<?php print $petsa; ?>" style="<?php print $scheduleStatusStyle; ?>" >
-                                <td class="agenda-date" class="active" rowspan="1">
+                                <td class="agenda-date" id="agenda-time-0-<?php print $petsa; ?>"       rowspan="1">
                                     <div class="dayofweek"><?php print $date['day']; ?></div>
                                 </td>
-                                <td class="agenda-time">
+                                <td class="agenda-time" id="agenda-time-1-<?php print $petsa; ?>"  >
                                     <select style="<?php print $scheduleStatusDropDownStyle; ?>"  name="<?php print $nameOpenFrom; ?>" class="bpc-as-hour-dropdown"><?php bpc_as_generate_hours_option($open_from_arr[0]); ?> </select>
                                     <select style="<?php print $scheduleStatusDropDownStyle; ?>" name="<?php print $nameOpenFrom; ?>" class="bpc-as-hour-dropdown"><?php bpc_as_generate_minutes_option($open_from_arr[1]); ?> </select>
                                 </td>
-
-                                <td class="agenda-events">
+                                <td class="agenda-events" id="agenda-time-2-<?php print $petsa; ?>"   >
                                     <div class="agenda-event">
                                         <select style="<?php print $scheduleStatusDropDownStyle; ?>" name="<?php print $nameOpenTo; ?>" class="bpc-as-hour-dropdown"><?php bpc_as_generate_hours_option($open_to_arr[0]); ?> </select>
                                         <select style="<?php print $scheduleStatusDropDownStyle; ?>" name="<?php print $nameOpenTo; ?>" class="bpc-as-hour-dropdown"><?php bpc_as_generate_minutes_option($open_to_arr[1]); ?> </select>
                                     </div>
                                 </td>
-
-                                <td>
+                                <td id="agenda-time-3-<?php print $petsa; ?>" >
                                     <input name="<?php print $nameClose; ?>" type="checkbox" name="close" onclick="bpc_as_schedule_close('<?php print $petsa; ?>')"  <?php print $scheduleStatus; ?> />
                                     <message><em><?php print $scheduleStatusMessage; ?></em></message>
-                                </td> 
- 
-                                <td class="bpc-as-break-time-container-td">   
+                                </td>
+                                <td class="bpc-as-break-time-container-td" id="agenda-time-4-<?php print $petsa; ?>"  >
 
 
                                     <input <?php print $scheduleStatusButton ?> style="<?php print $scheduleStatusDropDownStyle; ?>" type="button" value="Add Break" onclick="bpc_as_add_time_break('<?php print $strDate; ?>', 'standard',  '<?php print $day; ?>')" >

@@ -26,6 +26,25 @@ standard - when standard page loader, it should show the saved breaks for standa
 
 
 
+Hi Rich, 
+
+1. Make it google calendar clearer popup 
+2. Google calendar allow auto close when done loading the separated popup
+3. Google calendar synced look more cleaner table, working in my localhost, but with issue in online and this is to be fixed tomorrow
+4. add pagination if exceed data
+5. do testing in localhost and its working
+6. upload to server and do testing but site is too slow to test and i got some issue still, so i need to fix this tomorrow for online
+
+Tomorrow update
+1. Continue testing and do fixing with issue in online when doing testing, also try to figure out why site is too slow and try fixing it. 
+2. Update book phone call site code based on testing updates, in this way book phone call site can adopt the changes
+
+
+
+
+
+
+
 
 Update March 15, 2017 
 1. Custom - Allow when update break then delete current breaks and insert new breaks to custom settings database

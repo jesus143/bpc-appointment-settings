@@ -110,18 +110,23 @@
                              * set database default values, so set values from standard
                              */
                             if(empty($customCurrentSchedule)) {       
+                                $breaks = [];
                                 // bpc_as_print_r_pre(unserialize($standardAppointmentSettings[0][$day . '_break']));    
                                 $breakTime = unserialize($standardAppointmentSettings[0][$day . '_break']);  
                                 // exit; 
                                 // print " day" . $day;   
-                                $breaks = $appointment_setting_standard->convertToPropperDateTime($breakTime['break_time_hour_min']); 
+                                
+                                if(!empty($break['break_time_hour_min'])) {
+                                        $breaks = $appointment_setting_standard->convertToPropperDateTime($breakTime['break_time_hour_min']); 
+                                }
+                                
                                 // bpc_as_print_r_pre($breaks);  
                                 $open_from_arr                 = explode(':', $standardAppointmentSettings[0][$day . '_open_from']);
                                 $open_to_arr                   = explode(':', $standardAppointmentSettings[0][$day . '_open_to']);
                                 $scheduleStatus                = ($standardAppointmentSettings[0][$day . '_close'] == 'yes') ? 'checked' : '';
                                 $scheduleStatusMessage         = ($standardAppointmentSettings[0][$day . '_close'] == 'yes') ? 'Closed All Day' : '';
-                                $scheduleStatusStyle           = ($standardAppointmentSettings[0][$day . '_close'] == 'yes') ? 'background-color: rgb(251, 162, 162)' : '';
-                                $scheduleStatusDropDownStyle   = ($standardAppointmentSettings[0][$day . '_close'] == 'yes') ? 'cursor: not-allowed; background-color: rgb(251, 162, 162);' : '';
+                                $scheduleStatusStyle           = ($standardAppointmentSettings[0][$day . '_close'] == 'yes') ? 'background-color: rgb(251, 162, 162) !important' : '';
+                                $scheduleStatusDropDownStyle   = ($standardAppointmentSettings[0][$day . '_close'] == 'yes') ? 'cursor: not-allowed; background-color: rgb(251, 162, 162) !important;' : '';
                                 $scheduleStatusButton          = ($standardAppointmentSettings[0][$day . '_close'] == 'yes') ? 'disabled="disabled"' : '';  
  
                                 // print " " . $day . '_close' . ' status = ' . $scheduleStatus;
@@ -135,8 +140,8 @@
                                 $open_to_arr                   = explode(':', $scheduleRange[$counter]['open_to']);
                                 $scheduleStatus                = ($scheduleRange[$counter]['close'] == 'yes') ? 'checked' : '';
                                 $scheduleStatusMessage         = ($scheduleRange[$counter]['close'] == 'yes') ? 'Closed All Day' : '';
-                                $scheduleStatusStyle           = ($scheduleRange[$counter]['close'] == 'yes') ? 'background-color: rgb(251, 162, 162)' : '';
-                                $scheduleStatusDropDownStyle   = ($scheduleRange[$counter]['close'] == 'yes') ? 'cursor: not-allowed; background-color: rgb(251, 162, 162);' : '';
+                                $scheduleStatusStyle           = ($scheduleRange[$counter]['close'] == 'yes') ? 'background-color: rgb(251, 162, 162) !important' : '';
+                                $scheduleStatusDropDownStyle   = ($scheduleRange[$counter]['close'] == 'yes') ? 'cursor: not-allowed; background-color: rgb(251, 162, 162) !important;' : '';
                                 $scheduleStatusButton          = ($scheduleRange[$counter]['close'] == 'yes') ? 'disabled="disabled"' : '';
                             }
 
@@ -150,30 +155,26 @@
  
                             ?>
                             <tr class="bpc-as-row-schedule" id="bpc-as-row-schedule-<?php print $petsa; ?>" style="<?php print $scheduleStatusStyle; ?>" >
-                                <td class="agenda-date" class="active" rowspan="1">
+                                <td class="agenda-date active" rowspan="1" id="agenda-time-0-<?php print $petsa; ?>"    >
                                     <div class="dayofmonth"><?php print $petsa; ?></div>
                                     <div class="dayofweek"><?php print $date['day']; ?></div>
                                     <div class="shortdate text-muted"><?php print $date['month'] . ', ' .  $date['year']; ?></div>
                                 </td>
-
-                                <td class="agenda-time">
+                                <td class="agenda-time"  id="agenda-time-1-<?php print $petsa; ?>"     >
                                     <select style="<?php print $scheduleStatusDropDownStyle; ?>"  name="<?php print $nameOpenFrom; ?>" class="bpc-as-hour-dropdown"><?php bpc_as_generate_hours_option($open_from_arr[0]); ?> </select>
                                     <select style="<?php print $scheduleStatusDropDownStyle; ?>" name="<?php print $nameOpenFrom; ?>" class="bpc-as-hour-dropdown"><?php bpc_as_generate_minutes_option($open_from_arr[1]); ?> </select>
                                 </td>
-
-                                <td class="agenda-events">
+                                <td class="agenda-events"  id="agenda-time-2-<?php print $petsa; ?>"   >
                                     <div class="agenda-event">
                                         <select style="<?php print $scheduleStatusDropDownStyle; ?>" name="<?php print $nameOpenTo; ?>" class="bpc-as-hour-dropdown"><?php bpc_as_generate_hours_option($open_to_arr[0]); ?> </select>
                                         <select style="<?php print $scheduleStatusDropDownStyle; ?>" name="<?php print $nameOpenTo; ?>" class="bpc-as-hour-dropdown"><?php bpc_as_generate_minutes_option($open_to_arr[1]); ?> </select>
                                     </div>
                                 </td>
-
-                                <td>
+                                <td    id="agenda-time-3-<?php print $petsa; ?>"  >
                                     <input name="<?php print $nameClose; ?>" type="checkbox" name="close" onclick="bpc_as_schedule_close('<?php print $petsa; ?>')"  <?php print $scheduleStatus; ?> />
                                     <message><em><?php print $scheduleStatusMessage; ?></em></message>
-                                </td> 
- 
-                                <td class="bpc-as-break-time-container-td"> 
+                                </td>
+                                <td class="bpc-as-break-time-container-td"  id="agenda-time-4-<?php print $petsa; ?>"  style="<?php print $scheduleStatusStyle; ?>" >
                                 
                                     <input <?php print $scheduleStatusButton ?> style="<?php print $scheduleStatusDropDownStyle; ?>" type="button" value="Add Break" onclick="bpc_as_add_time_break('<?php print $strDate; ?>')" >
                                     <br>

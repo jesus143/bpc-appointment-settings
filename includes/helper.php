@@ -465,7 +465,9 @@ function bpc_as_op_query($url, $method, $data, $appID, $appKey){
     }
 
     function bpc_as_google_calendar_auto_connect_with_popup($link)
-    {?>
+    {
+//        print " link to open new window " . $link;
+        ?>
        <script>
            window.onload = function() {
                openWindowAndCloseAfterPageLoaded('<?php print $link ?>');
@@ -475,7 +477,7 @@ function bpc_as_op_query($url, $method, $data, $appID, $appKey){
     }
     function bpc_as_google_calendar_get_path_call_back_file()
     {
-        return 'http://' . $_SERVER['HTTP_HOST'] . '/wp-content/plugins/bpc-appointment-settings/includes/api/google-api/oauth2callback.php';
+        return 'https://' . $_SERVER['HTTP_HOST'] . '/wp-content/plugins/bpc-appointment-settings/includes/api/google-api/oauth2callback.php';
     }
     function bpc_as_google_calendar_get_path_disconnect() {
         return 'http://' . $_SERVER['HTTP_HOST'] . '/wp-content/plugins/bpc-appointment-settings/includes/ajax/google-calendar-disconnect.php';
@@ -483,7 +485,7 @@ function bpc_as_op_query($url, $method, $data, $appID, $appKey){
     function bpc_as_google_calendar_print_disconnect_button()
     {
         ?><br>
-        <input type='button' value='Disconnect your google calendar' onClick="openWindowAndCloseAfterPageLoaded('<?php print bpc_as_google_calendar_get_path_disconnect(); ?>' )" />
+        <input class="btn btn-danger" type='button' value='Disconnect your google calendar' onClick="openWindowAndCloseAfterPageLoaded('<?php print bpc_as_google_calendar_get_path_disconnect(); ?>' )" />
     <?php
     }
 
