@@ -1,5 +1,4 @@
- <hr>
-<?php  
+<?php
 // // Turn off error reporting
 // error_reporting(1);
 

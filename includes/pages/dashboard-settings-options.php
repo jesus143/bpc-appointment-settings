@@ -26,7 +26,7 @@ if(empty($scheduleRange)) {
 ?>
 
  <div class="container bpc-as-dashboard-settings-option">
-	<div class="row">
+	<div class="row" style="padding: 0px;margin: 0px;margin-left: -15px;" >
 		<div class="col-md-3">
 			<?php print get_option('bpc_call_back_delay_standard'); ?> 
 			<!-- <h5>Call Back Delay:</h5> -->

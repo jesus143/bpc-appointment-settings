@@ -1,7 +1,7 @@
  
 
 <div class="container dashboard-settings-option">  
-	<div class="row">
+	<div class="row" style="padding: 0px;margin: 0px;margin-left: -15px;" >
 		<div class="col-md-3">
 		<h5>Book Exact Time: &nbsp;&nbsp; <input type='radio'   id="bpc-as-bookTimeSorting" name="bookTimeSorting" checked onclick="bpc_as_schedule_type('book exact time')" value="book exact time" <?php print $book_exact_time; ?>  />  </h5>
 		 	  

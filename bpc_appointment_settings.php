@@ -467,7 +467,7 @@ function bpc_as_calendar_google_apple_authenticate()
 				$break_to = '';
 				$counter = 0;
 				
-				print '<div style="width:102%" class="list-group" >';
+				print '<div style="width:102%" >';
 					foreach($googleSchedule as $date => $breaks) {
 						if(!empty($date)) {
 							$appointment_setting_id = $bpc_AS_DB->InsertGetOrGetPhoneCallSettings($date)[0]['id'];
@@ -486,7 +486,7 @@ function bpc_as_calendar_google_apple_authenticate()
 							}
 						}
 					}
-				print '<div class="list-group">';
+				print '<div>';
 			}
 		}catch (Exception $e){
 			bpc_as_google_calendar_auto_connect_with_popup(bpc_as_google_calendar_get_path_call_back_file());

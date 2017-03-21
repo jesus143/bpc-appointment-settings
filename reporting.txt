@@ -1,3 +1,37 @@
+Hi Rich
+
+Update 21, 2017
+
+1. Clean ui and arrange ui for custom, standard and google calendar sync
+2. Fix ui selected background, but found out that we have issue in selected bakground so i just revert back the old way of background
+3. Fix error displayed
+4. Fix display pagination for google celendar sync
+5. Fix footer
+6. Fix google calendar popup not showing when page need authentication
+
+Tomorrow
+
+Fix few ui spacing.
+Focus working on book phone call integration with the update from testing calendar schedule
+
+
+Need to get rest now, good night.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Standard - Click "add break" - do nothing 
 
