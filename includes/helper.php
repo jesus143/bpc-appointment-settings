@@ -459,7 +459,7 @@ function bpc_as_op_query($url, $method, $data, $appID, $appKey){
     function bpc_as_google_calendar_print_connect_button($link) {
         ?>
         <br>
-         <input type='button' value='Sync with google calendar' onClick="openWindowAndCloseAfterPageLoaded('<?php print $link; ?>' )" />
+         <input class="btn btn-info" type='button' value='Sync with google calendar' onClick="openWindowAndCloseAfterPageLoaded('<?php print $link; ?>' )" />
 
         <?php
     }
