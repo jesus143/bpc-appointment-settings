@@ -97,3 +97,7 @@ body {
       color:black;
 
  }
+
+.table td, .table th {
+    background-color:transparent !important;
+}
