@@ -121,8 +121,6 @@ function bpc_as_opening_hours_func_custom_func()
 	echo "</form>";
 	require_once('includes/pages/dashboard-settings-options-save.php');
 	print "</div>";
-	print "</div>";
-	print "</div>";
 	ob_flush();
 }
 
@@ -255,7 +253,7 @@ function bpc_as_calendar_google_apple_func()
 	$standard->generateSpecificUserWithDefaultStandarSettings();
 
 
-
+	//	print "type " . $_SESSION['type']	;
 	if($_SESSION['type'] == 'auth') {
 	?>
 		<style>
@@ -403,7 +401,7 @@ function bpc_as_calendar_google_apple_func()
 			unset($_SESSION['access_token']);
 
 		}catch (Exception $e){
-			//			print "auto load google calendar!";
+			// print "auto load google calendar!";
 			bpc_as_google_calendar_auto_connect_with_popup(bpc_as_google_calendar_get_path_call_back_file());
 			bpc_as_google_calendar_print_connect_button(bpc_as_google_calendar_get_path_call_back_file());
 		}
@@ -525,7 +523,8 @@ function bpc_as_calendar_google_apple_authenticate()
 				print '<div>';
 			}
 		}catch (Exception $e){
-			bpc_as_google_calendar_auto_connect_with_popup(bpc_as_google_calendar_get_path_call_back_file());
+			//bpc_as_google_calendar_auto_connect_with_popup(bpc_as_google_calendar_get_path_call_back_file());
+//			bpc_as_google_calendar_print_connect_button(bpc_as_google_calendar_get_path_call_back_file());
 		}
 	} else {
 		print "<div style='width: 96%;' class='alert alert-info'> Click <a href='/google-calendar-settings'>here</a> to visit google calendar settings </div>";

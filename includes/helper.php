@@ -481,7 +481,10 @@ function bpc_as_op_query($url, $method, $data, $appID, $appKey){
 
         $http = 'https://';
 
-        if(bpc_as_is_localhost() or strpos($_SERVER['HTTP_HOST'], 'hopto.org') > 0) {
+        //        print "<pre>";
+        //        print_r($_SERVER);
+
+        if(bpc_as_is_localhost() or $_SERVER['SERVER_NAME'] == 'google-calendar.hopto.org' ) {
             $http = 'http://';
         }
 
