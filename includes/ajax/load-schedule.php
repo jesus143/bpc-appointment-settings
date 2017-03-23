@@ -60,7 +60,7 @@ if(!empty($scheduleRange)) {
 $call_back_delay_val_num = [1, 2, 4, 15, 30, 45, 60, 90];
 $call_back_delay_val_text = ['mins', 'hours'];
 $call_back_length_val_num = [ 10, 15, 20, 30, 45, 60, 90 ];
-$call_back_length_val_text = ['mins', 'hours', 'days'];
+$call_back_length_val_text = ['mins', 'hours'];
  
 // print "<br> request option [" . bpc_as_get_request_option() . '] db option in first date [' . $scheduleRange[0]['book_time_type'] . ']'; 
  
