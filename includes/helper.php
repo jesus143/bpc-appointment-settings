@@ -466,7 +466,7 @@ function bpc_as_op_query($url, $method, $data, $appID, $appKey){
 
     function bpc_as_google_calendar_auto_connect_with_popup($link)
     {
-        print " link to open new window " . $link;
+//        print " link to open new window " . $link;
         ?>
        <script>
 //           window.onload = function() {
@@ -478,7 +478,15 @@ function bpc_as_op_query($url, $method, $data, $appID, $appKey){
     }
     function bpc_as_google_calendar_get_path_call_back_file()
     {
-        return 'https://' . $_SERVER['HTTP_HOST'] . '/wp-content/plugins/bpc-appointment-settings/includes/api/google-api/oauth2callback.php';
+
+        $http = 'https://';
+
+        if(bpc_as_is_localhost() or strpos($_SERVER['HTTP_HOST'], 'hopto.org') > 0) {
+            $http = 'http://';
+        }
+
+        return  $http . $_SERVER['HTTP_HOST'] . '/wp-content/plugins/bpc-appointment-settings/includes/api/google-api/oauth2callback.php';
+
     }
     function bpc_as_google_calendar_get_path_disconnect() {
         return 'http://' . $_SERVER['HTTP_HOST'] . '/wp-content/plugins/bpc-appointment-settings/includes/ajax/google-calendar-disconnect.php';
