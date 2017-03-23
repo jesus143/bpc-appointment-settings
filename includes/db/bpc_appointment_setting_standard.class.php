@@ -91,7 +91,50 @@ class bpc_appointment_setting_standard
         // } else {
         //     return null;
         // }
-    } 
+    }
+
+
+
+    public function generateSpecificUserWithDefaultStandarSettings()
+    {
+
+        $user_id     = bpc_as_get_current_user_logged_in_id();
+        $partner_id  = bpc_as_get_current_user_partner_id();
+
+        //        print " user id $user_id and partner id $partner_id<Br>";
+
+        $isStandardExist= $this->bpc_as_wpdb_queries->wpdb_get_result("select * from $this->table_name where user_id = $user_id ");
+
+        //        bpc_as_print_r_pre($isStandardExist);
+
+       if(count($isStandardExist) < 1) {
+
+           $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+
+            foreach ($days as $day) {
+                $data[$day . '_open_from'] = '9:00';
+                $data[$day . '_open_to'] = '17:30';
+            }
+
+            $data['user_id'] = $user_id;
+            $data['partner_id'] = $partner_id;
+
+            $data['call_back_length'] = '15 mins';
+            $data['call_back_delay'] = '15 mins';
+
+            //            bpc_as_print_r_pre($data);
+
+            //            print " not exist user standard and generated";
+            return $this->bpc_as_wpdb_queries->wpdb_insert($data);
+
+       } else{
+
+            //           print " exist user standard and generated";
+           return false;
+
+       }
+
+    }
  
 
 }

@@ -317,7 +317,7 @@ function bpc_as_update_time_break(strDate)
  * open window when page loaded, this will allow generate the google calendar
  */
 function openWindowAndCloseAfterPageLoaded(link){
-    alert(" link " + link);
+    //alert(" link " + link);
     console.log("open popup");
     var temp = window.open(link, "mywindow","menubar=1,resizable=1,width=350,height=250");
     temp[temp.addEventListener ? 'addEventListener' : 'attachEvent']( (temp.attachEvent ? 'on' : '') + 'load', function() {

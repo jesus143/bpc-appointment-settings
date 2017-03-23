@@ -26,6 +26,8 @@ require_once('includes/db/Bpc_As_Calendar.php');
 require_once("includes/db/wpdb_queries.class.php");
 require_once("includes/db/bpc_as_db.php");
 require_once("includes/db/bpc_appointment_setting_breaks.php");
+require_once("includes/db/bpc_appointment_setting_standard.class.php");
+
 require_once("includes/db/bpc_user_api.php");
 
 if(bpc_as_is_localhost()) {
@@ -38,6 +40,7 @@ use App\Bpc_Appointment_Settings_Breaks;
 use App\BPC_AS_DB;
 use App\Bpc_As_Calendar;
 use App\Bpc_User_Api;
+use App\bpc_appointment_setting_standard;
 
 function bpc_as_admin_menu()
 {
@@ -91,10 +94,19 @@ function bpc_as_admin ()
 }
 
 /**
- * No standard
+ * Custom
  */
 function bpc_as_opening_hours_func_custom_func()
 {
+
+
+	/**
+	 * generate standard settings for specific user
+	 */
+	$standard = new bpc_appointment_setting_standard();
+	$standard->generateSpecificUserWithDefaultStandarSettings();
+
+
 	ob_start();
 	 	bpc_as_calendar_google_apple_authenticate();
 	print "<input type='hidden' value='". get_site_url() ."' id='bpc_as_rool_url' />";
@@ -120,6 +132,17 @@ function bpc_as_opening_hours_func_custom_func()
 function bpc_as_opening_hours_func() 
 {
 	ob_start();
+
+
+	/**
+	 * generate standard settings for specific user
+	 */
+	$standard = new bpc_appointment_setting_standard();
+	$standard->generateSpecificUserWithDefaultStandarSettings();
+
+
+
+
 
 	print "<input type='hidden' id='bpc_kind_of_page' value='standard' />";
     // 	bpc_as_calendar_google_apple_authenticate();
@@ -219,11 +242,20 @@ function bpc_as_install_table()
 }
 
 function bpc_as_calendar_google_apple_func()
-{ 
+{
     //	unset($_SESSION['access_token']); 
 	ob_start();   
 	// print " type " . $_SESSION['type'];  
-	 
+
+
+	/**
+	 * generate standard settings for specific user
+	 */
+	$standard = new bpc_appointment_setting_standard();
+	$standard->generateSpecificUserWithDefaultStandarSettings();
+
+
+
 	if($_SESSION['type'] == 'auth') {
 	?>
 		<style>
@@ -274,7 +306,9 @@ function bpc_as_calendar_google_apple_func()
 	$accessToken  = $bpc_User_Api->getGoogleCalendarAccessToken();
 		// print "token $accessToken";
 	// set if not empty, meaning its already authenticated
-	
+
+
+
 	print "<div style='width:90%' class='authenticate-google-api'>"; 
 	if (!empty($accessToken)) { 
 		print "<div style='width: 96%;' class='alert alert-success'>Authenticated with google calendar..</div>";
@@ -317,7 +351,7 @@ function bpc_as_calendar_google_apple_func()
 				$break_from = '';
 				$break_to = '';
 				$counter = 0;
- 
+
 		print '
 			<table id="example" class="display" cellspacing="0" width="100%">
 		        <thead>
@@ -369,11 +403,13 @@ function bpc_as_calendar_google_apple_func()
 			unset($_SESSION['access_token']);
 
 		}catch (Exception $e){
-			print "auto load google calendar!"; 
+			//			print "auto load google calendar!";
 			bpc_as_google_calendar_auto_connect_with_popup(bpc_as_google_calendar_get_path_call_back_file());
+			bpc_as_google_calendar_print_connect_button(bpc_as_google_calendar_get_path_call_back_file());
 		}
+
 	} else {
-		print " print button to authenticate in to google calendar"; 
+		//		print " print button to authenticate in to google calendar";
 		print "<div style='width: 96%;' class='alert alert-info'> Click <a href='/phone-appointment-settings'>here</a> to visit phone appointment settings  </div>";
 		bpc_as_google_calendar_print_connect_button(bpc_as_google_calendar_get_path_call_back_file());
 	} 
