@@ -214,8 +214,22 @@ function bpc_as_get_request_option()
 
 function bpc_as_set_date_as_db_format($date)
 {
-    $date = date_create($date);
-    return date_format($date, "Y-m-d");
+
+    ///print " Date  $date ";
+    if(!empty($date) and $date != 'undefined') {
+        //        print "date is not empty";
+        $date = date_create($date);
+        return date_format($date, "Y-m-d");
+    } else {
+        //print " Date is empty";
+        return $date;
+    }
+}
+
+
+function bpc_as_set_date_as_uk_format($db_date) {
+    $date = date_create($db_date);
+    return date_format($date, "d-m-Y");
 }
 /**
  * @param $fieldName
@@ -330,20 +344,24 @@ function bpc_as_print_r_pre($string)
 }
 
 function bpc_as_get_moday_in_date_week($dateRequest)
-{   
-
-    // print " request datae $dateRequest";
-    //  2017-01-02
-    // $date = bpc_as_set_date_as_db_format($date);  
-     $date = bpc_as_set_date_as_db_format($dateRequest); 
-    $dateArr = explode("-", $date); 
-    $year = $dateArr[0];
-    $month =  $dateArr[1];
-    $day =  $dateArr[2];
-    $monday=strtotime("monday this week", mktime(0,0,0, $month, $day, $year));
-    $mondayOfTheWeek = date("Y-m-d",$monday);
-    // print " monday of the week " . $mondayOfTheWeek . ' <<------ <br><br><Br>';
-    return $mondayOfTheWeek; 
+{
+    //    print " register " . $dateRequest;
+    if(!empty($dateRequest) and $dateRequest != 'undefined') {
+        // print " request datae $dateRequest";
+        //  2017-01-02
+        // $date = bpc_as_set_date_as_db_format($date);
+        $date = bpc_as_set_date_as_db_format($dateRequest);
+        $dateArr = explode("-", $date);
+        $year = $dateArr[0];
+        $month = $dateArr[1];
+        $day = $dateArr[2];
+        $monday = strtotime("monday this week", mktime(0, 0, 0, $month, $day, $year));
+        $mondayOfTheWeek = date("Y-m-d", $monday);
+        // print " monday of the week " . $mondayOfTheWeek . ' <<------ <br><br><Br>';
+        return $mondayOfTheWeek;
+    } else {
+        return '';
+    }
 }
 
 

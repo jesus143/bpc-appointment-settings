@@ -101,3 +101,7 @@ body {
 .table td, .table th {
     background-color:transparent !important;
 }
+
+#bpc-as-save-schedule-container {
+    text-align: center !important;
+}

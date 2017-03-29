@@ -32,7 +32,7 @@
                         <th>Days</th>
                         <th>Open From</th>
                         <th>Open To</th>
-                        <th>Close</th>
+                        <th>Closed</th>
                         <th>Break</th>
                     </tr>
                 </thead>
@@ -220,7 +220,8 @@
                                     </div> 
 
                                     <div style="display:none" id="break-time-update-loader-<?php print $day; ?>" >
-                                        <i class=" fa fa-spinner fa-spin"   ></i> 
+                                        <i class=" fa fa-spinner fa-spin"   ></i><br>
+                                        Loading...
                                     </div>
                                 </td>   
                             </tr><?php

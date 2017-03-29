@@ -150,7 +150,7 @@ foreach($dataToUpdate as $data) {
         if($bpc_as_db->isExistScheduleByDbDate($user_id, $date)) {
             // update
             $bpc_as_db->updateEntryByDateDb($data, ['user_id'=>$user_id, 'date'=>$date]);
-            print "updated";
+            print "Updated..";
         } else {
             // insert
             $bpc_as_db->insertEntry($data);

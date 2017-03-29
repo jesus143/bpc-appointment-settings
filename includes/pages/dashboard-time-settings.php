@@ -273,7 +273,8 @@
 
                                     <div id="bpc-loader-break-time-<?php print $strDate; ?>" style="display:none">
                                         <div id="break-time-update-loader-<?php print $day; ?>" >
-                                            <i class=" fa fa-spinner fa-spin"   ></i> 
+                                            <i class=" fa fa-spinner fa-spin"   ></i><br>
+                                            Loading...
                                         </div> 
                                     </div>  
 

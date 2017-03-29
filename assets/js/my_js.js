@@ -186,7 +186,7 @@ function bpc_as_save_schedule(type)
     $.post( url, formValues )
         .done(function( data ) {
             $("#bpc-as-schedule-update-loader").attr('style', 'display:inline; visibility: hidden;');
-            $("#bpc-as-schedule-update-loader-message").html("<span style='color:green'>updated..</span>").attr('style', 'visibility:visible');  
+            $("#bpc-as-schedule-update-loader-message").html("<span style='color:green'>Updated..</span>").attr('style', 'visibility:visible');
             console.log( "Data Loaded: " + data );
         });
 }

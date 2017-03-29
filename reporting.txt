@@ -1,3 +1,135 @@
+Here is the update for today,
+
+Update for March 28
+
+1. Update name event date to "Event time"
+2. Change format of the date display in google settings
+3. Set header closed not close in settings
+4. On the Phone Appointment Settings page, centre the Update Schedule button in custom settings, standard settings for time and day
+5. Please and add Loading.. (capital L) below centred
+6. Have Updated (capital U) show as well.
+7. Only allow them to go back as far as the month we are currently in
+
+Continue updates tomorrow
+
+Clarification:
+
+Since we will change this to standard settings type https://www.screencast.com/t/c50cD7Efz4mt and we don't need to create custom
+for this, is that correct?
+
+
+Thanks.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Also increase the size of the TODAY text a little so it stands out a bit more.Also increase the size of the TODAY text a little so it stands out a bit more -
+Standard settings
+
+
+
+
+
+Sync with google calendar have random and not correct availability
+
+
+after loading successfully in popup needs to show "success" message before close it and refresh the page
+
+
+
+
+Hi Rich,
+
+Update for March 27, 2017
+
+Add same loading with custom and standard
+Add loading icon when click "book time of day"
+Add same size for loading
+Fix footer when activated with google calendar authenticated
+Fix ui spacing.
+Change loading in update button
+
+Wait for feedback tomorrow and do fex if any.
+
+Thanks
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hi Rich,
+
+Update for March 23, 2017
+
+1. Add style in the button for connect calendar
+2. Remove days in callbacks
+3. Make the td allow closed selected and fill the red background color
+4. Add auto generate standard values if visited custom, standard or google calendar sync page
+5. Fix url https and http automatic popup and sync with google
+6. Just got issue with google calendar sync and try to figure out
+7. umbrella message rte change to 1min check new message instead of 10 seconds, this will help site speed increase.
+8. got issue with google authentication and it gives me a roadblocks and i fixed now.
+
+
+Todo later work
+
+Focus on display book phone calls available dates based on testing custom and standard settings
+- also i need to think the best way for this integration
+
+Hopefully I can let you checked the new updates tomorrow.
+
+
+Thanks rich.
+
+
+
+
+
+
+
+
+
+
 Hi Rich
 
 Update 21, 2017
@@ -10,9 +142,6 @@ Update 21, 2017
 6. Fix google calendar popup not showing when page need authentication
 
 Tomorrow
-
-Fix few ui spacing.
-Focus working on book phone call integration with the update from testing calendar schedule
 
 
 Need to get rest now, good night.

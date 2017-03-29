@@ -18,7 +18,7 @@
                         <th>Morning</th>
                         <th>Afternoon</th>
                         <th>Evening</th>
-                        <th>Close</th>
+                        <th>Closed</th>
                     </tr>
                 </thead>
                 <tbody>

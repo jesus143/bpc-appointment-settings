@@ -99,6 +99,9 @@ function bpc_as_admin ()
 function bpc_as_opening_hours_func_custom_func()
 {
 
+	$bpc_User_Api 	 = new Bpc_User_Api();
+	$accessToken  	 = $bpc_User_Api->getGoogleCalendarAccessToken();
+
 
 	/**
 	 * generate standard settings for specific user
@@ -108,19 +111,38 @@ function bpc_as_opening_hours_func_custom_func()
 
 
 	ob_start();
-	 	bpc_as_calendar_google_apple_authenticate();
+
+	bpc_as_calendar_google_apple_authenticate();
+
 	print "<input type='hidden' value='". get_site_url() ."' id='bpc_as_rool_url' />";
+
 	print "<div onload='bpc_init()'>";
+
 	$book_exact_time = 'checked';
+
 	$book_exact_day = '';
+
 	bpc_as_header();
+
 	echo "<form method='POST' id='testform' >";
+
 	require_once('includes/pages/date-picker.php');
+
 	print "<div id='bpc-as-schedule-settings-content-and-type'>";
+
 	print "</div>";
+
 	echo "</form>";
+
 	require_once('includes/pages/dashboard-settings-options-save.php');
+
+	if (!empty($accessToken)) {
+		print "</div>";
+		print "</div>";
+	}
+
 	print "</div>";
+
 	ob_flush();
 }
 
@@ -129,6 +151,7 @@ function bpc_as_opening_hours_func_custom_func()
  */
 function bpc_as_opening_hours_func() 
 {
+	error_reporting(0);
 	ob_start();
 
 
@@ -147,17 +170,17 @@ function bpc_as_opening_hours_func()
 	print "<input type='hidden' value='". get_site_url() ."' id='bpc_as_rool_url' />";
 	print "<div onload='bpc_init()'>";  
 
-		print '<div id="standard-settings-loader" >'; 
-		print '<i class=" fa fa-spinner fa-spin"    ></i>'; 
-		print '<p>Please wait..</p>';
-		print '</div>'; 
+		//		print '<div id="standard-settings-loader" >';
+		//		print '<i class=" fa fa-spinner fa-spin"    ></i>';
+		//		print '<p>Please wait..</p>';
+		//		print '</div>';
 
 		$book_exact_time = 'checked';
 		$book_exact_day = ''; 
 			bpc_as_header();
 			echo "<form method='POST' id='testform' >";
-				print "<div style='visibility: hidden'>";
-				 require_once('includes/pages/date-picker.php');
+				print "<div>";
+				 require_once('includes/pages/standard/standard-date-picker.php');
 				print "</div>";
 				print "<div id='bpc-as-schedule-settings-content-and-type'>";
 				print "</div>";
@@ -355,14 +378,14 @@ function bpc_as_calendar_google_apple_func()
 		        <thead>
 		            <tr>
 		                <th>Event Date</th>
-		                <th>Event Date</th>
+		                <th>Event Times</th>
 		                <th>Event Name</th> 
 		            </tr>
 		        </thead>
 		        <tfoot>
 		         <tr>
 		            <th>Event Date</th>
-		            <th>Event Date</th>
+		            <th>Event Times</th>
 		            <th>Event Name</th> 
 		        </tr>
 		        </tfoot>
@@ -380,8 +403,8 @@ function bpc_as_calendar_google_apple_func()
 								$description   = $break['description'];
 								if(!empty($break_from) and !empty($break_to)) { 
 									print '<tr>'; 
-									print "<td>$date</td>"; 
-									print "<td>$break_from</td>"; 
+									print "<td>" . bpc_as_set_date_as_uk_format($date) . "</td>";
+									print "<td>$break_from - $break_to</td>";
 									print "<td>$description</td>";  
 									print "</tr>";     
 									$bpc_Appointment_Settings_Breaks->addNewAppointmentBreakIndividual($appointment_setting_id, $break_from, $break_to);
@@ -419,11 +442,12 @@ function bpc_as_calendar_google_apple_func()
 
 function bpc_as_calendar_google_apple_authenticate()
 {
+
+
+
 	ob_start();
+
 	bpc_as_header();
-
-
-
 
 	?>
 	<style>
@@ -448,9 +472,6 @@ function bpc_as_calendar_google_apple_authenticate()
 	$bpc_As_Calendar = new Bpc_As_Calendar();
 	$bpc_User_Api 	 = new Bpc_User_Api();
 	$accessToken  	 = $bpc_User_Api->getGoogleCalendarAccessToken();
-
-
-
 
 	if (!empty($accessToken)) {
 		print "<div style='width: 96%;' class='alert alert-info'>Synced with google calendar.. click <a href='/google-calendar-settings'>here</a> to visit google calendar settings </div>";
