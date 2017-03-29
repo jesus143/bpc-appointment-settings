@@ -1,8 +1,11 @@
 <br><br>
-<?php  
+<?php
 
-
-    if(bpc_as_is_localhost()) {  require_once("E:/xampp/htdocs/practice/wordpress/wp-load.php"); } else { require $_SERVER['DOCUMENT_ROOT'] .'/wp-load.php'; }
+    if(bpc_as_is_localhost()) {
+        require_once("E:/xampp/htdocs/practice/wordpress/wp-load.php");
+    } else {
+        require $_SERVER['DOCUMENT_ROOT'] .'/wp-load.php';
+    }
 
     use App\Bpc_Appointment_Settings_Breaks;
     use App\BPC_AS_DB; 
@@ -26,6 +29,9 @@
 
     <div class="agenda" >
         <div class="table-responsive bpc-as-table-display">
+
+            <input type="hidden" value="Book Exact Time" name="book_time_type" />
+
             <table class="table table-condensed table-bordered">
                 <thead>
                     <tr>
@@ -56,13 +62,14 @@
                          */
                         foreach($dates as $petsa => $date):
 
+                            $day1 = $days[$counter];
                             $day = $date['day'];
                             $breaks = [];
 
                             // set names of the fields
-                            $nameOpenFrom    = $petsa . '_' . $date['month'] . '_' . $date['year'] . '_' . $date['day'] . '_open_from[]';
-                            $nameOpenTo      = $petsa . '_' . $date['month'] . '_' . $date['year'] . '_' . $date['day'] . '_open_to[]';
-                            $nameClose       = $petsa . '_' . $date['month'] . '_' . $date['year'] . '_' . $date['day'] . '_business_close[]'; 
+                            $nameOpenFrom    = $petsa . '_' . $date['month'] . '_' . $date['year'] . '_' . $day1 . '_open_from[]';
+                            $nameOpenTo      = $petsa . '_' . $date['month'] . '_' . $date['year'] . '_' . $day1 . '_open_to[]';
+                            $nameClose       = $petsa . '_' . $date['month'] . '_' . $date['year'] . '_' . $day1 . '_business_close[]';
                             $strDate         = $petsa . '-' . $date['month'] . '-' . $date['year'];
                             // $scheduleRangeArr = (!empty($scheduleRange[$counter])) ? $scheduleRange[$counter]  : null; 
 
@@ -84,7 +91,7 @@
                             /**
                              *  get results by day only
                              */
-                            $scheduleRange = $bpc_appointment_setting_standard->getResultByDay($date['day'], $scheduleStandard, $counter); 
+                            $scheduleRange = $bpc_appointment_setting_standard->getResultByDay($day1, $scheduleStandard, $counter);
 
                             /**
                              *   result assignment, to enable adopt custom version
@@ -108,7 +115,7 @@
                                 $scheduleStatusButton          = ($scheduleRange[$counter]['close'] == 'yes') ? 'disabled="disabled"' : '';
 
 
-                            } else if ($date['day'] == 'Saturday' ||$date['day']  == 'Sunday') {
+                            } else if ($day1 == 'Saturday' ||$day1  == 'Sunday') {
                                 $scheduleStatus                = 'checked';
                                 $scheduleStatusMessage         = 'Closed All Day';
                                 $scheduleStatusStyle           = 'background-color: rgb(251, 162, 162) !important';
@@ -125,7 +132,7 @@
                             ?>
                             <tr class="bpc-as-row-schedule" id="bpc-as-row-schedule-<?php print $petsa; ?>" style="<?php print $scheduleStatusStyle; ?>" >
                                 <td class="agenda-date" id="agenda-time-0-<?php print $petsa; ?>"       rowspan="1">
-                                    <div class="dayofweek"><?php print $date['day']; ?></div>
+                                    <div class="dayofweek"><?php print $day1; ?></div>
                                 </td>
                                 <td class="agenda-time" id="agenda-time-1-<?php print $petsa; ?>"  >
                                     <select style="<?php print $scheduleStatusDropDownStyle; ?>"  name="<?php print $nameOpenFrom; ?>" class="bpc-as-hour-dropdown"><?php bpc_as_generate_hours_option($open_from_arr[0]); ?> </select>
@@ -148,7 +155,7 @@
                                     <br>
                                     <form> </form>
 
-                                    <form id="bpc-as-break-time-container-form-<?php print $strDate; ?>"   class="<?php print $date['day']; ?>_form_class">
+                                    <form id="bpc-as-break-time-container-form-<?php print $strDate; ?>"   class="<?php print $day1; ?>_form_class">
 
 
                                         <input type="hidden" value="<?php print $strDate; ?>" name="strDate" />

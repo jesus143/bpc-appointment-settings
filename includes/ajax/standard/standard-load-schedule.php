@@ -89,13 +89,25 @@ $book_exact_day = '';
 
 if(bpc_as_get_quest_type() == 'date_picker') {   
     // print "<br> date picker request";
-    $option  = (!empty($scheduleRange[0]['book_time_type'])) ? $scheduleRange[0]['book_time_type'] : $option;  
+    $option  = (!empty($scheduleRange[0]['book_time_type'])) ? strtolower($scheduleRange[0]['book_time_type']) : $option;
 }  else {
 
  
     // print "<br> option type request";
 }
-  
+
+$days  = [
+   'Monday',
+   'Tuesday',
+   'Wednesday',
+   'Thursday',
+   'Friday',
+   'Saturday',
+   'Sunday',
+];
+
+
+
 if($option =='book exact time') {
     $book_exact_time = 'checked';
 } else {
