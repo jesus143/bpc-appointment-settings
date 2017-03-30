@@ -1,3 +1,28 @@
+Hi Rich,
+
+Update for March 29, 2017
+
+1. Create database for "Book Time Of Day"
+2. Remove all dates with year, day and month
+3. Diplay only days from monday - sunday
+4. When hit button save new info to database as standard data
+5. Allow saving execution and ajax way and merge with book time of day and book exact time
+6. Do refresh and set default value that was already saved
+7. Set opn form when selected for  "book time of day" or "book exact time"
+
+Todo tomorrow
+Work with time of day - book phone calls appointment display with button for morning, afternoon and evening
+
+Thanks,
+
+
+
+
+
+
+
+
+
 Here is the update for today,
 
 Update for March 28

@@ -74,7 +74,7 @@
                             // $scheduleRangeArr = (!empty($scheduleRange[$counter])) ? $scheduleRange[$counter]  : null; 
 
                             /**  This will get specific break of the day */ 
-                            $break = unserialize($scheduleStandard[0][strtolower($day) . '_break']); 
+                            $break = unserialize($scheduleStandard[0][strtolower($day1) . '_break']);
                             // bpc_as_print_r_pre($break);  
                              
                             /** new compose break */   
@@ -151,7 +151,7 @@
                                 <td class="bpc-as-break-time-container-td" id="agenda-time-4-<?php print $petsa; ?>"  >
 
 
-                                    <input <?php print $scheduleStatusButton ?> style="<?php print $scheduleStatusDropDownStyle; ?>" type="button" value="Add Break" onclick="bpc_as_add_time_break('<?php print $strDate; ?>', 'standard',  '<?php print $day; ?>')" >
+                                    <input <?php print $scheduleStatusButton ?> style="<?php print $scheduleStatusDropDownStyle; ?>" type="button" value="Add Break" onclick="bpc_as_add_time_break('<?php print $strDate; ?>', 'standard',  '<?php print $day1; ?>')" >
                                     <br>
                                     <form> </form>
 
@@ -159,7 +159,7 @@
 
 
                                         <input type="hidden" value="<?php print $strDate; ?>" name="strDate" />
-                                        <input type="hidden" value="<?php print $day; ?>" name="day" />
+                                        <input type="hidden" value="<?php print $day1; ?>" name="day" />
 
                                         <ul class="bpc-as-break-time-container-ul" id="bpc-as-break-time-container-<?php print $strDate; ?>" >
                                            <?php
@@ -204,9 +204,9 @@
                                                             $break_to_min,
                                                             $scheduleStatusStyle,
                                                             $scheduleStatusDropDownStyle,
-                                                            $scheduleStatusButton, 
-                                                            $day
-                                                        ); 
+                                                            $scheduleStatusButton,
+                                                            $day1
+                                                        );
                                                     }
                                                 }
                                            ?>
@@ -226,7 +226,7 @@
                                         Loading...
                                     </div> 
 
-                                    <div style="display:none" id="break-time-update-loader-<?php print $day; ?>" >
+                                    <div style="display:none" id="break-time-update-loader-<?php print $day1; ?>" >
                                         <i class=" fa fa-spinner fa-spin"   ></i><br>
                                         Loading...
                                     </div>

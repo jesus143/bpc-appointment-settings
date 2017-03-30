@@ -42,9 +42,9 @@
                         $counter=0;
 
 
-                        //                        print" <pre>";
-                        //                        print_r($scheduleRange);
-                        //                        print" </pre>";
+                        // print" <pre>";
+                        // print_r($scheduleRange);
+                        // print" </pre>";
 
                         foreach($dates as $petsa => $date):
 
