@@ -13,7 +13,7 @@
 
         <div class="table-responsive bpc-as-table-display">
 
-            <input type="text" value="Book Time Of Day" name="book_time_type" />
+            <input type="hidden" value="Book Time Of Day" name="book_time_type" />
 
             <table class="table table-condensed table-bordered">
                 <thead>
