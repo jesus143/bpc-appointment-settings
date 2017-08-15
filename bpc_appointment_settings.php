@@ -65,7 +65,7 @@ function bpc_as_admin ()
 	    <script src="http://cloud.tinymce.com/stable/tinymce.min.js?apiKey=o2rim480e9ixjtiuyes05u9iu2930pqx4xow0tg25vta8k2t"></script>
 	    <script>tinymce.init({ selector:'textarea' });</script>
 	   
-	<div style="width:50%; margin:0px auto;" > 
+		<div style="width:50%; margin:0px auto;" > 
  		<br> 
  		<label class="label label-success">Reminder:</label><br> 
 		1. Add short code post or page <b>[bpc_as_opening_hours]</b> in order to display the partner schedule calendar<br>
@@ -101,8 +101,7 @@ function bpc_as_opening_hours_func_custom_func()
 
 	$bpc_User_Api 	 = new Bpc_User_Api();
 	$accessToken  	 = $bpc_User_Api->getGoogleCalendarAccessToken();
-
-
+ 
 	/**
 	 * generate standard settings for specific user
 	 */
@@ -134,15 +133,16 @@ function bpc_as_opening_hours_func_custom_func()
 
 	echo "</form>";
 
-	require_once('includes/pages/dashboard-settings-options-save.php');
+	require_once('includes/pages/dashboard-settings-options-save.php'); 
 
-	if (!empty($accessToken)) {
+	if (bpc_as_calendar_googl_apple_function_is_authenticated()  == true) {
+				//print "token is authenticated"; 
+			print "</div>";
 		print "</div>";
-		print "</div>";
-	}
-
-	print "</div>";
-
+	} else {
+		//print "token is not authenticated";
+	} 
+	print "</div>"; 
 	ob_flush();
 }
 
@@ -262,6 +262,96 @@ function bpc_as_install_table()
 	//when install also add talble
 }
 
+
+function bpc_as_calendar_googl_apple_function_is_authenticated() {
+	    //	unset($_SESSION['access_token']); 
+	ob_start();   
+	// print " type " . $_SESSION['type'];  
+
+
+	/**
+	 * generate standard settings for specific user
+	 */
+	$standard = new bpc_appointment_setting_standard();
+	$standard->generateSpecificUserWithDefaultStandarSettings();
+
+
+	//	print "type " . $_SESSION['type']	;
+	if($_SESSION['type'] == 'auth') {
+	?>
+		<style>
+			.authenticate-google-api, body{
+				display:none !important;
+			}
+		</style> <?php 
+		print "Connecting...";
+	} 
+	unset($_SESSION['type']); 
+	?>
+ 
+	<style>
+		#page-content {
+			width:1024px !important;
+		}
+	</style>
+	<?php
+	bpc_as_header();
+	$bpc_AS_DB					      = new BPC_AS_DB('wp_bpc_appointment_settings');
+	$bpc_Appointment_Settings_Breaks  = new Bpc_Appointment_Settings_Breaks();
+	require_once __DIR__.'/includes/api/google-api/vendor/autoload.php';
+	require_once __DIR__.'/includes/api/google-api/helper.php';
+
+			// print "<pre>";
+			// print_r($_SESSION);
+			// print "</pre>";
+	// google calendar connect
+
+	$bpc_User_Api		 			  = new Bpc_User_Api();
+ 
+	// execute new insert for google authentication
+	if(!empty($_SESSION['access_token'])) {
+				// print "session is not emopty";
+		$_SESSION['access_token']['name'] = 'google calendar';
+		$bpc_User_Api->addOrUpdate($_SESSION['access_token']);
+	} else {
+				// print "sesssion is empty";
+	} 
+	$client = new Google_Client();
+	$client->setAuthConfig( __DIR__ . '/includes/api/google-api/client_secret.json');
+	$client->addScope(Google_Service_Calendar::CALENDAR);
+	$bpc_As_Calendar = new Bpc_As_Calendar();
+ 
+	$accessToken  = $bpc_User_Api->getGoogleCalendarAccessToken();
+ 
+ 
+	if (!empty($accessToken)) {  
+		try { 
+			$_SESSION['token_authenticated'] = true;
+			$client->setAccessToken($accessToken);
+			$service = new Google_Service_Calendar($client); 
+			$calendarId = 'primary';
+			$optParams = array(
+					'maxResults' => 100,
+					'orderBy' => 'startTime',
+					'singleEvents' => TRUE,
+					'timeMin' => date("c", strtotime($bpc_As_Calendar->getCurrentDate()))
+					// 'timeMax' => '2017-03-28T23:59:59-04:00'
+			); 
+			$results = $service->events->listEvents($calendarId, $optParams); 
+			if (count($results->getItems()) == 0) { 
+			} else { 
+			}   
+
+
+			return true;
+		}catch (Exception $e){ 
+			return false; 
+		} 
+	} else {
+	 	return false; 
+	}  
+}
+
 function bpc_as_calendar_google_apple_func()
 {
     //	unset($_SESSION['access_token']); 
@@ -335,6 +425,8 @@ function bpc_as_calendar_google_apple_func()
 		print "<div style='width: 96%;' class='alert alert-success'>Authenticated with google calendar..</div>";
 		// allow try ang catch functions
 		try {
+
+			$_SESSION['token_authenticated'] = true;
 			$client->setAccessToken($accessToken);
 			$service = new Google_Service_Calendar($client);
 			// Print "the next 10 events on the user's calendar"; 
@@ -430,6 +522,7 @@ function bpc_as_calendar_google_apple_func()
 		}
 
 	} else {
+		$_SESSION['token_authenticated'] = false;
 		//		print " print button to authenticate in to google calendar";
 		print "<div style='width: 96%;' class='alert alert-info'> Click <a href='/phone-appointment-settings'>here</a> to visit phone appointment settings  </div>";
 		bpc_as_google_calendar_print_connect_button(bpc_as_google_calendar_get_path_call_back_file());
@@ -474,8 +567,12 @@ function bpc_as_calendar_google_apple_authenticate()
 	$accessToken  	 = $bpc_User_Api->getGoogleCalendarAccessToken();
 
 	if (!empty($accessToken)) {
+
 		print "<div style='width: 96%;' class='alert alert-info'>Synced with google calendar.. click <a href='/google-calendar-settings'>here</a> to visit google calendar settings </div>";
+
 		try {
+
+			$_SESSION['token_authenticated'] = true; 
 
 			/** Set access token */
 			$client->setAccessToken($accessToken);
@@ -544,11 +641,15 @@ function bpc_as_calendar_google_apple_authenticate()
 				print '<div>';
 			}
 		}catch (Exception $e){
-			//bpc_as_google_calendar_auto_connect_with_popup(bpc_as_google_calendar_get_path_call_back_file());
-//			bpc_as_google_calendar_print_connect_button(bpc_as_google_calendar_get_path_call_back_file());
+			// bpc_as_google_calendar_auto_connect_with_popup(bpc_as_google_calendar_get_path_call_back_file());
+			// bpc_as_google_calendar_print_connect_button(bpc_as_google_calendar_get_path_call_back_file()); 
 		}
 	} else {
+
+		$_SESSION['token_authenticated'] = false;
+
 		print "<div style='width: 96%;' class='alert alert-info'> Click <a href='/google-calendar-settings'>here</a> to visit google calendar settings </div>";
+ 
 	}
 	ob_flush();
 }
@@ -593,4 +694,49 @@ function bpc_as_header()
 			}); 
 		</script>
 	<?php
+}
+
+
+/**
+ * sample query
+ *
+ * $content = file_get_contents('https://testing.umbrellasupport.co.uk/wp-json/bpc/api/v1/partner/77514');
+ * $content = json_decode($content, true);
+ * print "<pre>";
+ * print_r($content);
+ *
+ */
+add_action( 'rest_api_init', function () {
+    register_rest_route( 'bpc/api/v1', '/partner/(?P<partner_id>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'my_bpc_api_func',
+    ) );
+} );
+
+function my_bpc_api_func( $data ) {
+    $partner_id = $data['partner_id']; 
+    // print "test";
+
+    global $wpdb;
+    $settings = $wpdb->get_results( 'SELECT * FROM wp_bpc_appointment_settings WHERE partner_id = ' . $partner_id, ARRAY_A  );
+
+
+    $content = [];
+
+    foreach($settings as $setting) {
+
+        $appointment_setting_id = $setting['id'];
+        $date = $setting['date'];
+
+        $breaks = $wpdb->get_results( 'SELECT * FROM wp_bpc_appointment_setting_breaks WHERE partner_id = ' . $appointment_setting_id, ARRAY_A  );
+
+        $content[$date]['bpc_appointment_settings'] = $setting;
+        $content[$date]['bpc_appointment_setting_breaks'] = $breaks;
+
+    }
+
+    $content['standard'] = $wpdb->get_results( 'SELECT * FROM wp_bpc_appointment_setting_standard WHERE partner_id = ' . $partner_id, ARRAY_A  );
+
+    return $content;
+
 }

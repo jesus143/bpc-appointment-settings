@@ -10,7 +10,7 @@ $type = (!empty($_GET['type'])) ? $_GET['type'] : null;
 
 $client = new Google_Client();
 $client->setAuthConfigFile('client_secret.json');
-$client->setRedirectUri('http://' . $_SERVER['HTTP_HOST'] . '/wp-content/plugins/bpc-appointment-settings/includes/api/google-api/oauth2callback.php');
+$client->setRedirectUri('https://' . $_SERVER['HTTP_HOST'] . '/wp-content/plugins/bpc-appointment-settings/includes/api/google-api/oauth2callback.php');
 $client->addScope(Google_Service_Calendar::CALENDAR);
 
 if (! isset($_GET['code'])) {
@@ -22,7 +22,7 @@ if (! isset($_GET['code'])) {
  	$_SESSION['type'] = 'auth'; 
     $client->authenticate($_GET['code']);
     $_SESSION['access_token'] = $client->getAccessToken();
-  	$redirect_uri = 'http://' . $_SERVER['HTTP_HOST'] . '/google-calendar-settings';
+  	$redirect_uri = 'https://' . $_SERVER['HTTP_HOST'] . '/google-calendar-settings';
   // print "else";
   // exit; 
   header('Location: ' . filter_var($redirect_uri, FILTER_SANITIZE_URL));

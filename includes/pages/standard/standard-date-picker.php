@@ -18,7 +18,7 @@
 
 
 				<div id="bpc-as-schedule-loader" >
-					<i class=" fa fa-spinner fa-spin"    ></i><br>
+<!--					<i class=" fa fa-spinner fa-spin"    ></i><br>-->
 					Loading...
 				</div>
 

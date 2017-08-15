@@ -43,22 +43,46 @@
 	$post = $_REQUEST;  
 	$day  = $post['day']; 	   
 
-	print_r($post);  
-	
 	/** seriazlized break post and prepare to insert database */
 	$post_serizlized = serialize($post); 
 	$data = [$day . '_break'=>$post_serizlized];
 
-	bpc_as_print_r_pre($data); 
+    $t1a = $post['break_time_hour_min'][0];
+    $t1b = $post['break_time_hour_min'][1];
 
-	// update specific date with parameter user id, day and serialized post
-	$isUpdated = $appointment_setting_standard->update($data, ['user_id'=>$user_id]); 
- 
-	/**
-	 * Print status 
-	 */
-	if($isUpdated) { 
-		print  "Successfully updated!"; 
-	} else {
-		print "Failed to update"; 
-	}
+    $t2a = $post['break_time_hour_min'][2];
+    $t2b = $post['break_time_hour_min'][3];
+
+    $time1 =  "$t1a:$t1b";
+    $time2 =  "$t2a:$t2b";
+
+    if($time1 < $time2) {
+
+        print_r($post);
+
+        print " below is the data";
+
+        bpc_as_print_r_pre($data);
+
+        bpc_as_print_r_pre($data['break_time_hour_min']);
+
+        print "<br>   time1 $time1 and time2 $time2 <br>";
+
+        // update specific date with parameter user id, day and serialized post
+        $isUpdated = $appointment_setting_standard->update($data, ['user_id' => $user_id]);
+
+
+        /**
+         * Print status
+         */
+        if ($isUpdated) {
+            print  "Successfully updated!";
+        } else {
+            print "Failed to update";
+        }
+
+    } else {
+
+	   print json_encode(array('error'=>'Time is not valid, please reverse.'));
+
+    }

@@ -1,5 +1,5 @@
  <br><br>
- <div class="container" id="bpc-as-save-schedule-container" style="display:none"> 
+ <div id="bpc-as-save-schedule-container" style="display:none"> 
  		<input type="button" value="Update Schedule" class="btn btn-default" onclick="bpc_as_save_schedule()" />
 	 	<br><br>
  		<div id="bpc-as-schedule-update-loader"  style="display:inline; visibility: hidden;">

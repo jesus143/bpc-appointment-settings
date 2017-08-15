@@ -180,7 +180,7 @@
 
                                 <td class="bpc-as-break-time-container-td"  >
                                 
-                                    <input <?php print $scheduleStatusButton ?> style="<?php print $scheduleStatusDropDownStyle; ?>" type="button" value="Add Break" onclick="bpc_as_add_time_break('<?php print $strDate; ?>')" >
+                                    <input <?php print $scheduleStatusButton ?> style="<?php print $scheduleStatusDropDownStyle; ?>;background: #d7090a;color: white;padding: 5px;" type="button" value="Add Break" onclick="bpc_as_add_time_break('<?php print $strDate; ?>')" >
                                     <br>
                                     <form> </form>
                                     <form id="bpc-as-break-time-container-form-<?php print $strDate; ?>" >

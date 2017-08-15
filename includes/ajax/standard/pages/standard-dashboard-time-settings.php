@@ -151,7 +151,7 @@
                                 <td class="bpc-as-break-time-container-td" id="agenda-time-4-<?php print $petsa; ?>"  >
 
 
-                                    <input <?php print $scheduleStatusButton ?> style="<?php print $scheduleStatusDropDownStyle; ?>" type="button" value="Add Break" onclick="bpc_as_add_time_break('<?php print $strDate; ?>', 'standard',  '<?php print $day1; ?>')" >
+                                    <input <?php print $scheduleStatusButton ?> style="<?php print $scheduleStatusDropDownStyle; ?>;background: #d7090a;color: white;padding: 5px;" type="button"  type="button" value="Add Break"   onclick="bpc_as_add_time_break('<?php print $strDate; ?>', 'standard',  '<?php print $day1; ?>')" >
                                     <br>
                                     <form> </form>
 
